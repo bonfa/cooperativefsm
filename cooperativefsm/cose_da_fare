@@ -1,0 +1,20 @@
+Ambiente di sviluppo:
+	UML:		violet o visual paradigm
+	Java:		NetBeans-6.7.1
+	
+
+Stile di progettazione:		incrementale
+
+Classa FSM:	Lista Stati:		n° stato, corrente
+		Lista Transizioni:	Transizione:	durata, stato sorgente, stato finale
+						
+La transizione di defualt è asincrona. è sincrona sse l'altra transizione sincrona è abilitata se no è asincrona.
+
+CORE:
+	FSM:	nome,lista_stati		
+		->	stato:		id (costruttore), lista_transizioni(metodo init successivo all'istanziamento delle transizioni uscenti)	
+		->	transizione:	stato_sorgente, stato_destinazione, durata
+	
+
+	
+
