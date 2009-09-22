@@ -7,7 +7,7 @@ package cooperativefsm;
 
 /**
  *
- * @author luca
+ * @author Cominardi Luca, Ferrari Alessandro, Svanera Carlo
  */
 public class Main {
 
