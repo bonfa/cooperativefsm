@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cooperativefsm;
 
 /**
@@ -14,11 +9,13 @@ import java.util.Vector;
 
 public class Fsm {
 
+    String id;
+    int numStati;
+    Stato sCorrente;    //serve davvero???
     Vector listaStati;
     Vector listaTrans;
 
-    int numStati;
-    Stato sCorrente;
+
 
     public Fsm () {    // costruttore di una macchina a stati finiti
 
@@ -27,12 +24,13 @@ public class Fsm {
 
      }
 
-    public void addStato(Stato s) {
-        //aggiunge uno stato al vector listaStati
+    
+
+    public void addStato(Stato s) {         //aggiunge uno stato al vector listaStati
+        listaStati.add(s);
     }
 
-    public void setStatoCorrente(Stato s) {
-        //imposta il valore dello stato corrente
+    public void setStatoCorrente(Stato s) {         //imposta il valore dello stato corrente
         sCorrente = s;
     }
 
@@ -41,6 +39,12 @@ public class Fsm {
     }
 
 
+    public Stato getStato (int indice)  {
+        
+        Stato s = (Stato) listaStati.get(indice);
+        return s;
+    }
+    
      //settaTransizioniUscentiStati();
 
 
