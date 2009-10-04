@@ -9,13 +9,20 @@ import java.util.Vector;
 
 public class Simulazione {
 
+    public enum Relazione{
+        SINCRONA,
+        ASINCRONA,
+        M_EX
+    }
+
     //public Fsm fsm1;
     //public Fsm fsm2;
-    public Vector listaFsm;
+    private Vector listaFsm;
     
-    public Vector listaRelazioni;           //lista statica che comprende TUTTE le possibili coppie di transizioni
-    public Vector listaRelazioniAbilitate;  //lista dinamica che varia a seconda dello stato corrente
-    public StatoCorrente sCorrente;
+    private Vector listaRelazioni;           //lista statica che comprende TUTTE le possibili coppie di transizioni
+    private Vector listaRelazioniAbilitate;  //lista dinamica che varia a seconda dello stato corrente
+    private StatoCorrente sCorrente;
+    private Relazione relazioniTransizioni[][];
     
     
     
