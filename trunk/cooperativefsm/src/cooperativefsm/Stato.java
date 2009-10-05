@@ -2,24 +2,35 @@ package cooperativefsm;
 
 /**
  *
- * @author Renato
+ * @author Alessandro Ferrari, Carlo Svanera, Luca Cominardi
  */
 
 import java.util.Vector;
 
 public class Stato {
 
-    int idStato;
-    Vector transUscenti;
+    private int idStato;
+    private Vector<Transizione> transizioniUscenti;
 
 
     public Stato (int num_stato) {   //costruttore di uno stato
 
         idStato = num_stato;
-        transUscenti = new Vector ();
+        transizioniUscenti = new Vector<Transizione>();
     }
 
     public void addTransUscente(Transizione t){
-        transUscenti.add(t);
+        transizioniUscenti.add(t);
     }
+
+    public int getId()
+    {
+        return idStato;
+    }
+
+    public void setId(int id)
+    {
+        idStato = id;
+    }
+
 }

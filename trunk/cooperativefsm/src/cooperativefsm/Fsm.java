@@ -2,50 +2,60 @@ package cooperativefsm;
 
 /**
  *
- * @author Renato
+ * @author Alessandro Ferrari, Carlo Svanera, Luca Cominardi
  */
 
 import java.util.Vector;
 
 public class Fsm {
 
-    String id;
-    int numStati;
-    Stato sCorrente;    //serve davvero???
-    Vector listaStati;
-    Vector listaTrans;
+    private String id;
+    private int numStati;
+    private Vector<Stato> stati;
+    private Vector<Transizione> transizioni;
+    private int numRelazioniSincroneTransizioniUscenti;
 
 
 
-    public Fsm () {    // costruttore di una macchina a stati finiti
+    public Fsm (String _id, Vector<Stato> _stati,Vector<Transizione> _transizioni) {    // costruttore di una macchina a stati finiti
 
-        listaStati = new Vector ();
-        listaTrans = new Vector ();
+        id=_id;
+        stati = _stati;
+        transizioni = _transizioni;
 
      }
 
-    
-
     public void addStato(Stato s) {         //aggiunge uno stato al vector listaStati
-        listaStati.add(s);
+        stati.add(s);
     }
 
-    public void setStatoCorrente(Stato s) {         //imposta il valore dello stato corrente
-        sCorrente = s;
+    public Vector<Stato> getStati(){
+        return stati;
     }
-
-    public Stato getStatoCorrente ()  {
-        return sCorrente;
-    }
-
 
     public Stato getStato (int indice)  {
         
-        Stato s = (Stato) listaStati.get(indice);
+        Stato s = (Stato) stati.get(indice);
         return s;
     }
+
+    public Vector<Transizione> getTransizioni()
+    {
+        return transizioni;
+    }
+
     
-     //settaTransizioniUscentiStati();
+     public void setTransizioniUscentiStati(){
+         //TODO
+     }
+
+     public int getNumRelazioniSincroneTransizioniUscenti(){
+         return numRelazioniSincroneTransizioniUscenti;
+     }
+
+     public void setNumRelazioniSincroneTransizioniUscenti(Simulazione.Relazione relazioni[][]){
+         //TODO
+     }
 
 
   }

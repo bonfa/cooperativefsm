@@ -2,7 +2,7 @@ package cooperativefsm;
 
 /**
  *
- * @author Renato
+ * @author Alessandro Ferrari, Carlo Svanera, Luca Cominardi
  */
 import java.util.Vector;
 import java.lang.*;
@@ -10,11 +10,21 @@ import java.lang.*;
 
 public class Input {
 
+    //Attributi private, metodi public, information hiding ;), per accederci
+    //utilizza i get e i set
+
+    //Ricordati il specificatore del tipo di collection per i vector,
+    //tipo Vector<nome_classe>
+
+    //Per i nomi degli attributi fai riferimento ai diagrammi uml che ho fatto
+
     //Questi attributi sono in realtà variabili di appoggio che servono ai metodi (astatti)
-    public Vector listaS;
-    public Vector listaT;
-    public Vector listaR;
-    public Vector listaMacchine;
+    private Vector<Stato> listaS;
+    private Vector<Transizione> listaT;
+    //La documentazione su come deve essere  relazioniTransizioni è presente nelle mail
+    //Se non è ancora chiara contattami
+    private Simulazione.Relazione relazioniTransizioni[][]; //Relazione è un tipo enum che definisce i tipi di relazione
+    private Vector<Fsm> listaFSM;
     
     
     /*
@@ -28,14 +38,14 @@ public class Input {
              for(i=0; i<numFsm; i++)
              {
              Fsm fsm = creaFsm (Integer.toString(i));
-             listaMacchine.add(fsm);
+             listaFSM.add(fsm);
              }
              
              //Lettura stato iniziale
              StatoCorrente statoIniziale = leggiStatoIniziale();
              
              //Lettura relazioni
-             listaR = leggiRelazioni();
+             relazioniTransizioni = leggiRelazioni();
 
              //Controllo dei vincoli di correttezza della simulazione
              if(!simulazioneCorretta() )
@@ -44,7 +54,7 @@ public class Input {
              }
 
                  //L'interfaccia tra io e core è data da questa riga, è l'unico punto di incontro
-                 return (new Simulazione(listaMacchine, listaR, statoIniziale));
+                 return (new Simulazione(listaFSM, relazioniTransizioni, statoIniziale));
             }
     
     
@@ -119,16 +129,11 @@ public class Input {
       * @return la nuova istanza di Fsm
       */
 
-     public Fsm creaFsm (String nome)
-        {
-        Fsm macchina= new Fsm ();
+     public Fsm creaFsm (String nome){
+        Fsm macchina= new Fsm ( nome , listaS, listaT);
         
-        macchina.id = nome;
-        macchina.listaStati = listaS;
-        macchina.listaTrans = listaT;
-       
         return macchina;
-        }
+     }
 
      
 
@@ -152,16 +157,17 @@ public class Input {
          * Metodo che ricava le relazioni tra le transizioni delle 2 FSM
          * @return il vettore contenente le relazioni tra TUTTE le transizioni [...]
          */
-        public Vector leggiRelazioni ()
-            {
-            Vector listaRelazioni = new Vector();
+        public  Simulazione.Relazione[][] leggiRelazioni (){
+            int n = listaFSM.elementAt(0).getTransizioni().size();//N° transizioni prima fsm
+            int m = listaFSM.elementAt(1).getTransizioni().size();//..seconda
+            Simulazione.Relazione _relazioniTransizioni[][] = new Simulazione.Relazione[n+1][m+1];
 
             Transizione t1,t2;
             //RelazioneTransizioni r = new RelazioneTransizioni (t1,t2);
             //listaRelazioni.add(r);
             
-            return listaRelazioni;
-            }
+            return relazioniTransizioni;
+        }
         
 
         
