@@ -11,13 +11,24 @@ package cooperativefsm;
  */
 public class Transizione {
 
-    int id;
-    Stato sorgente;
-    Stato destinazione;
-    //int numRelazioniSincroneStatoCorrente //Indica quanti relazioni sincrone ha con altre transizioni nello stato corrente
+    private int id;
+    private Stato stato1;
+    private Stato stato2;
+    private int numRelazioniSincroneStatoCorrente; //Indica quanti relazioni sincrone ha con altre transizioni nello stato corrente
 
-    public Transizione(Stato s, Stato d) {
-        sorgente=s;
-        destinazione=d;
+    public Transizione(Stato _stato1, Stato _stato2) {
+        stato1=_stato1;
+        stato2=_stato2;
+    }
+
+    public void setNumRelazioniSincroneStatoCorrente( Simulazione.Relazione relazioni[][]){
+        //TODO
+    }
+
+    public int getNumRelazioniSincroneStatoCorrente(){
+
+        //TODO
+
+        return  numRelazioniSincroneStatoCorrente;
     }
 }
