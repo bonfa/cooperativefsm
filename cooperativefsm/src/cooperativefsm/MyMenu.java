@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cooperativefsm;
 
 /**
@@ -31,10 +26,14 @@ public class MyMenu
 	this.voci = voci;
   }
 
-  public int scegli ()
+  /**
+   *
+   * @return
+   */
+  public int scegli ()          //NB: non è stato fatto nessun controllo che il carattere inserito sia un intero
   {
 	stampaMenu();
-	return Servizio.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);
+	return Servizio.leggiIntero(RICHIESTA_INSERIMENTO, 0 ,voci.length);
   }
 
   public void stampaMenu ()

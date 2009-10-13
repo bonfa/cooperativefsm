@@ -9,7 +9,8 @@ import java.util.Vector;
 
 public class Stato {
 
-    private int idStato;
+    private int idStato;    //è il numero progressivo assegnato allo stato, riferito alla fsm cui appartiene
+    private String nome;    //identifica un certo stato (attributo opzionale)
     private Vector<Transizione> transizioniUscenti;
 
 

@@ -15,6 +15,7 @@ public class Simulazione {
         M_EX
     }
 
+
     private Vector<Fsm> listaFsm;
     private Vector<TransizioniAbilitate> transizioniAbilitate;  //lista dinamica che varia a seconda dello stato corrente
     private StatoCorrente statoCorrente;
