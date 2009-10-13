@@ -5,6 +5,8 @@ package cooperativefsm;
  * @author Renato
  */
 import java.util.Scanner;
+import java.io.*;
+import java.lang.*;
 
 
 public class Servizio {
@@ -19,7 +21,7 @@ public class Servizio {
 	  private final static char RISPOSTA_SI='S';
 	  private final static char RISPOSTA_NO='N';
 
-
+          
 
 	  private static Scanner creaScanner ()
 	  {
@@ -70,6 +72,7 @@ public class Servizio {
 	       System.out.println(ERRORE_STRINGA_VUOTA);
 	      }
 	    } while (!finito);
+
 	   return valoreLetto;
 	  }
 

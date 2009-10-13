@@ -20,38 +20,39 @@ public class Main {
      * @param args the command line arguments
      */
     
-    public static void main(String[] args) {
-    
-    final String TIPOINPUT = "TIPO DI INPUT";
-    final String [] SCELTAINPUT  = {"da tastiera","da file xml"};
-    final String MESS_FINALE = "CIAO!";
-
-    MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
-    boolean fineProgramma=false;
-    
-    int selezione = menuInput.scegli();
-
-    Input in;
-    switch (selezione)
+    public static void main(String[] args)
     {
-        case 1: in = new InputTast();
-        case 2: in = new InputXML();
-        default: in = new Input();
-        break;
-    }
+        final String TIPOINPUT = "TIPO DI INPUT";
+        final String [] SCELTAINPUT  = {"da tastiera","da file xml"};
+        final String MESS_FINALE = "CIAO!";
+
+        MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
+        boolean fineProgramma=false;
+
+        int selezione = menuInput.scegli();
+
+        Input in = null;
+
+            switch (selezione)
+            {
+                case 1: {in = new InputTast(); System.out.println("ok");}
+                case 2: in = new InputXML();
+                default : System.out.println("boh");
+            }
 
 
-    Simulazione s = in.leggiSimulazione();   //leggiSimulazione è un metodo della interfaccia Input,
-                                            //da cui ereditano le classi InputTast e InputXML
-    
-    while (!fineProgramma)
-        {
-        fineProgramma = s.eseguiIterazione();
-        }
-    
+        Simulazione s = in.leggiSimulazione();   //leggiSimulazione è un metodo della classe Input,
+                                                //da cui ereditano le classi InputTast e InputXML
 
-    System.out.println(MESS_FINALE);
+        while (!fineProgramma)
+            {
+            fineProgramma = s.eseguiIterazione();
+            }
 
+
+        System.out.println(MESS_FINALE);
+
+  
     }
 
 

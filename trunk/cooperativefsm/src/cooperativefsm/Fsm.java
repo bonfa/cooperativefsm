@@ -11,18 +11,39 @@ public class Fsm {
 
     private String id;
     private int numStati;
-    private Vector<Stato> stati;
+    private Vector<Stato>       stati;
     private Vector<Transizione> transizioni;
     private int numRelazioniSincroneTransizioniUscenti;
 
 
+    /**
+     * Costruttore di una fsm
+     */
 
-    public Fsm (String _id, Vector<Stato> _stati,Vector<Transizione> _transizioni) {    // costruttore di una macchina a stati finiti
+    public Fsm (String _id)
+    {
+        id          = _id;
+        stati       = new Vector<Stato> ();
+        transizioni = new Vector<Transizione> ();
+    }
 
-        id=_id;
-        stati = _stati;
+    /** Costruttore (con argomenti in più...) di una macchina a stati finiti ... non so se servirà!?!
+     *
+     * @param _id
+     * @param _stati
+     * @param _transizioni
+     */
+
+    public Fsm (String _id, Vector<Stato> _stati,Vector<Transizione> _transizioni) {    
+
+        id          = _id;
+        stati       = _stati;
         transizioni = _transizioni;
 
+     }
+
+     public String getId(){
+     return id;
      }
 
     public void addStato(Stato s) {         //aggiunge uno stato al vector listaStati
@@ -33,18 +54,32 @@ public class Fsm {
         return stati;
     }
 
-    public Stato getStato (int indice)  {
+    public Stato getStatoAt (int indice)  {
         
         Stato s = (Stato) stati.get(indice);
         return s;
     }
 
-    public Vector<Transizione> getTransizioni()
-    {
+
+
+
+    public void addTrans (Transizione t)    {
+        transizioni.add(t);
+    }
+
+    public Vector<Transizione> getTransizioni()    {
         return transizioni;
     }
 
-    
+    public Transizione getTransizioneAt (int indice)    {
+        Transizione t = transizioni.get(indice);
+        return t;
+    }
+
+
+
+
+
      public void setTransizioniUscentiStati(){
          //TODO
      }
