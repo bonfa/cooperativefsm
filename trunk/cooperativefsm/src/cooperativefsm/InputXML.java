@@ -76,10 +76,12 @@ public class InputXML extends Input {
 
         public void insFSM(Node node)
         {
-               NodeList nl = node.getChildNodes();
+               Vector<Stato> listaS = new Vector<Stato>();
                String id = "";
                int states = 0;
 
+               NodeList nl = node.getChildNodes();
+               
                for(int i=0, cnt=nl.getLength(); i<cnt; i++)
                {
                     String test=nl.item(i).getNodeName();
@@ -96,7 +98,7 @@ public class InputXML extends Input {
                         for(i=0; i<states; i++)
                         {
                             Stato s = new Stato(i);
-                            //listaS.add(s);
+                            listaS.add(s);
                         }
                     }
                     else if(test.equalsIgnoreCase("transition"))
@@ -106,17 +108,24 @@ public class InputXML extends Input {
                }
         }
 
-        public void insTRANS(Node node)
+        public Vector<Transizione> insTRANS(Node node)
         {
+            Vector<Transizione> listaT = new Vector<Transizione>();
+
             NodeList nl = node.getChildNodes();
 
             for(int i=0, cnt=nl.getLength(); i<cnt; i++)
             {
+                String id = "";
+                Stato s1 = null;
+                Stato s2 = null;
+                int length = 0;
+                
                 String test=nl.item(i).getNodeName();
 
                 if(test.equalsIgnoreCase("id"))
                 {
-                    System.out.println("id: " + nl.item(i).getFirstChild().getNodeValue());
+                    id = nl.item(i).getFirstChild().getNodeValue();
                 }
                 else if(test.equalsIgnoreCase("s1"))
                 {
@@ -131,6 +140,7 @@ public class InputXML extends Input {
                     System.out.println("length: " + nl.item(i).getFirstChild().getNodeValue());
                 }
             }
+            return listaT;
         }
 
         public void insREL(Node node)
