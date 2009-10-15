@@ -6,7 +6,7 @@ package cooperativefsm;
  */
 import java.util.Scanner;
 import java.io.*;
-import java.lang.*;
+
 
 
 public class Servizio {
@@ -21,9 +21,46 @@ public class Servizio {
 	  private final static char RISPOSTA_SI='S';
 	  private final static char RISPOSTA_NO='N';
 
-          
+          private static InputStreamReader reader = new InputStreamReader (System.in);
+          private static BufferedReader myInput = new BufferedReader (reader);
 
-	  private static Scanner creaScanner ()
+          public static String leggiString(String messaggio)
+                {
+                //InputStreamReader reader = new InputStreamReader (System.in);
+                //BufferedReader myInput = new BufferedReader (reader);
+                System.out.println (messaggio);
+                String str= new String();
+                    try 
+                    {
+                    str = myInput.readLine();
+                    } 
+                    catch (IOException e) 
+                    {
+                    System.out.println ("Si è verificato un errore: " + e);
+                    System.exit(-1);
+                    }
+                return str;
+                }
+          
+            public static int leggiInt(String messaggio)
+                {
+                
+                int i=0;
+                String a = leggiString(messaggio);
+                    try 
+                    {
+                    i = Integer.parseInt(a);
+                    }
+                    catch (Exception e)
+                    {
+                    System.out.println ("Devi inserire un intero! ");
+                    return leggiInt(messaggio);
+                    }
+                return i;
+                }
+           
+	  
+            private static Scanner creaScanner ()
 	  {
 	   Scanner creato = new Scanner(System.in);
 	   creato.useDelimiter(System.getProperty("line.separator"));
@@ -76,6 +113,27 @@ public class Servizio {
 	   return valoreLetto;
 	  }
 
+          public static char leggiCaratt (String messaggio)
+	  {
+	   boolean finito = false;
+	   char valoreLetto = '\0';
+	   do
+	    {
+	     String lettura = leggiString(messaggio);
+	     if (lettura.length() > 0)
+	      {
+	       valoreLetto = lettura.charAt(0);
+	       finito = true;
+	      }
+	     else
+	      {
+	       System.out.println(ERRORE_STRINGA_VUOTA);
+	      }
+	    } while (!finito);
+
+	   return valoreLetto;
+	  }
+          
 	  public static boolean yesOrNo(String messaggio)
 	  {
 		  String mioMessaggio = messaggio + "("+RISPOSTA_SI+"/"+RISPOSTA_NO+")";
@@ -93,7 +151,7 @@ public class Servizio {
 	   char valoreLetto = '\0';
 	   do
 	   {
-	    valoreLetto = leggiChar(messaggio);
+	    valoreLetto = leggiCaratt(messaggio);
 	    valoreLetto = Character.toUpperCase(valoreLetto);
 	    if (ammissibili.indexOf(valoreLetto) != -1)
 		 finito  = true;
@@ -125,13 +183,13 @@ public class Servizio {
 	   return valoreLetto;
 	  }
 
-	  public static int leggiInteroConMinimo(String messaggio, int minimo)
+	  public static int leggiIntConMinimo(String messaggio, int minimo)
 	  {
 	   boolean finito = false;
 	   int valoreLetto = 0;
 	   do
 	    {
-	     valoreLetto = leggiIntero(messaggio);
+	     valoreLetto = leggiInt(messaggio);
 	     if (valoreLetto >= minimo)
 	      finito = true;
 	     else
@@ -141,13 +199,13 @@ public class Servizio {
 	   return valoreLetto;
 	  }
 
-	  public static int leggiIntero(String messaggio, int minimo, int massimo)
+	  public static int leggiInt(String messaggio, int minimo, int massimo)
 	  {
 	   boolean finito = false;
 	   int valoreLetto = 0;
 	   do
 	    {
-	     valoreLetto = leggiIntero(messaggio);
+	     valoreLetto = leggiInt(messaggio);
 	     if (valoreLetto >= minimo && valoreLetto<= massimo)
 	      finito = true;
 	     else

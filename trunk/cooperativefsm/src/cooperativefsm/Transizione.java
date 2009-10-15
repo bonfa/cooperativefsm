@@ -30,6 +30,13 @@ public class Transizione {
         stato2 = _stato2;
     }
 
+    public String ToString()
+    {
+        String s = ("Transizione numero: " + id +
+                    "\nDallo stato " + stato1.getId() +
+                    " allo stato " + stato2.getId());
+        return s;
+    }
 
     public void setNumRelazioniSincroneStatoCorrente( Simulazione.Relazione relazioni[][])
     {

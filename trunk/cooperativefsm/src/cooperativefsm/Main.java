@@ -13,7 +13,6 @@ package cooperativefsm;
  * @author Cominardi Luca, Ferrari Alessandro, Svanera Carlo
  */
 
-
 public class Main {     
 
     /**
@@ -27,7 +26,7 @@ public class Main {
         final String MESS_FINALE = "CIAO!";
 
         MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
-        boolean fineProgramma=false;
+        boolean fineProgramma = false;
 
         int selezione = menuInput.scegli();
 
@@ -35,25 +34,29 @@ public class Main {
 
             switch (selezione)
             {
-                case 1: {in = new InputTast(); System.out.println("ok");}
-                case 2: in = new InputXML();
-                default : System.out.println("boh");
+                case 1: {in = new InputTast();
+                        break;
+                        }
+                case 2: {in = new InputXML();
+                        break;
+                        }
+                case 0: {
+                        System.out.println(MESS_FINALE);
+                        System.exit(0);
+                        }
             }
 
-
-        Simulazione s = in.leggiSimulazione();   //leggiSimulazione è un metodo della classe Input,
+        Simulazione s = in.leggiSimulazione();  //leggiSimulazione è un metodo della classe Input,
                                                 //da cui ereditano le classi InputTast e InputXML
-
-        while (!fineProgramma)
+        //while (!fineProgramma)
             {
-            fineProgramma = s.eseguiIterazione();
+            //fineProgramma = s.eseguiIterazione();
             }
 
+        //System.out.println(s.getListaFsm().get(0).ToString());
+        //System.out.println(s.getListaFsm().get(1).ToString());
 
         System.out.println(MESS_FINALE);
-
-  
     }
-
-
+    
 }
