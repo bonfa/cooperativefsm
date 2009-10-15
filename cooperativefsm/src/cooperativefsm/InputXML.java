@@ -10,24 +10,29 @@ package cooperativefsm;
  * @author Renato
  */
 
+
+
 import java.util.Vector;
 
 public class InputXML extends Input {
 
-    public InputXML()
+     private Simulazione.Relazione relazioniTransizioni[][]; //Relazione è un tipo enum che definisce i tipi di relazione
+     private Vector<Fsm> listaFsm;
+     private StatoCorrente statoIniziale;
+
+
+     public InputXML()
     {
+
     }
 
-    public @Override int leggiNumStati(){return 0;}
-
-    public @Override boolean ciSonoTrans(){ return true;}
-
-    public @Override boolean ciSonoRelaz() {return true;}
-
-    public @Override void imposta (Simulazione.Relazione [][] relaz) {}
-
-    public @Override Stato leggiStato(String a){ return new Stato(0);}
+    public @Override Simulazione leggiSimulazione()
+    {  
+        return new Simulazione(listaFsm, relazioniTransizioni, statoIniziale);
+    }
 
     public @Override StatoCorrente leggiStatoIniziale(Vector<Fsm> list) {return new StatoCorrente();}
 
+    
+   
 }

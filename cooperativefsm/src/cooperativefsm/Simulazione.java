@@ -33,9 +33,9 @@ public class Simulazione {
      * @see Input,InputXML,InputTast
      */
     
-    public Simulazione (Vector<Fsm> listaFSM, Relazione relazioni[][], StatoCorrente sc)
+    public Simulazione (Vector<Fsm> _listaFsm, Relazione relazioni[][], StatoCorrente sc)
     {
-        listaFsm = listaFSM;
+        listaFsm = _listaFsm;
         relazioniTransizioni = relazioni;
         statoCorrente = sc;
     }
@@ -47,6 +47,11 @@ public class Simulazione {
      *  state.
      * 
      */
+
+    public Vector<Fsm> getListaFsm()
+    {
+    return listaFsm;
+    }
 
     private void setTransizioniAbilitate(){
         //TODO: vedi macchina a stati finiti uml

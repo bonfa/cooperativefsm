@@ -46,6 +46,14 @@ public class Fsm {
      return id;
      }
 
+     public int getNumStati(){
+        numStati = stati.size();
+        return numStati;
+     }
+
+     public int getNumTr(){
+     return transizioni.size();
+     }
     public void addStato(Stato s) {         //aggiunge uno stato al vector listaStati
         stati.add(s);
     }
@@ -92,5 +100,18 @@ public class Fsm {
          //TODO
      }
 
+     public String ToString ()
+     {
+     String s = new String();
+     s = ("\nNome della Fsm: " + id +
+                        "\nNumero di stati: " + numStati +
+                        "\nElenco delle transizioni: " );
+
+     for (int i = 0; i<transizioni.size(); i++)
+     {
+        s.concat(transizioni.get(i).ToString());
+     }
+     return s;
+     }
 
   }
