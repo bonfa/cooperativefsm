@@ -37,7 +37,7 @@ public class Main {
                 case 1: {in = new InputTast();
                         break;
                         }
-                case 2: {in = new InputXML();
+                case 2: {in = new InputXML("fsm.xml"); //l'uri del file xml dovrà essere passato da tastiera
                         break;
                         }
                 case 0: {
