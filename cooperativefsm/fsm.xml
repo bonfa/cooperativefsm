@@ -16,7 +16,7 @@
 		</transition>
 		<transition>
 			<id>c</id>
-			<s1>2</s1>
+			<s1>1</s1>
 			<s2>3</s2>
 		</transition>
 		<transition>
@@ -44,6 +44,7 @@
 			<s1>5</s1>
 			<s2>2</s2>
 		</transition>
+		<current>2</current>
 	</fsm>
 
 	<fsm>
@@ -75,6 +76,7 @@
 			<s2>1</s2>
 			<!--<length>7</length>-->
 		</transition>
+		<current>1</current>
 	</fsm>
 
 	<relation>
@@ -99,4 +101,6 @@
 		</transval>
 		<type>mutua</type>
 	</relation>
+
+
 </simulation>

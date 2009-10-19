@@ -11,11 +11,12 @@ package cooperativefsm;
  */
 public class Transizione {
 
-    private int id;         //è il numero progressivo assegnato alla transizione, riferito alla fsm cui appartiene
+    //private int id;         //è il numero progressivo assegnato alla transizione, riferito alla fsm cui appartiene
+    private String id;
     private String nome;    //identifica una certa transizione (attributo opzionale)
     private Stato stato1;
     private Stato stato2;
-    private int numRelazioniSincroneStatoCorrente; //Indica quanti relazioni sincrone ha con altre transizioni nello stato corrente
+    private int numRelazioniSincroneStatoCorrente; //Indica quante relazioni sincrone ha con altre transizioni nello stato corrente
 
     /**
      * Costruttore di una transizione a partire da due stati di una stessa fsm
@@ -24,8 +25,9 @@ public class Transizione {
      * @param _stato2
      */
 
-    public Transizione(Stato _stato1, Stato _stato2)
+    public Transizione(String _id, Stato _stato1, Stato _stato2)
     {
+        id = _id;
         stato1 = _stato1;
         stato2 = _stato2;
     }
@@ -36,6 +38,21 @@ public class Transizione {
                     "\nDallo stato " + stato1.getId() +
                     " allo stato " + stato2.getId());
         return s;
+    }
+
+    public String getId()
+    {
+        return id;
+    }
+
+    public Stato getStato1()
+    {
+        return stato1;
+    }
+
+    public Stato getStato2()
+    {
+        return stato2;
     }
 
     public void setNumRelazioniSincroneStatoCorrente( Simulazione.Relazione relazioni[][])

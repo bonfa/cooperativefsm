@@ -34,4 +34,10 @@ public class Stato {
         idStato = id;
     }
 
+    public String ToString()
+    {
+        String s = ("Stato numero: " + idStato);
+        return s;
+    }
+
 }
