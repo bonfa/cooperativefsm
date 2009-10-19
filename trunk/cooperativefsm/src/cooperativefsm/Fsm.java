@@ -28,6 +28,7 @@ public class Fsm {
     }
 
     /** Costruttore (con argomenti in più...) di una macchina a stati finiti ... non so se servirà!?!
+     * (Serve per l'InputXML)
      *
      * @param _id
      * @param _stati
