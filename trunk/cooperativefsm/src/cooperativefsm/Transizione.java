@@ -11,8 +11,8 @@ package cooperativefsm;
  */
 public class Transizione {
 
-    //private int id;         //è il numero progressivo assegnato alla transizione, riferito alla fsm cui appartiene
-    private String id;
+    private int id;         //è il numero progressivo assegnato alla transizione, riferito alla fsm cui appartiene
+    //private String id;
     private String nome;    //identifica una certa transizione (attributo opzionale)
     private Stato stato1;
     private Stato stato2;
@@ -25,7 +25,7 @@ public class Transizione {
      * @param _stato2
      */
 
-    public Transizione(String _id, Stato _stato1, Stato _stato2)
+    public Transizione(int _id, Stato _stato1, Stato _stato2)
     {
         id = _id;
         stato1 = _stato1;
@@ -34,13 +34,23 @@ public class Transizione {
 
     public String ToString()
     {
-        String s = ("Transizione numero: " + id +
+        String s = ("Transizione numero: " + id + "\nNome: " + nome +
                     "\nDallo stato " + stato1.getId() +
                     " allo stato " + stato2.getId());
         return s;
     }
 
-    public String getId()
+    public void setNome(String _nome)
+    {
+        nome = _nome;
+    }
+
+    public String getNome()
+    {
+        return nome;
+    }
+
+    public int getId()
     {
         return id;
     }
