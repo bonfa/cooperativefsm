@@ -101,6 +101,17 @@
 		</transval>
 		<type>mutex</type>
 	</relation>
+	<relation>
+		<transval>
+			<fsmval>A</fsmval>
+			<idval>b</idval>
+		</transval>
+		<transval>
+			<fsmval>A</fsmval>
+			<idval>c</idval>
+		</transval>
+		<type>mutex</type>
+	</relation>
 
 
 </simulation>
