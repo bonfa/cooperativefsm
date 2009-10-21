@@ -5,6 +5,10 @@
 
 package cooperativefsm;
 
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+
 /**
  *
  * Prova commit
@@ -26,26 +30,45 @@ public class Main {
         final String MESS_FINALE = "CIAO!";
 
         MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
-        boolean fineProgramma = false;
-
-        int selezione = menuInput.scegli();
-
+        boolean continua = true;
         Input in = null;
 
+        while(continua)
+        {
+            int selezione = menuInput.scegli();
+        
             switch (selezione)
             {
                 case 1: {in = new InputTast();
                         break;
                         }
-                case 2: {in = new InputXML("fsm.xml"); //l'uri del file xml dovrà essere passato da tastiera
-                        break;
+                case 2: {
+                            String url=Servizio.leggiString("Inserire il percorso del file xml da leggere (fsm.xml): ");
+                            try {
+                                in = new InputXML(url); //l'uri del file xml dovrà essere passato da tastiera
+                                break;
+                            } catch (SAXException ex) {
+                                System.out.println("File xml non formattato correttamente");
+                            } catch (IOException ex) {
+                                System.out.println("File xml non formattato correttamente");
+                                //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (ParserConfigurationException ex) {
+                                System.out.println("File xml non formattato correttamente");
+                                //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (NullPointerException q) {
+                                System.out.println("File xml non formattato correttamente");
+                            } catch (ArrayIndexOutOfBoundsException t) {
+                                System.out.println("File xml non formattato correttamente");
+                            }break;
                         }
+
+
                 case 0: {
                         System.out.println(MESS_FINALE);
                         System.exit(0);
                         }
             }
-
+        }
         Simulazione s = in.leggiSimulazione();  //leggiSimulazione è un metodo della classe Input,
                                                 //da cui ereditano le classi InputTast e InputXML
         //while (!fineProgramma)

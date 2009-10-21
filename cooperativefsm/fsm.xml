@@ -99,7 +99,7 @@
 			<fsmval>B</fsmval>
 			<idval>e</idval>
 		</transval>
-		<type>mutua</type>
+		<type>mutex</type>
 	</relation>
 
 

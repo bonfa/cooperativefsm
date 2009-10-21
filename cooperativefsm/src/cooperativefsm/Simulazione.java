@@ -19,14 +19,14 @@ public class Simulazione {
     private Vector<Fsm> listaFsm;
     private Vector<TransizioniAbilitate> transizioniAbilitate;  //lista dinamica che varia a seconda dello stato corrente
     private StatoCorrente statoCorrente;
-    private Relazione relazioniTransizioni[][];
+    public Relazione relazioniTransizioni[][];
     
     /**
      *
      * That constructor provide to create a simulation by settings the params
      * passed from the IO classes.
      *
-     * @param listaFSM
+     * @param _listaFsm
      * @param relazioni
      * @param sc
      *
@@ -46,6 +46,7 @@ public class Simulazione {
      *  a set of Relazioni that interest outgoing Transizioni from the current
      *  state.
      * 
+     * @return 
      */
 
     public Vector<Fsm> getListaFsm()
@@ -68,6 +69,7 @@ public class Simulazione {
     /**
      *This method perform the simultion step.
      * 
+     * @return
      */
     public boolean eseguiIterazione ()
     {
