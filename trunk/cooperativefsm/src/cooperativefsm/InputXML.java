@@ -146,7 +146,7 @@ public class InputXML extends Input {
                     //Controllo che non ci sia già un'altra fsm con lo stesso id
                     for(int j=0; j<listaFsm.size(); j++)
                     {
-                        if(id.equals(listaFsm.get(j).getId()))
+                        if(id.equalsIgnoreCase(listaFsm.get(j).getId()))
                         {
                             System.out.println("-- Due fsm non possono avere lo stesso id!!! -- ");
                             listaFsm.get(-1);//per uscire dal programma
@@ -390,6 +390,7 @@ public class InputXML extends Input {
                 }
             }
         }
+
         for(int i=0, cnt=nl.getLength(); i<cnt; i++)
         {
             String test=nl.item(i).getNodeName();
@@ -400,16 +401,26 @@ public class InputXML extends Input {
                 //System.out.println("type: " +type);
             }
         }
+
         for(int i=0; i<ind.size(); i++)
         {
             //System.out.println("Ind fsm: " + ind.get(i)[0] + "\tInd tr: " + ind.get(i)[1]);
             for(int j=0; j<ind.size(); j++)
             {
+                if(i!=j)
+                {
+                    if(ind.get(i)[0]==ind.get(j)[0])
+                    {
+                        System.out.println("-- Non è possibile inserire una relazione tra due transizioni appartenenti alla stessa macchina!!! --");
+                        ind.get(-1);//per uscire dal programma
+                    }
+                }
                 int p=ind.get(j)[0];
                 if(i==p)
                     app.add(ind.get(j));
             }
         }
+
         if(type.equalsIgnoreCase("sync"))
         {
             relazioniTransizioni[app.get(0)[1]][app.get(1)[1]]=Simulazione.Relazione.SINCRONA;

@@ -28,6 +28,7 @@ public class Main {
         final String TIPOINPUT = "TIPO DI INPUT";
         final String [] SCELTAINPUT  = {"da tastiera","da file xml"};
         final String MESS_FINALE = "CIAO!";
+        final String XML_NOT = "-- File xml non formattato correttamente!!! --";
 
         MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
         boolean continua = true;
@@ -48,18 +49,18 @@ public class Main {
                                 in = new InputXML(url); //l'uri del file xml dovrà essere passato da tastiera
                                 break;
                             } catch (SAXException ex) {
-                                System.out.println("File xml non formattato correttamente");
+                                System.out.println(XML_NOT);
                             } catch (IOException ex) {
-                                System.out.println("File xml non formattato correttamente");
+                                System.out.println("-- Il file specificato non esiste!!! --");
                                 //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                             } catch (ParserConfigurationException ex) {
-                                System.out.println("File xml non formattato correttamente");
+                                System.out.println(XML_NOT);
                                 //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                             } catch (NullPointerException q) {
-                                System.out.println("File xml non formattato correttamente");
+                                System.out.println(XML_NOT);
                             } catch (ArrayIndexOutOfBoundsException t) {
-                                System.out.println("File xml non formattato correttamente");
-                            }break;
+                                System.out.println(XML_NOT);
+                            } break;
                         }
 
 
