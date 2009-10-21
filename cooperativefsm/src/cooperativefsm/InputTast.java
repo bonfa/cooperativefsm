@@ -119,16 +119,16 @@ public class InputTast extends Input
      public void inizializzaTrans (Fsm x)
      {
         boolean continua = this.ciSonoTrans();   //metodo che verrà sovrascritto dalle sottoclassi
-        int k = 0;
+        int k=0;
         while (continua)
         {
             Stato sorgente = this.leggiStatoConMax("sorgente", x.getNumStati()-1);
             Stato destinazione = this.leggiStatoConMax("destinazione", x.getNumStati()-1);
 
-            Transizione t = new Transizione (Integer.toString(k),sorgente,destinazione);
+            Transizione t = new Transizione (k,sorgente,destinazione);
             x.addTrans(t);
-            System.out.println("Transizione inserita correttamente!");
             k++;
+            System.out.println("Transizione inserita correttamente!");
             continua = this.ciSonoTrans();
         }//while
      }
