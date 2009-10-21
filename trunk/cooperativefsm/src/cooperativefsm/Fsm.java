@@ -40,6 +40,7 @@ public class Fsm {
         id          = _id;
         stati       = _stati;
         transizioni = _transizioni;
+        numStati=_stati.size();
 
      }
 
@@ -110,7 +111,7 @@ public class Fsm {
 
      for (int i = 0; i<transizioni.size(); i++)
      {
-        s.concat(transizioni.get(i).ToString());
+        s = s + transizioni.get(i).ToString();
      }
      return s;
      }

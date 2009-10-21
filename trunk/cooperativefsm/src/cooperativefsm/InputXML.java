@@ -23,6 +23,7 @@ import org.xml.sax.SAXException;
 
 import java.util.Vector;
 
+
 public class InputXML extends Input {
 
     private Simulazione.Relazione relazioniTransizioni[][]; //Relazione è un tipo enum che definisce i tipi di relazione
@@ -30,36 +31,25 @@ public class InputXML extends Input {
     private StatoCorrente statoIniziale = new StatoCorrente();
     private Vector<Stato> statoCur = new Vector<Stato>();
     private Document doc = null;
+    private boolean rel=true;
 
     /**
      *
      * @param URI
-     * @param è il percorso del file xml da caricre
-     * @return è il costruttore della classe InputXML
+     * è il percorso del file xml da caricre
+     * è il costruttore della classe InputXML
+     * @throws SAXException
+     * @throws IOException 
+     * @throws ParserConfigurationException
      */
-    public InputXML(String URI)
+    public InputXML(String URI) throws SAXException, IOException, ParserConfigurationException
     {
         //provo a leggere il file e fare il parser xml
-	try
-	{
-            doc = parserXML(new File(URI));
-            insSIM(doc, 0);
-        }
-        catch(Exception error)
-        {
-            System.out.println("File xml non formattato correttamente");
-            error.printStackTrace();
-        }
+	doc = parserXML(new File(URI));
+        insSIM(doc, 0);
         //controllo che siano state create almeno 2 fsm prima di settare lo stato corrente della simulazione
-        if(statoCur.size()>1)
-            statoIniziale.setStati(statoCur.get(0), statoCur.get(1));
-        /*
-        System.out.println("Le fsm sono: " + listaFsm.size());
-        System.out.println("Stati fsm1: " + listaFsm.get(0).getNumStati());
-        System.out.println("Stati fsm2: " + listaFsm.get(1).getNumStati());
-        System.out.println("Stati fsm1: " + listaFsm.get(0).getNumTr());
-        System.out.println("Stati fsm2: " + listaFsm.get(1).getNumTr());
-        */
+        //if(statoCur.size()>1)
+        statoIniziale.setStati(statoCur.get(0), statoCur.get(1));
     }
 
     /**
@@ -104,12 +94,19 @@ public class InputXML extends Input {
             {
                 listaFsm.add(insFSM(nl.item(i)));
             }
+        }
+        for(int i=0, cnt=nl.getLength(); i<cnt; i++)
+        {
+            String test=nl.item(i).getNodeName();
             //Se è definita una relazione la leggo e la aggiungo alla lista delle relazioni
-            else if(test.equalsIgnoreCase("relation"))
+            if(test.equalsIgnoreCase("relation"))
             {
                 insREL(nl.item(i));
             }
-            //Chiamata ricorsiva per far passare tutti i nodi del file
+        }
+        //Chiamata ricorsiva per far passare tutti i nodi del file
+        for(int i=0; i<nl.getLength(); i++)
+        {
             insSIM(nl.item(i), level+1);
         }
     }
@@ -125,6 +122,7 @@ public class InputXML extends Input {
            boolean stati=true;
            boolean name=true;
            boolean trans=true;
+           boolean stCor=true;
            String id = "";
            Vector<Stato> listaS = new Vector<Stato>();
            Vector<Transizione> listaT = new Vector<Transizione>();
@@ -150,8 +148,8 @@ public class InputXML extends Input {
                     {
                         if(id.equals(listaFsm.get(j).getId()))
                         {
-                            System.out.println("Due fsm definite con lo stesso id!!!");
-                            //TODO Uscire dal programma
+                            System.out.println("-- Due fsm non possono avere lo stesso id!!! -- ");
+                            listaFsm.get(-1);//per uscire dal programma
                         }
                     }
                 }
@@ -172,7 +170,7 @@ public class InputXML extends Input {
                     }
                     catch(NumberFormatException ne)
                     {
-                        System.out.println("Lo stato dev'essere identificato da un numero intero!!!");
+                        System.out.println("-- Lo stato dev'essere identificato da un numero intero!!! --");
                     } 
                 }
            }//end for
@@ -188,49 +186,48 @@ public class InputXML extends Input {
                     trans=false;
                     //Leggo e aggiungo una transizione alla lista delle transizioni
                     listaT.add(insTRANS(nl.item(i), listaS, listaT));
+                    //System.out.println(insTRANS(nl.item(i), listaS, listaT).ToString());
                 }
                 else if(test.equalsIgnoreCase("current"))
                 {
+                    stCor=false;
                     try
                     {
                         //Faccio un parse da String a Int per il numero dello stato corrente
                         int stato = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                         //Controllo che il numero dello stato corrente non sia maggiore del numero massimo degli stati
                         if(stato>listaS.size())
-                            System.out.println("Il numero dello stato corrente non può superare il numero totale degli stati");
+                            System.out.println("-- Il numero dello stato corrente non può superare il numero totale degli stati!!! --");
                         else
                         {
                            //Estraggo dalla lista degli stati l'oggetto Stato identificato dall'id
                            Stato scurrent=getStatoById(stato, listaS);
-                           if(scurrent==null)
-                           {
-                               System.out.println("Lo stato corrente è nullo");
-                           }
-                           else
-                           {
-                               //Aggiungo lo stato corrente di questa fsm al vector degli stati correnti
-                               statoCur.add(scurrent);
-                           }
+                           //Aggiungo lo stato corrente di questa fsm al vector degli stati correnti
+                           statoCur.add(scurrent);
                         }
                     }
                     catch(NumberFormatException ne)
                     {
-                        System.out.println("Lo stato dev'essere identificato da un numero intero!!!");
+                        System.out.println("-- Lo stato dev'essere identificato da un numero intero!!! --");
                     }
                 }
            }
            //Messaggi di errore se non sono stati dichiarati alcuni tag
            if(name)
            {
-               System.out.println("Non è stato definito l'id per una fsm");
+               System.out.println("-- Non è stato definito l'id per una fsm!!! --");
            }
            if(stati)
            {
-               System.out.println("Non è stato definito il numero di stati per una fsm");
+               System.out.println("-- Non è stato definito il numero di stati per una fsm!!! --");
            }
            if(trans)
            {
-               System.out.println("Non è stata definita alcuna transizione per una fsm");
+               System.out.println("-- Non è stata definita alcuna transizione per una fsm!!! --");
+           }
+           if(stCor)
+           {
+               System.out.println("-- Definire lo stato corrente per tutte le fsm!!! --");
            }
            //Creo la fsm
            Fsm f = new Fsm(id, listaS, listaT);
@@ -271,8 +268,8 @@ public class InputXML extends Input {
                 {
                     if(nome.equals(lT.get(j).getNome()))
                     {
-                        System.out.println("Due transizioni definite con lo stesso id!!!");
-                        //TODO Uscire dal programma
+                        System.out.println("-- Due transizioni appartenenti alla stessa fsm non possono avere lo stesso id!!! --");
+                        lT.get(-1);//per uscire dal programma
                     }
                 }
             }
@@ -284,7 +281,7 @@ public class InputXML extends Input {
                     int stato = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                     //Controllo che il numero dello stato non sia maggiore del numero degli stati della fsm
                     if(stato>lS.size())
-                        System.out.println("Il numero dello stato non può superare il numero totale degli stati");
+                        System.out.println("-- Il numero dello stato usato in una relazione non può superare il numero totale degli stati di quella fsm!!! --");
                     else
                     {
                         //Estraggo dalla lista degli stati l'oggetto Stato identificato dall'id
@@ -293,7 +290,7 @@ public class InputXML extends Input {
                 }
                 catch(NumberFormatException ne)
                 {
-                        System.out.println("Lo stato dev'essere identificato da un numero intero!!!");
+                        System.out.println("-- Lo stato dev'essere identificato da un numero intero!!! --");
                 }
             }
             else if(test.equalsIgnoreCase("s2"))
@@ -304,7 +301,7 @@ public class InputXML extends Input {
                     int stato = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                     //Controllo che il numero dello stato non sia maggiore del numero degli stati della fsm
                     if(stato>lS.size())
-                        System.out.println("Il numero dello stato non può superare il numero totale degli stati");
+                        System.out.println("-- Il numero dello stato usato in una relazione non può superare il numero totale degli stati di quella fsm!!! --");
                     else
                     {
                         //Estraggo dalla lista degli stati l'oggetto Stato identificato dall'id
@@ -313,7 +310,7 @@ public class InputXML extends Input {
                 }
                 catch(NumberFormatException ne)
                 {
-                        System.out.println("Lo stato dev'essere identificato da un numero intero!!!");
+                        System.out.println("-- Lo stato dev'essere identificato da un numero intero!!! --");
                 }
             }
             /*
@@ -333,6 +330,7 @@ public class InputXML extends Input {
             //Aggiungo allo stato sorgente della transizione la transizione stessa come transizione uscente
             s1.addTransUscente(T);
         }
+        
         return T;
     }
 
@@ -359,13 +357,18 @@ public class InputXML extends Input {
      * @param node
      * Serve per creare e inizializzare una relazione tra transizioni
      */
-    private void insREL(Node node)
+    private void insREL(Node node) throws ArrayIndexOutOfBoundsException
     {
-        int x = listaFsm.get(0).getNumTr();
-        int y = listaFsm.get(1).getNumTr();
-        Simulazione.Relazione relazioniTransizioni[][] = (new Simulazione.Relazione [x+1][y+1]);
+        //se non è ancora stata inizializzata relazioniTransizioni la inizializzo
+        if(rel)
+        {
+            inizRel();
+        }
 
         NodeList nl = node.getChildNodes();
+        Vector<Integer[]> ind = new Vector<Integer[]>();
+        Vector<Integer[]> app = new Vector<Integer[]>();
+        String type="";
 
         for(int i=0, cnt=nl.getLength(); i<cnt; i++)
         {
@@ -373,14 +376,66 @@ public class InputXML extends Input {
 
             if(test.equalsIgnoreCase("transval"))
             {
-                insTRANSVAL(nl.item(i));
+                try
+                {
+                    ind.add(insTRANSVAL(nl.item(i)));
+                }
+                catch(IndexOutOfBoundsException e)
+                {
+                    System.out.println("-- L'id della fsm o della transizione all'interno della definizione di una relazione non è valido!!! --");
+                }
+                catch(NullPointerException w)
+                {
+                    System.out.println("-- L'id della fsm o della transizione all'interno della definizione di una relazione non è valido!!! --");
+                }
             }
         }
+        for(int i=0, cnt=nl.getLength(); i<cnt; i++)
+        {
+            String test=nl.item(i).getNodeName();
+
+            if(test.equalsIgnoreCase("type"))
+            {
+                type=nl.item(i).getFirstChild().getNodeValue();
+                //System.out.println("type: " +type);
+            }
+        }
+        for(int i=0; i<ind.size(); i++)
+        {
+            //System.out.println("Ind fsm: " + ind.get(i)[0] + "\tInd tr: " + ind.get(i)[1]);
+            for(int j=0; j<ind.size(); j++)
+            {
+                int p=ind.get(j)[0];
+                if(i==p)
+                    app.add(ind.get(j));
+            }
+        }
+        if(type.equalsIgnoreCase("sync"))
+        {
+            relazioniTransizioni[app.get(0)[1]][app.get(1)[1]]=Simulazione.Relazione.SINCRONA;
+        }
+        else if(type.equalsIgnoreCase("mutex"))
+        {
+            relazioniTransizioni[app.get(0)[1]][app.get(1)[1]]=Simulazione.Relazione.M_EX;
+        }
+        
+//        int x = listaFsm.get(0).getNumTr();
+//        int y = listaFsm.get(1).getNumTr();
+//        for(int i=0; i<x; i++)
+//            for(int j=0; j<y; j++)
+//                System.out.println("x: " + i + "\ty: " + j + "\t" + relazioniTransizioni[i][j]);
     }
 
-    private void insTRANSVAL(Node node)
+    /**
+     *
+     * @param node
+     */
+    private Integer[] insTRANSVAL(Node node)
     {
+        Integer[] a = new Integer[2];
         NodeList nl = node.getChildNodes();
+        String idfsm = "";
+        String idtr = "";
 
         for(int i=0, cnt=nl.getLength(); i<cnt; i++)
         {
@@ -388,16 +443,70 @@ public class InputXML extends Input {
 
             if(test.equalsIgnoreCase("fsmval"))
             {
-                //System.out.println("fsmval: " + nl.item(i).getFirstChild().getNodeValue());
-            }
-            else if(test.equalsIgnoreCase("idval"))
-            {
-                //System.out.println("idval: " + nl.item(i).getFirstChild().getNodeValue());
+                 idfsm = nl.item(i).getFirstChild().getNodeValue();
             }
         }
+        for(int i=0, cnt=nl.getLength(); i<cnt; i++)
+        {
+            String test=nl.item(i).getNodeName();
+
+            if(test.equalsIgnoreCase("idval"))
+            {
+                 idtr = nl.item(i).getFirstChild().getNodeValue();
+            }
+        }
+        a[0] = getFsmIndexById(idfsm);
+        a[1] = getTrIdByName(idtr, a[0]);
+
+        return a;
     }
 
+    private void inizRel()
+    {
+        int x = listaFsm.get(0).getNumTr();
+        int y = listaFsm.get(1).getNumTr();
+        relazioniTransizioni = new Simulazione.Relazione [x][y];
+        for(int i=0; i<x; i++)
+            for(int j=0; j<y; j++)
+                relazioniTransizioni[i][j]=Simulazione.Relazione.ASINCRONA;
+
+        rel=false;
+    }
+    /**
+     *
+     * @param name
+     * @param indexFsm
+     * @return
+     */
+    private int getTrIdByName(String name, int indexFsm) throws IndexOutOfBoundsException, NullPointerException
+    {
+        Vector<Transizione> lT= listaFsm.get(indexFsm).getTransizioni();
+        int k=-1;
+        
+        for(int i=0; i<lT.size(); i++)
+        {
+            if(lT.get(i).getNome().equalsIgnoreCase(name))
+                k=i;
+        }
+        return k;
+    }
     
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    private int getFsmIndexById(String id) throws IndexOutOfBoundsException, NullPointerException
+    {
+        int k = -1;
+
+        for(int i=0; i<listaFsm.size(); i++)
+        {
+            if(listaFsm.get(i).getId().equalsIgnoreCase(id))
+                k=i;
+        }
+        return k;
+    }
     /**
      *
      * @param file
@@ -410,5 +519,6 @@ public class InputXML extends Input {
     {
             return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
     }
+
 
 }
