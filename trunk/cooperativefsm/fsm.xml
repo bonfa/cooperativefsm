@@ -107,7 +107,7 @@
 			<idval>b</idval>
 		</transval>
 		<transval>
-			<fsmval>A</fsmval>
+			<fsmval>B</fsmval>
 			<idval>c</idval>
 		</transval>
 		<type>mutex</type>
