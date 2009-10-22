@@ -113,6 +113,7 @@ public class Fsm {
      {
         s = s + transizioni.get(i).ToString();
      }
+     s+="\n";
      return s;
      }
 
