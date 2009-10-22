@@ -78,4 +78,19 @@ public class Simulazione {
         return true;
     }
 
+    public String ToString()
+    {
+        String s = "";
+        for(int i=0; i<listaFsm.size(); i++)
+        {
+            s+=listaFsm.get(i).ToString();
+        }
+        s+="\nRelazioni tra transizioni:\n" +
+                "Fsm1\tFsm2\tTipo\n";
+        for(int i=0; i<relazioniTransizioni.length; i++)
+            for(int j=0; j<relazioniTransizioni[0].length; j++)
+                s+="id: " + i + "\tid: " + j + "\t" + relazioniTransizioni[i][j]+"\n";
+        return s;
+    }
+
 }

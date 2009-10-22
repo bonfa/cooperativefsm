@@ -21,6 +21,7 @@ public class Transizione {
     /**
      * Costruttore di una transizione a partire da due stati di una stessa fsm
      *
+     * @param _id
      * @param _stato1
      * @param _stato2
      */
@@ -34,9 +35,9 @@ public class Transizione {
 
     public String ToString()
     {
-        String s = ("Transizione numero: " + id + "\nNome: " + nome +
-                    "\nDallo stato " + stato1.getId() +
-                    " allo stato " + stato2.getId());
+        String s = ("\nTransizione numero: " + id + "\tNome:\t" + nome +
+                    "\nDallo stato:\t" + stato1.getId() +
+                    "\tallo stato:  " + stato2.getId());
         return s;
     }
 
