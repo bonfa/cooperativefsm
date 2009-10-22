@@ -26,10 +26,7 @@ import java.util.Vector;
 
 public class InputXML extends Input {
 
-    //Variabili globali utili per la costruzione della simulazione
-    private Simulazione.Relazione relazioniTransizioni[][]; //Relazione è un tipo enum che definisce i tipi di relazione
-    private Vector<Fsm> listaFsm = new Vector<Fsm>();
-    private StatoCorrente statoIniziale = new StatoCorrente();
+
     private Vector<Stato> statoCur = new Vector<Stato>();
     private Document doc = null;
     //Variabile di appoggio per verificare se sono già state inserite delle relazioni

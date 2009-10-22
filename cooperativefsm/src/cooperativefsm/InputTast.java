@@ -20,9 +20,9 @@ public class InputTast extends Input
 
      private final int min_stati = 2;
 
-     private Simulazione.Relazione relazioniTransizioni[][]; //Relazione è un tipo enum che definisce i tipi di relazione
-     private Vector<Fsm> listaFsm;
-     private StatoCorrente statoIniziale;
+//     private Simulazione.Relazione relazioniTransizioni[][]; //Relazione è un tipo enum che definisce i tipi di relazione
+//     private Vector<Fsm> listaFsm;
+//     private StatoCorrente statoIniziale;
      
      
      /**
@@ -97,13 +97,13 @@ public class InputTast extends Input
             }
      }
 
-     public Stato leggiStato (String a)
-     {
-         int id = Servizio.leggiIntConMinimo(INS_STATO + a + ": ", 0);
-         Stato s = new Stato (id);
-         return s;
-     }
 
+     /**
+      *
+      * @param a: Stringa per il messaggio da visualizzare
+      * @param max: è di fatto il numero totale di stati di una fsm
+      * @return un nuovo stato che sicuramente appartiene alla fsm
+      */
      public Stato leggiStatoConMax (String a, int max)
      {
          int id = Servizio.leggiInt(INS_STATO + a + ": ", 0, max);
@@ -133,22 +133,7 @@ public class InputTast extends Input
         }//while
      }
 
-     /**
-      * Verifica l'appartenenza di una transizione a una fsm, in base al suo numero progressivo
-      * @param num
-      * @param m
-      * @return
-      */
-     public boolean appartTr (int num , Fsm m)
-     {
-         int n = m.getTransizioni().size();
-         return num < n ;
-     }
-     
-     /**
-      *
-      * @return 
-      */
+
      public boolean ciSonoTrans ()
      {
         return Servizio.yesOrNo(RICH_TRANS);
@@ -182,12 +167,12 @@ public class InputTast extends Input
 
     
 
-     
-     /*
-      * Metodo che crea un'istanza di Fsm a partire dalla variabili globali che sono
-      * già state inizializzate
-      * @return la nuova istanza di Fsm
-      */
+    /**
+     * Metodo che crea un'istanza di Fsm a partire dalla variabili globali che sono
+     * già state inizializzate
+     * @param nome: nome della fsm
+     * @return una nuova istanza di fsm
+     */
 
      public Fsm creaFsm (String nome)
      {
@@ -208,9 +193,9 @@ public class InputTast extends Input
             int m = listaFsm.elementAt(1).getTransizioni().size();//..seconda
             Simulazione.Relazione relazioniTransizioni[][] = (new Simulazione.Relazione [n+1][m+1]);
                 
-            for (int i=0; i<n+1; i++)
+            for (int i=0; i<n; i++)
             {
-                for(int j=0; j<m+1; j++)
+                for(int j=0; j<m; j++)
                     relazioniTransizioni[i][j] = relazioniTransizioni[i][j].ASINCRONA; //di default le transizioni sono asincrone tra loro,
                                                                                        //solo quelle sincrone e m-ex saranno specificate
             }
@@ -221,7 +206,8 @@ public class InputTast extends Input
 
       /**
       * imposta una relazione tra due transizioni € a due fsm diverse
-      * @param relaz
+      * @param relaz: l'array bidimensionale contenente tutte le possibili relazioni tra transizioni
+      * @param list: la lista di fsm in questione
       */
 
      public boolean imposta(Simulazione.Relazione[][] relaz, Vector<Fsm> list)

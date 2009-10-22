@@ -5,9 +5,9 @@
 
 package cooperativefsm;
 
-import java.io.IOException;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
+//import java.io.IOException;
+//import javax.xml.parsers.ParserConfigurationException;
+//import org.xml.sax.SAXException;
 
 /**
  *
@@ -42,7 +42,11 @@ public class Main {
         
             switch (selezione)
             {
-                case 1: {in = new InputTast();
+                case 1: {
+                        in = new InputTast();
+                        s = in.leggiSimulazione();          //leggiSimulazione è un metodo della classe Input,
+                        System.out.println(s.ToString());   //da cui ereditano le classi InputTast e InputXML
+                        continua = false;
                         break;
                         }
                 case 2: {
@@ -55,7 +59,7 @@ public class Main {
                                 s = in.leggiSimulazione();
                                 System.out.println(s.ToString());
                             } catch (Exception ex) {
-                                System.out.println(XML_NOT);
+                                System.out.println(XML_NOT + ex.toString());
 //                            } catch (IOException ex) {
 //                                System.out.println("-- Il file specificato non esiste!!! --");
 //                                //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,10 +79,11 @@ public class Main {
                         //System.exit(0);
                         continua=false;
                         }
-            }
-        }
-          //leggiSimulazione è un metodo della classe Input,
-                                                //da cui ereditano le classi InputTast e InputXML
+            }//switch
+        
+        
+        }//while
+                                                
         //while (!fineProgramma)
            // {
             //fineProgramma = s.eseguiIterazione();
