@@ -32,5 +32,15 @@ public class StatoCorrente
         //sCorrenteFsm2 = new Stato(corrente2.getId());
         sCorrenteFsm2 = corrente2;
     }
+
+    public Stato getStato(int s)
+    {
+        Stato p = null;
+        if(s==0)
+            p=sCorrenteFsm1;
+        if(s==1)
+            p=sCorrenteFsm2;
+        return p;
+    }
 }
 

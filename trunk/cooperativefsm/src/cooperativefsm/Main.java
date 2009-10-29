@@ -30,6 +30,7 @@ public class Main {
         final String MESS_FINALE = "CIAO!";
         final String XML_NOT = "-- File xml non formattato correttamente!!! --";
         final String XML_DEF = "fsm.xml";
+        final String SALVA_SIM = "Vuoi salvare la simulazione? ";
 
         MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
         boolean continua = true;
@@ -59,7 +60,8 @@ public class Main {
                                 s = in.leggiSimulazione();
                                 System.out.println(s.ToString());
                             } catch (Exception ex) {
-                                System.out.println(XML_NOT + ex.toString());
+                                //System.out.println(XML_NOT + ex.toString());
+                                System.out.println(XML_NOT);
 //                            } catch (IOException ex) {
 //                                System.out.println("-- Il file specificato non esiste!!! --");
 //                                //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,7 +77,7 @@ public class Main {
 
 
                 case 0: {
-                        System.out.println(MESS_FINALE);
+                        //System.out.println(MESS_FINALE);
                         //System.exit(0);
                         continua=false;
                         }
@@ -91,7 +93,17 @@ public class Main {
 
         //System.out.println(s.getListaFsm().get(0).ToString());
         //System.out.println(s.getListaFsm().get(1).ToString());
-
+        if(s!=null)
+        {
+            boolean salva = Servizio.yesOrNo(SALVA_SIM);
+            if(salva)
+            {
+                String url=Servizio.leggiString("Inserire il percorso dove salvare il file xml della simulazione (" + XML_DEF + ")> ");
+                if(url.equals(""))
+                    url=XML_DEF;
+                s.salvaSimulazione(url);
+            }
+        }
         System.out.println(MESS_FINALE);
     }
     
