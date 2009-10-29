@@ -543,5 +543,4 @@ public class InputXML extends Input {
             return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
     }
 
-
-}
+}//end class

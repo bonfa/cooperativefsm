@@ -2,7 +2,7 @@
 <simulation>
 	<fsm>
 		<name>A</name>
-		<states>5</states>
+		<states>6</states>
 		<transition>
 			<id>a</id>
 			<s1>1</s1>
@@ -112,6 +112,4 @@
 		</transval>
 		<type>mutex</type>
 	</relation>
-
-
 </simulation>
