@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<simulation>
+	<fsm>
+		<name>0</name>
+		<states>4</states>
+		<transition>
+			<id>null</id>
+			<s1>2</s1>
+			<s2>3</s2>
+		</transition>
+		<current>1</current>
+	</fsm>
+	<fsm>
+		<name>1</name>
+		<states>4</states>
+		<transition>
+			<id>null</id>
+			<s1>3</s1>
+			<s2>2</s2>
+		</transition>
+		<current>1</current>
+	</fsm>
+	<relation>
+		<transval>
+			<fsmval>0</fsmval>
+			<idval>null</idval>
+		</transval>
+		<transval>
+			<fsmval>1</fsmval>
+			<idval>null</idval>
+		</transval>
+		<type>mutex</type>
+	</relation>
+</simulation>

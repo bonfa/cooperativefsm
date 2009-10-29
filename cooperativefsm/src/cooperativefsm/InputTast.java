@@ -16,8 +16,10 @@ public class InputTast extends Input
      private final String INS_STATO   = "Inserire il numero dello stato ";
      private final String INS_RELAZ = "Vuoi inserire una nuova relazione tra transizioni? ";
      private final String TIPO_RELAZ = "TIPO DI RELAZIONE TRA LE TRANSIZIONI";
-     private final String [] SCELTA_RELAZ  = {"Relazione sincrona","Relazione mutuamente esclusiva"};
+     private final String INS_NOMEFSM   = "Inserire il nome della Fsm ";
+     private final String INS_NOMETR   = "Inserire il nome della transizione: ";
 
+     private final String [] SCELTA_RELAZ  = {"Relazione sincrona","Relazione mutuamente esclusiva"};
      private final int min_stati = 2;
 
 //     private Simulazione.Relazione relazioniTransizioni[][]; //Relazione è un tipo enum che definisce i tipi di relazione
@@ -69,7 +71,8 @@ public class InputTast extends Input
         int numFsm = 2;
         for(int i = 0; i < numFsm; i++)
              {
-             Fsm fsm = creaFsm (Integer.toString(i));
+             String nome = Servizio.leggiStringaNonVuota(INS_NOMEFSM + i);
+             Fsm fsm = creaFsm (nome);
              listaFsm.add(fsm);
              }
     }
@@ -126,8 +129,11 @@ public class InputTast extends Input
             Stato destinazione = this.leggiStatoConMax("destinazione", x.getNumStati()-1);
 
             Transizione t = new Transizione (k,sorgente,destinazione);
+            t.setNome(Servizio.leggiStringaNonVuota(INS_NOMETR));
             x.addTrans(t);
             k++;
+            
+            
             System.out.println("Transizione inserita correttamente!");
             continua = this.ciSonoTrans();
         }//while
@@ -191,11 +197,11 @@ public class InputTast extends Input
      {
             int n = listaFsm.elementAt(0).getTransizioni().size();//N° transizioni prima fsm
             int m = listaFsm.elementAt(1).getTransizioni().size();//..seconda
-            Simulazione.Relazione relazioniTransizioni[][] = (new Simulazione.Relazione [n+1][m+1]);
+            Simulazione.Relazione relazioniTransizioni[][] = (new Simulazione.Relazione [n][m]);
                 
-            for (int i=0; i<n; i++)
+            for (int i=0; i < n; i++)
             {
-                for(int j=0; j<m; j++)
+                for(int j  =0; j < m; j++)
                     relazioniTransizioni[i][j] = relazioniTransizioni[i][j].ASINCRONA; //di default le transizioni sono asincrone tra loro,
                                                                                        //solo quelle sincrone e m-ex saranno specificate
             }

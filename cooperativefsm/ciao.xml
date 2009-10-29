@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<simulation>
+	<fsm>
+		<name>prima</name>
+		<states>3</states>
+		<transition>
+			<id>scatto</id>
+			<s1>1</s1>
+			<s2>2</s2>
+		</transition>
+		<current>1</current>
+	</fsm>
+	<fsm>
+		<name>seconda</name>
+		<states>4</states>
+		<transition>
+			<id>autotrans</id>
+			<s1>1</s1>
+			<s2>1</s2>
+		</transition>
+		<current>1</current>
+	</fsm>
+	<relation>
+		<transval>
+			<fsmval>prima</fsmval>
+			<idval>scatto</idval>
+		</transval>
+		<transval>
+			<fsmval>seconda</fsmval>
+			<idval>autotrans</idval>
+		</transval>
+		<type>mutex</type>
+	</relation>
+</simulation>

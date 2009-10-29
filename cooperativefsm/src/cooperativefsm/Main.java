@@ -59,6 +59,7 @@ public class Main {
                                 System.out.println("-- Simulazione creata con successo!!! --");
                                 s = in.leggiSimulazione();
                                 System.out.println(s.ToString());
+                                continua = false;
                             } catch (Exception ex) {
                                 //System.out.println(XML_NOT + ex.toString());
                                 System.out.println(XML_NOT);

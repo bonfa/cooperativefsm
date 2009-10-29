@@ -67,19 +67,13 @@ public class Servizio {
 	   return creato;
 	  }
 
-	  public static String leggiStringa (String messaggio)
-	  {
-		  System.out.print(messaggio);
-		  return lettore.next();
-	  }
-
 	  public static String leggiStringaNonVuota(String messaggio)
 	  {
 	   boolean finito=false;
 	   String lettura = null;
 	   do
 	   {
-		 lettura = leggiStringa(messaggio);
+		 lettura = leggiString(messaggio);
 		 lettura = lettura.trim();
 		 if (lettura.length() > 0)
 		  finito=true;
