@@ -79,7 +79,10 @@ public class Simulazione {
 
         return true;
     }
-
+/**
+ *
+ * @return
+ */
     public void salvaSimulazione(String file)
     {
         try {
