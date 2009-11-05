@@ -14,6 +14,11 @@ public class TransizioniAbilitate {
     private int idTransizioneFSM1;
     private int idTransizioneFSM2;
 
+    public TransizioniAbilitate()
+    {
+    //TODO
+    }
+
     public void setIdTransizioneFSM1(int id){
         idTransizioneFSM1 = id;
     }
@@ -27,6 +32,12 @@ public class TransizioniAbilitate {
 
     public int getIdtransizioneFSM2(){
         return idTransizioneFSM2;
+    }
+
+    public @Override String toString ()
+    {
+        //TODO
+        return "";
     }
         
 }
