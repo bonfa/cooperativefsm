@@ -23,6 +23,12 @@ public class Simulazione {
     private StatoCorrente statoCorrente;
     public Relazione relazioniTransizioni[][];
     
+    private final static String NO_TR_DISP = "Non ci sono transizioni abilitate a scattare. Fine della simulazione";
+    private final static String UNICA_TR = "Questa è l'unica transizione/coppia di transizioni abilitata a scattare";
+    private final static String PIU_TR_DISP = "Ci sono più transizioni/coppie di transizioni abilitate a scattare";
+    private final static String SCELTA_TR = "Scegli la transizione/coppia di transizioni che deve scattare";
+    private final static String PROSEGUI = "Vuoi proseguire con la simulazione?";
+
     /**
      *
      * That constructor provide to create a simulation by settings the params
@@ -40,6 +46,7 @@ public class Simulazione {
         listaFsm = _listaFsm;
         relazioniTransizioni = relazioni;
         statoCorrente = sc;
+        transizioniAbilitate = new Vector<TransizioniAbilitate>();
     }
 
     /**
@@ -56,11 +63,22 @@ public class Simulazione {
     return listaFsm;
     }
 
-    private void setTransizioniAbilitate(){
+    /**
+     * Imposta il vettore contenente le transizioni abilitate a seconda della stato della simulazione
+     */
+    private void setTransizioniAbilitate()
+    {
         //TODO: vedi macchina a stati finiti uml
     }
 
-    private StatoCorrente scatta(TransizioniAbilitate t){
+    
+    /**
+     * Esegue lo scatto della simulazione.
+     * @param t
+     * @return Il nuovo Stato corrente della simulazione
+     */
+    private StatoCorrente scatta(TransizioniAbilitate t)
+    {
         StatoCorrente prossimoStato = new StatoCorrente();
 
         //TODO
@@ -71,14 +89,47 @@ public class Simulazione {
     /**
      *This method perform the simultion step.
      * 
-     * @return
+     * @return un boolean che rappresenta la volontà di proseguire nella simulazione
      */
     public boolean eseguiIterazione ()
     {
         //TODO
+        setTransizioniAbilitate();
+        
+        if(transizioniAbilitate.isEmpty())
+        {
+            System.out.println(NO_TR_DISP);
+            return false;
+        }
+        
+        TransizioniAbilitate t = new TransizioniAbilitate();
+        
+        if(transizioniAbilitate.size() == 1)
+        {
+            System.out.println(UNICA_TR);
+            t = transizioniAbilitate.get(0);
+            System.out.println(t.toString());
+        }
+        
+        if(transizioniAbilitate.size() > 1)
+        {
+            System.out.println(PIU_TR_DISP);
+            int numTrAbil  = transizioniAbilitate.size();
+            String [] scelte = new String [numTrAbil];
 
-        return true;
-    }
+            for (int i=0; i<numTrAbil; i++)
+                scelte [i] = transizioniAbilitate.get(i).toString();    //TODO
+
+            MyMenu sceltaTr = new MyMenu(SCELTA_TR, scelte);
+            int scelta = sceltaTr.scegli();
+
+            t = transizioniAbilitate.get(scelta - 1);
+        }
+        
+        statoCorrente = scatta(t);
+
+        return Servizio.yesOrNo(PROSEGUI);
+        }
 /**
  *
  * @return
@@ -147,7 +198,7 @@ public class Simulazione {
 
     private String getTrNameById(int id, int index)
     {
-        Fsm fsm=listaFsm.get(index);
+        Fsm fsm = listaFsm.get(index);
         Vector<Transizione> tr=fsm.getTransizioni();
         String name="";
         for(int i=0; i<tr.size(); i++)
@@ -161,16 +212,17 @@ public class Simulazione {
 
     public String ToString()
     {
-        String s = "";
+        String s = "\nDATI DELLA SIMULAZIONE\n--------------------------------------------\n";
+
         for(int i=0; i<listaFsm.size(); i++)
-        {
-            s+=listaFsm.get(i).ToString();
-        }
-        s+="\nRelazioni tra transizioni:\n" +
+            s += listaFsm.get(i).ToString();
+        
+        s += "\nRelazioni tra transizioni:\n" +
                 "Fsm1\tFsm2\tTipo\n";
+
         for(int i=0; i<relazioniTransizioni.length; i++)
             for(int j=0; j<relazioniTransizioni[0].length; j++)
-                s+="id: " + i + "\tid: " + j + "\t" + relazioniTransizioni[i][j]+"\n";
+                s += "id: " + i + "\tid: " + j + "\t" + relazioniTransizioni[i][j]+"\n";
         return s;
     }
 

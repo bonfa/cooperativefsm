@@ -18,15 +18,12 @@ public class InputTast extends Input
      private final String TIPO_RELAZ = "TIPO DI RELAZIONE TRA LE TRANSIZIONI";
      private final String INS_NOMEFSM   = "Inserire il nome della Fsm ";
      private final String INS_NOMETR   = "Inserire il nome della transizione: ";
+     private final String INS_ST_CORR   = "Inserire lo stato corrente della fsm ";
 
      private final String [] SCELTA_RELAZ  = {"Relazione sincrona","Relazione mutuamente esclusiva"};
      private final int min_stati = 2;
 
-//     private Simulazione.Relazione relazioniTransizioni[][]; //Relazione è un tipo enum che definisce i tipi di relazione
-//     private Vector<Fsm> listaFsm;
-//     private StatoCorrente statoIniziale;
-     
-     
+
      /**
       * Costruttore specializzato per l'input da tastiera.
       */
@@ -34,7 +31,10 @@ public class InputTast extends Input
      {
          listaFsm = new Vector<Fsm> ();
      }
-
+     /**
+      *
+      * @return Un'istanza corretta di Simulazione
+      */
      public @Override Simulazione leggiSimulazione()
     {
         this.inizializzaListaFsm();
@@ -55,10 +55,9 @@ public class InputTast extends Input
         while (ciSonoRelaz())
              imposta(relazioniTransizioni, listaFsm);
 
-        
         System.out.println("Simulazione caricata correttamente!");
+
         return (new Simulazione(listaFsm, relazioniTransizioni, statoIniziale));    //L'interfaccia tra io e core è data da questa riga, è l'unico punto di incontro
-           
    }
      
      
@@ -77,7 +76,11 @@ public class InputTast extends Input
              }
     }
     
-    
+    /**
+     *
+     * @param nome_fsm
+     * @return Il numero di stati da creare nella fsm
+     */
      public int leggiNumStati (String nome_fsm)
      {
          return Servizio.leggiIntConMinimo(RICH_STATI + nome_fsm + ": ", min_stati);
@@ -90,7 +93,6 @@ public class InputTast extends Input
     * @param Fsm di appoggio
     * @param Numero di stati
     */
-
      public void inizializzaStati (Fsm x, int numStat)
      {
             for (int i = 0; i < numStat; i++)
@@ -102,14 +104,14 @@ public class InputTast extends Input
 
 
      /**
-      *
+      * @ensures id < max;
       * @param a: Stringa per il messaggio da visualizzare
       * @param max: è di fatto il numero totale di stati di una fsm
       * @return un nuovo stato che sicuramente appartiene alla fsm
       */
      public Stato leggiStatoConMax (String a, int max)
      {
-         int id = Servizio.leggiInt(INS_STATO + a + ": ", 0, max);
+         int id = Servizio.leggiInt(INS_STATO + a + " (n° compreso tra 0 e " + max + "): ", 0, max);
          Stato s = new Stato (id);
          return s;
      }
@@ -121,8 +123,8 @@ public class InputTast extends Input
     */
      public void inizializzaTrans (Fsm x)
      {
-        boolean continua = this.ciSonoTrans();   //metodo che verrà sovrascritto dalle sottoclassi
-        int k=0;
+        boolean continua = this.ciSonoTrans();   
+        int k = 0;
         while (continua)
         {
             Stato sorgente = this.leggiStatoConMax("sorgente", x.getNumStati()-1);
@@ -154,7 +156,7 @@ public class InputTast extends Input
 
 
      /**
-      *
+      * @ensures (\exist s1; 0 < ind1 < lista.get(0).getnumStati() -1; lista.getStatoAt(ind1) != null)
       * @param la lista contenente le fsm
       * @return lo stato iniziale della simulazione
       *
@@ -162,11 +164,12 @@ public class InputTast extends Input
      public @Override StatoCorrente leggiStatoIniziale (Vector<Fsm> lista)
      {
         StatoCorrente s = new StatoCorrente ();
-       
-        Stato c1 = leggiStatoConMax("corrente della fsm " + lista.get(0).getId(), lista.get(0).getNumStati() - 1);
-        Stato c2 = leggiStatoConMax("corrente della fsm " + lista.get(1).getId(), lista.get(1).getNumStati() - 1);
-
-        s.setStati( c1, c2 );
+ 
+        int ind1 = Servizio.leggiInt(INS_ST_CORR + lista.get(0).getId(), 0, lista.get(0).getNumStati() - 1);
+        int ind2 = Servizio.leggiInt(INS_ST_CORR + lista.get(1).getId(), 0, lista.get(1).getNumStati() - 1);
+        Stato s1 = lista.get(0).getStatoAt(ind1);
+        Stato s2 = lista.get(1).getStatoAt(ind2);
+        s.setStati( s1, s2 );
         
         return s;
      }
@@ -174,22 +177,22 @@ public class InputTast extends Input
     
 
     /**
-     * Metodo che crea un'istanza di Fsm a partire dalla variabili globali che sono
-     * già state inizializzate
+     * Metodo che crea un'istanza di Fsm con un id letterale
+     * @ensures maccchina != null
      * @param nome: nome della fsm
      * @return una nuova istanza di fsm
      */
 
      public Fsm creaFsm (String nome)
      {
-        Fsm macchina= new Fsm ( nome );
+        Fsm macchina = new Fsm ( nome );
         return macchina;
      }
      
      
      
 
-/**
+    /**
      * Metodo che ricava le relazioni tra le transizioni delle 2 FSM
      * @return il vettore contenente le relazioni tra TUTTE le transizioni [...]
      */
@@ -197,11 +200,11 @@ public class InputTast extends Input
      {
             int n = listaFsm.elementAt(0).getTransizioni().size();//N° transizioni prima fsm
             int m = listaFsm.elementAt(1).getTransizioni().size();//..seconda
-            Simulazione.Relazione relazioniTransizioni[][] = (new Simulazione.Relazione [n][m]);
+            relazioniTransizioni = new Simulazione.Relazione[n][m];
                 
             for (int i=0; i < n; i++)
             {
-                for(int j  =0; j < m; j++)
+                for(int j = 0; j < m; j++)
                     relazioniTransizioni[i][j] = relazioniTransizioni[i][j].ASINCRONA; //di default le transizioni sono asincrone tra loro,
                                                                                        //solo quelle sincrone e m-ex saranno specificate
             }
@@ -226,9 +229,8 @@ public class InputTast extends Input
 
         switch (sel)
             {
-                case 1: (relaz[t1][t2]) = (relaz[t1][t2]).SINCRONA;
-                case 2: (relaz[t1][t2]) = (relaz[t1][t2]).M_EX;
-                break;
+                case 1: (relaz[t1][t2]) = (relaz[t1][t2]).SINCRONA; break;
+                case 2: (relaz[t1][t2]) = (relaz[t1][t2]).M_EX; break;
             }
 
         System.out.println("Relazione aggiunta correttamente!");

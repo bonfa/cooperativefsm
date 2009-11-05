@@ -107,13 +107,13 @@ public class Fsm {
      String s = new String();
      s = ("\nNome della Fsm: " + id +
                         "\nNumero di stati: " + numStati +
-                        "\nElenco delle transizioni: " );
+                        "\n\nElenco delle transizioni: " );
 
-     for (int i = 0; i<transizioni.size(); i++)
+     for (int i = 0; i < transizioni.size(); i++)
      {
         s = s + transizioni.get(i).ToString();
      }
-     s+="\n";
+     s += "\n-----------------------------------------------\n";
      return s;
      }
 
