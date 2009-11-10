@@ -5,7 +5,7 @@ package cooperativefsm;
  * @author Alessandro Ferrari, Carlo Svanera, Luca Cominardi
  */
 
-import java.util.Vector;
+import java.util.*;
 
 public class Fsm {
 
@@ -13,8 +13,7 @@ public class Fsm {
     private int numStati;
     private Vector<Stato>       stati;
     private Vector<Transizione> transizioni;
-    private int numRelazioniSincroneTransizioniUscenti;
-
+ 
 
     /**
      * Costruttore di una fsm
@@ -70,9 +69,6 @@ public class Fsm {
         return s;
     }
 
-
-
-
     public void addTrans (Transizione t)    {
         transizioni.add(t);
     }
@@ -87,20 +83,33 @@ public class Fsm {
     }
 
 
+    //Setto le transizioni uscenti da ogni stato della fsm
+    public void setTransizioniUscentiStati(){
+        
+         ListIterator l_itr_st = stati.listIterator();
+         ListIterator l_itr_tr;
+         Stato stato;
+         Transizione transizione;
 
+         //Setto le transizioni uscenti per tutti gli stati della fsm
+         while(l_itr_st.hasNext()){
 
+            stato = (Stato) l_itr_st.next();
+            l_itr_tr = transizioni.listIterator();
 
-     public void setTransizioniUscentiStati(){
-         //TODO
-     }
-
-     public int getNumRelazioniSincroneTransizioniUscenti(){
-         return numRelazioniSincroneTransizioniUscenti;
-     }
-
+            //Scorro tutte le transizioni per vedere quelle che sono uscenti
+            while(l_itr_tr.hasNext()){
+                transizione = (Transizione) l_itr_tr.next();
+                if( transizione.getStato1().equals(stato) )
+                    stato.addTransUscente(transizione);
+            }
+            stato.transizioniUscentiIsSetted();
+         }
+    }
      public void setNumRelazioniSincroneTransizioniUscenti(Simulazione.Relazione relazioni[][]){
          //TODO
      }
+
 
      public String ToString ()
      {

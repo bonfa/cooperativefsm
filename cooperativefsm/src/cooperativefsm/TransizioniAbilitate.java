@@ -11,27 +11,27 @@ package cooperativefsm;
  */
 public class TransizioniAbilitate {
 
-    private int idTransizioneFSM1;
-    private int idTransizioneFSM2;
+    private Transizione tr1;
+    private Transizione tr2;
 
-    public TransizioniAbilitate()
-    {
-    //TODO
+    public TransizioniAbilitate(Transizione _tr1, Transizione _tr2){
+        tr1=_tr1;
+        tr2=_tr2;
     }
 
-    public void setIdTransizioneFSM1(int id){
-        idTransizioneFSM1 = id;
+    public void setTransizioneFSM1(Transizione _tr1){
+        tr1 = _tr1;
     }
-    public void setIdTransizioneFSM2(int id){
-        idTransizioneFSM2 = id;
-    }
-
-    public int getIdTransizioneFSM1(){
-        return idTransizioneFSM1;
+    public void setTransizioneFSM2(Transizione _tr2){
+        tr2 = _tr2;
     }
 
-    public int getIdtransizioneFSM2(){
-        return idTransizioneFSM2;
+    public Transizione getTransizioneFSM1(){
+        return tr1;
+    }
+
+    public Transizione gettransizioneFSM2(){
+        return tr2;
     }
 
     public @Override String toString ()

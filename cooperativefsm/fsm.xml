@@ -5,46 +5,46 @@
 		<states>6</states>
 		<transition>
 			<id>a</id>
-			<s1>1</s1>
-			<s2>2</s2>
+			<s1>0</s1>
+			<s2>1</s2>
 		</transition>
 		<transition>
 			<id>b</id>
-			<s1>1</s1>
-			<s2>3</s2>
+			<s1>0</s1>
+			<s2>2</s2>
 			<!--<length>10</length>-->
 		</transition>
 		<transition>
 			<id>c</id>
-			<s1>1</s1>
-			<s2>3</s2>
+			<s1>0</s1>
+			<s2>2</s2>
 		</transition>
 		<transition>
 			<id>d</id>
+			<s1>0</s1>
+			<s2>3</s2>
+		</transition>
+		<transition>
+			<id>e</id>
+			<s1>2</s1>
+			<s2>0</s2>
+		</transition>
+		<transition>
+			<id>f</id>
 			<s1>2</s1>
 			<s2>4</s2>
 		</transition>
 		<transition>
-			<id>e</id>
-			<s1>3</s1>
-			<s2>1</s2>
-		</transition>
-		<transition>
-			<id>f</id>
-			<s1>3</s1>
-			<s2>5</s2>
-		</transition>
-		<transition>
 			<id>g</id>
-			<s1>4</s1>
-			<s2>3</s2>
+			<s1>3</s1>
+			<s2>2</s2>
 		</transition>
 		<transition>
 			<id>h</id>
-			<s1>5</s1>
-			<s2>2</s2>
+			<s1>4</s1>
+			<s2>1</s2>
 		</transition>
-		<current>2</current>
+		<current>0</current>
 	</fsm>
 
 	<fsm>
@@ -52,31 +52,31 @@
 		<states>3</states>
 		<transition>
 			<id>a</id>
+			<s1>0</s1>
+			<s2>1</s2>
+		</transition>
+		<transition>
+			<id>b</id>
+			<s1>0</s1>
+			<s2>2</s2>
+		</transition>
+		<transition>
+			<id>c</id>
 			<s1>1</s1>
 			<s2>2</s2>
 		</transition>
 		<transition>
-			<id>b</id>
-			<s1>1</s1>
-			<s2>3</s2>
-		</transition>
-		<transition>
-			<id>c</id>
-			<s1>2</s1>
-			<s2>3</s2>
-		</transition>
-		<transition>
 			<id>d</id>
-			<s1>2</s1>
-			<s2>1</s2>
+			<s1>1</s1>
+			<s2>0</s2>
 		</transition>
 		<transition>
 			<id>e</id>
-			<s1>3</s1>
-			<s2>1</s2>
+			<s1>2</s1>
+			<s2>0</s2>
 			<!--<length>7</length>-->
 		</transition>
-		<current>1</current>
+		<current>0</current>
 	</fsm>
 
 	<relation>

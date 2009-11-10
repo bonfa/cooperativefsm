@@ -57,7 +57,8 @@ public class InputXML extends Input {
      */
     public @Override Simulazione leggiSimulazione()
     {
-        return new Simulazione(listaFsm, relazioniTransizioni, statoIniziale);
+        Simulazione s = new Simulazione(listaFsm, relazioniTransizioni, statoIniziale);
+        return s;
     }
 
     /**
@@ -328,7 +329,7 @@ public class InputXML extends Input {
             //Setto il nome simbolico della transizione
             T.setNome(nome);
             //Aggiungo allo stato sorgente della transizione la transizione stessa come transizione uscente
-            s1.addTransUscente(T);
+            //s1.addTransUscente(T);
         }
         
         return T;
