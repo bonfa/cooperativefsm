@@ -10,5 +10,6 @@ package cooperativefsm;
  * @author alessandro
  */
 public enum ReturnCodeIterazione {
-    NO_ERROR
+    NO_ERROR,
+    OUTGOING_TRANSITION_NOT_SETTED //le transizioni uscenti non sono state correttamente settate
 }

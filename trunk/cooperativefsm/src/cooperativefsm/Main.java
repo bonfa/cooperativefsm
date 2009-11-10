@@ -46,7 +46,8 @@ public class Main {
                 case 1: {
                         in = new InputTast();
                         s = in.leggiSimulazione();          //leggiSimulazione è un metodo della classe Input,
-                        System.out.println(s.ToString());   //da cui ereditano le classi InputTast e InputXML
+                        //da cambiare
+                        //System.out.println(s.ToString());   //da cui ereditano le classi InputTast e InputXML
                         continua = false;
                         break;
                         }
@@ -58,7 +59,8 @@ public class Main {
                                 in = new InputXML(url); //l'uri del file xml dovrà essere passato da tastiera, invio per il default
                                 System.out.println("-- Simulazione creata con successo!!! --");
                                 s = in.leggiSimulazione();
-                                System.out.println(s.ToString());
+                                //da cambiare
+                                //System.out.println(s.ToString());
                                 continua = false;
                             } catch (Exception ex) {
                                 //System.out.println(XML_NOT + ex.toString());
@@ -87,10 +89,9 @@ public class Main {
         
         }//while
                                                 
-        //while (!fineProgramma)
-           // {
-            //fineProgramma = s.eseguiIterazione();
-           // }
+       //while (!fineProgramma)
+        s.eseguiIterazione();
+           
 
         //System.out.println(s.getListaFsm().get(0).ToString());
         //System.out.println(s.getListaFsm().get(1).ToString());
@@ -102,7 +103,8 @@ public class Main {
                 String url=Servizio.leggiString("Inserire il percorso dove salvare il file xml della simulazione (" + XML_DEF + ")> ");
                 if(url.equals(""))
                     url=XML_DEF;
-                s.salvaSimulazione(url);
+                //da cambiare
+                //s.salvaSimulazione(url);
             }
         }
         System.out.println(MESS_FINALE);

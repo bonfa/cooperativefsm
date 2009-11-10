@@ -39,6 +39,14 @@ public class StatoCorrente
         sCorrenteFsm2 = corrente2;
     }
 
+    public Stato getStatoCorrenteFSM1(){
+        return sCorrenteFsm1;
+    }
+
+    public Stato getStatoCorrenteFSM2(){
+        return sCorrenteFsm2;
+    }
+
     public Stato getStato(int s)
     {
         Stato p = null;
