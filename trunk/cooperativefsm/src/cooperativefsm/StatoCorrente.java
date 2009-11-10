@@ -12,10 +12,16 @@ public class StatoCorrente
     public Stato sCorrenteFsm1;
     public Stato sCorrenteFsm2;
 
-    public StatoCorrente ()
+    //Modify
+    public StatoCorrente (/*Stato corrente1, Stato corrente2*/)
     {
+
         sCorrenteFsm1 = new Stato(0);
         sCorrenteFsm2 = new Stato(0);
+        /*
+        sCorrenteFsm1 = corrente1;
+        sCorrenteFsm2 = corrente2;
+        */
     }
 
     /**
