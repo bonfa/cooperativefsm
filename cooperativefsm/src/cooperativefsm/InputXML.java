@@ -164,7 +164,7 @@ public class InputXML extends Input {
                         //Aggiungo un numero di stati pari a quanto definito in states
                         for(i=0; i<states; i++)
                         {
-                            Stato s = new Stato(i+1);
+                            Stato s = new Stato(i);
                             listaS.add(s);
                         }
                     }
@@ -196,7 +196,7 @@ public class InputXML extends Input {
                         //Faccio un parse da String a Int per il numero dello stato corrente
                         int stato = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                         //Controllo che il numero dello stato corrente non sia maggiore del numero massimo degli stati
-                        if(stato>listaS.size())
+                        if(stato>=listaS.size())
                             System.out.println("-- Il numero dello stato corrente non può superare il numero totale degli stati!!! --");
                         else
                         {
@@ -280,7 +280,7 @@ public class InputXML extends Input {
                     //Faccio un parse da String a int per il numero dello stato
                     int stato = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                     //Controllo che il numero dello stato non sia maggiore del numero degli stati della fsm
-                    if(stato>lS.size())
+                    if(stato>=lS.size())
                         System.out.println("-- Il numero dello stato usato in una relazione non può superare il numero totale degli stati di quella fsm!!! --");
                     else
                     {
@@ -300,7 +300,7 @@ public class InputXML extends Input {
                     //Faccio un parse da String a int per il numero dello stato
                     int stato = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                     //Controllo che il numero dello stato non sia maggiore del numero degli stati della fsm
-                    if(stato>lS.size())
+                    if(stato>=lS.size())
                         System.out.println("-- Il numero dello stato usato in una relazione non può superare il numero totale degli stati di quella fsm!!! --");
                     else
                     {
