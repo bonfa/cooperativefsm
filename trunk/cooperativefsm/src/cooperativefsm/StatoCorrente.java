@@ -2,7 +2,7 @@ package cooperativefsm;
 
 /**
  *
- * @author Renato
+ * @author Alessandro
  * La classe stato corrente definisce la situazione della simulazione in un certo istante
  *
  */

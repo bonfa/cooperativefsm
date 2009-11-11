@@ -7,7 +7,7 @@ package cooperativefsm;
 
 /**
  *
- * @author alessandro
+ * @author Alessandro
  */
 public class TransizioniAbilitate {
 

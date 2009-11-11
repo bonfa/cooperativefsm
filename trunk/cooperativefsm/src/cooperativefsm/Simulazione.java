@@ -104,6 +104,7 @@ public class Simulazione {
     /**
      * Imposta il vettore contenente le transizioni abilitate a seconda della stato della simulazione
      */
+    @SuppressWarnings("empty-statement")
     private void setTransizioniAbilitate()
     {
         boolean isMutEx;
@@ -128,12 +129,14 @@ public class Simulazione {
             if(tr_1.getNumRelazioniSincroneStatoCorrente() == 0){
                 transizioniAbilitate.add(new TransizioniAbilitate(tr_1,null));
 
-                tr_2 = (Transizione) l_itr_tr_usc2.next();
+                while(l_itr_tr_usc2.hasNext()){
+                    tr_2 = (Transizione) l_itr_tr_usc2.next();
 
-                isMutEx = (relazioniTransizioni[tr_1.getId()][tr_2.getId()]==Simulazione.Relazione.M_EX);
+                    isMutEx = (relazioniTransizioni[tr_1.getId()][tr_2.getId()]==Simulazione.Relazione.M_EX);
 
-                if((tr_2.getNumRelazioniSincroneStatoCorrente() == 0)&&(!isMutEx)){
-                    transizioniAbilitate.add(new TransizioniAbilitate(tr_1,tr_2));
+                    if((tr_2.getNumRelazioniSincroneStatoCorrente() == 0)&&(!isMutEx)){
+                        transizioniAbilitate.add(new TransizioniAbilitate(tr_1,tr_2));
+                    }
                 }
             }
 
