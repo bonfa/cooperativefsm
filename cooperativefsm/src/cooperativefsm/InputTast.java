@@ -43,7 +43,7 @@ public class InputTast extends Input
         {                                                               //con i suoi stati e le sue transizioni
             Fsm appoggio = listaFsm.elementAt(i);
 
-            int numStati = this.leggiNumStati(appoggio.getId());        //inserimento degli stati
+            int numStati = this.leggiNumStati(appoggio.getNome());        //inserimento degli stati
             this.inizializzaStati(appoggio, numStati);
 
             this.inizializzaTrans(appoggio);                            //inserimento delle transizioni
@@ -69,24 +69,25 @@ public class InputTast extends Input
     {
         int numFsm = 2;
         for(int i = 0; i < numFsm; i++)
-             listaFsm.add(creaFsm (""));
+             listaFsm.add(creaFsm(i));
 
-        String nome1 = Servizio.leggiStringaNonVuota(INS_NOMEFSM + " 1");
-        listaFsm.get(0).setId(nome1);
-
-        boolean nomeInserito = false;
-
-        while(!nomeInserito)
-        {
-        String nome2 = Servizio.leggiStringaNonVuota(INS_NOMEFSM + " 2");
-            if(! nome1.equals(nome2))
-            {
-                listaFsm.get(1).setId(nome2);
-                nomeInserito=true;
-            }
-            else
-                System.out.println("Esiste già una fsm con lo stesso nome. Inserirne un altro.\n");
-        }
+//gestione dell'id letterale: RIMOSSA
+//        String nome1 = Servizio.leggiStringaNonVuota(INS_NOMEFSM + " 1");
+//        listaFsm.get(0).setId(nome1);
+//
+//        boolean nomeInserito = false;
+//
+//        while(!nomeInserito)
+//        {
+//        String nome2 = Servizio.leggiStringaNonVuota(INS_NOMEFSM + " 2");
+//            if(! nome1.equals(nome2))
+//            {
+//                listaFsm.get(1).setId(nome2);
+//                nomeInserito=true;
+//            }
+//            else
+//                System.out.println("Esiste già una fsm con lo stesso nome. Inserirne un altro.\n");
+//        }
     }
     
     /**
@@ -212,9 +213,9 @@ public class InputTast extends Input
      * @return una nuova istanza di fsm
      */
 
-     public Fsm creaFsm (String nome)
+     public Fsm creaFsm (int id)
      {
-        Fsm macchina = new Fsm ( nome );
+        Fsm macchina = new Fsm (id);
         return macchina;
      }
      
@@ -250,8 +251,8 @@ public class InputTast extends Input
 
      public void imposta(Simulazione.Relazione[][] relaz, Vector<Fsm> list)
      {
-        int t1 = Servizio.leggiInt("Transizione di riferimento della fsm 1", 0, list.get(0).getNumTr()- 1);
-        int t2 = Servizio.leggiInt("Transizione di riferimento della fsm 2", 0, list.get(1).getNumTr() - 1);
+        int t1 = Servizio.leggiInt("Transizione di riferimento della fsm 0", 0, list.get(0).getNumTr()- 1);
+        int t2 = Servizio.leggiInt("Transizione di riferimento della fsm 1", 0, list.get(1).getNumTr() - 1);
           
         //ogni transizione deve avere una e una sola relazione con ognuna delle transizioni dell'altra fsm
         if(relazioniTransizioni[t1][t2] == Simulazione.Relazione.ASINCRONA) //cioè non è ancora presente una relazione tra le due transizioni in questione
