@@ -171,7 +171,7 @@ public class InputXML extends Input {
                     }
                     catch(NumberFormatException ne)
                     {
-                        System.out.println("-- Lo stato dev'essere identificato da un numero intero!!! --");
+                        System.out.println("-- Lo stato dev'essere identificato da un numero intero > 0!!! --");
                     } 
                 }
            }//end for
@@ -197,8 +197,8 @@ public class InputXML extends Input {
                         //Faccio un parse da String a Int per il numero dello stato corrente
                         int stato = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                         //Controllo che il numero dello stato corrente non sia maggiore del numero massimo degli stati
-                        if(stato>=listaS.size())
-                            System.out.println("-- Il numero dello stato corrente non può superare il numero totale degli stati!!! --");
+                        if(stato>=listaS.size() || stato<0)
+                            System.out.println("-- Il numero dello stato corrente non può essere < 0 o superare il numero totale degli stati!!! --");
                         else
                         {
                            //Estraggo dalla lista degli stati l'oggetto Stato identificato dall'id
@@ -281,8 +281,8 @@ public class InputXML extends Input {
                     //Faccio un parse da String a int per il numero dello stato
                     int stato = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                     //Controllo che il numero dello stato non sia maggiore del numero degli stati della fsm
-                    if(stato>=lS.size())
-                        System.out.println("-- Il numero dello stato usato in una relazione non può superare il numero totale degli stati di quella fsm!!! --");
+                    if(stato>=lS.size() || stato<0)
+                        System.out.println("-- Il numero dello stato usato in una relazione dev'essere >= 0 e non può superare il numero totale degli stati di quella fsm!!! --");
                     else
                     {
                         //Estraggo dalla lista degli stati l'oggetto Stato identificato dall'id
@@ -301,8 +301,8 @@ public class InputXML extends Input {
                     //Faccio un parse da String a int per il numero dello stato
                     int stato = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                     //Controllo che il numero dello stato non sia maggiore del numero degli stati della fsm
-                    if(stato>=lS.size())
-                        System.out.println("-- Il numero dello stato usato in una relazione non può superare il numero totale degli stati di quella fsm!!! --");
+                    if(stato>=lS.size() || stato<0)
+                        System.out.println("-- Il numero dello stato usato in una relazione dev'essere >= 0 e non può superare il numero totale degli stati di quella fsm!!! --");
                     else
                     {
                         //Estraggo dalla lista degli stati l'oggetto Stato identificato dall'id
@@ -424,8 +424,12 @@ public class InputXML extends Input {
                     app.add(ind.get(j));
             }
         }
-
-        if(type.equalsIgnoreCase("sync"))
+        if(relazioniTransizioni[app.get(0)[1]][app.get(1)[1]]!=Simulazione.Relazione.ASINCRONA)
+        {
+            System.out.println("-- Non è possibileinserire due relazioni per la stessa coppia di transizioni!!! --");
+            ind.get(-1);//per uscire dal programma
+        }
+        else if(type.equalsIgnoreCase("sync"))
         {
             relazioniTransizioni[app.get(0)[1]][app.get(1)[1]]=Simulazione.Relazione.SINCRONA;
         }
