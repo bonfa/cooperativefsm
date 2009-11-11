@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -37,17 +38,22 @@ public class InputXML extends Input {
      * @param URI
      * è il percorso del file xml da caricare
      * @throws SAXException
-     * @throws IOException 
+     * @throws IOException
      * @throws ParserConfigurationException
      */
     public InputXML(String URI) throws SAXException, IOException, ParserConfigurationException
     {
         //provo a leggere il file e fare il parser xml
-	doc = parserXML(new File(URI));
+        doc = parserXML(new File(URI));
         insSIM(doc, 0);
         //controllo che siano state create almeno 2 fsm prima di settare lo stato corrente della simulazione
-        //if(statoCur.size()>1)
-        statoIniziale.setStati(statoCur.get(0), statoCur.get(1));
+        if(listaFsm.size()==2)
+            statoIniziale.setStati(statoCur.get(0), statoCur.get(1));
+        else
+        {
+             System.out.println("-- Bisogna definire 2 fsm nel file xml!!! -- ");
+             listaFsm.get(-1);//per uscire dal programma
+        }
     }
 
     /**
@@ -85,7 +91,7 @@ public class InputXML extends Input {
 
         //for che fa passare tutti i nodi figli del nodo passato come parametro
         for(int i=0, cnt=nl.getLength(); i<cnt; i++)
-	{
+        {
             //prendo il nome del nodo (identificatore tag)
             String test=nl.item(i).getNodeName();
             //Se è definita una fsm la leggo e la aggiungo alla lista delle fsm
@@ -93,6 +99,11 @@ public class InputXML extends Input {
             {
                 listaFsm.add(insFSM(nl.item(i)));
             }
+        }
+        //se non è ancora stata inizializzata relazioniTransizioni la inizializzo
+        if(listaFsm.size()==2)
+        {
+            inizRel();
         }
         for(int i=0, cnt=nl.getLength(); i<cnt; i++)
         {
@@ -143,15 +154,23 @@ public class InputXML extends Input {
                     //Se è presente un tag "name" imposto name=false
                     name=false;
                     //Prendo il valore del tag name
-                    id = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
-                    //Controllo che non ci sia già un'altra fsm con lo stesso id
-                    for(int j=0; j<listaFsm.size(); j++)
+                    try
                     {
-                        if(id == listaFsm.get(j).getId())
+                        id = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
+                        //Controllo che non ci sia già un'altra fsm con lo stesso id
+                        for(int j=0; j<listaFsm.size(); j++)
                         {
-                            System.out.println("-- Due fsm non possono avere lo stesso id!!! -- ");
-                            listaFsm.get(-1);//per uscire dal programma
+                            if(id == listaFsm.get(j).getId())
+                            {
+                                System.out.println("-- Due fsm non possono avere lo stesso id!!! -- ");
+                                listaFsm.get(-1);//per uscire dal programma
+                            }
                         }
+                    }
+                    catch(NumberFormatException ne)
+                    {
+                        System.out.println("-- Il name della fsm dev'essere identificato da un numero intero!!! --");
+                        listaFsm.get(-1);//per uscire dal programma
                     }
                 }
                 else if(test.equalsIgnoreCase("states"))
@@ -160,20 +179,19 @@ public class InputXML extends Input {
                     stati=false;
                     try
                     {
-                        int j;
                         //Faccio un parse da String a Int per il numero di stati
                         int states = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                         //Aggiungo un numero di stati pari a quanto definito in states
-                        for(j=0; j<states; j++)
+                        for(int l=0; l<states; l++)
                         {
-                            Stato s = new Stato(j);
+                            Stato s = new Stato(l);
                             listaS.add(s);
                         }
                     }
                     catch(NumberFormatException ne)
                     {
                         System.out.println("-- Lo stato dev'essere identificato da un numero intero > 0!!! --");
-                    } 
+                    }
                 }
            }//end for
            //Ora posso creare le transizioni
@@ -287,7 +305,11 @@ public class InputXML extends Input {
                     else
                     {
                         //Estraggo dalla lista degli stati l'oggetto Stato identificato dall'id
-                        s1=getStatoById(stato, lS);
+                        s1=getStatoById(stato, lS);//se non è ancora stata inizializzata relazioniTransizioni la inizializzo
+//        if(rel)
+//        {
+//            inizRel();
+//        }
                     }
                 }
                 catch(NumberFormatException ne)
@@ -332,7 +354,7 @@ public class InputXML extends Input {
             //Aggiungo allo stato sorgente della transizione la transizione stessa come transizione uscente
             //s1.addTransUscente(T);
         }
-        
+
         return T;
     }
 
@@ -361,11 +383,11 @@ public class InputXML extends Input {
      */
     private void insREL(Node node) throws ArrayIndexOutOfBoundsException
     {
-        //se non è ancora stata inizializzata relazioniTransizioni la inizializzo
-        if(rel)
-        {
-            inizRel();
-        }
+//        //se non è ancora stata inizializzata relazioniTransizioni la inizializzo
+//        if(rel)
+//        {
+//            inizRel();
+//        }
         //Estraggo tutti i nodi figli del nodo passato come parametro
         NodeList nl = node.getChildNodes();
         //Vector contenente array, ogni array ha 2 elementi: il primo è l'id della fsm, il secondo l'id della transizione
@@ -438,7 +460,7 @@ public class InputXML extends Input {
         {
             relazioniTransizioni[app.get(0)[1]][app.get(1)[1]]=Simulazione.Relazione.M_EX;
         }
-        
+
 //        int x = listaFsm.get(0).getNumTr();
 //        int y = listaFsm.get(1).getNumTr();
 //        for(int i=0; i<x; i++)
@@ -455,10 +477,9 @@ public class InputXML extends Input {
     {
         Integer[] a = new Integer[2];
         NodeList nl = node.getChildNodes();
-        int idfsm=0;
+        int idfsm = 0;
         String idtr = "";
 
-        //NON E' GESTITO IL CASO IN CUI NON E' DEFINITA NESSUNA FSMVAL!!
         //faccio passare tutti gli elemtni del nodo cercando quello con nome fsmval
         for(int i=0, cnt=nl.getLength(); i<cnt; i++)
         {
@@ -466,7 +487,15 @@ public class InputXML extends Input {
 
             if(test.equalsIgnoreCase("fsmval"))
             {
-                 idfsm = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
+                 try
+                 {
+                     idfsm = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
+                 }
+                 catch(NumberFormatException ne)
+                 {
+                     System.out.println("-- L'id della fsm nei tag fsmval dev'essere un numero intero!!! --");
+                     listaFsm.get(-1);//per uscire dal programma
+                 }
             }
         }
         //faccio passare tutti gli elemtni del nodo cercando quello con nome idval
@@ -480,7 +509,7 @@ public class InputXML extends Input {
             }
         }
         //ad a[0] assegno l'id della fsm che ha nome idfsm
-        a[0] = idfsm;
+        a[0] = getFsmIndexById(idfsm);
         //ad a[1] assengo l'id della transizione che ha nome idtr e fa parte della fsm identificata da a[0]
         a[1] = getTrIdByName(idtr, a[0]);
 
@@ -519,9 +548,9 @@ public class InputXML extends Input {
         //Se non è stata trovata la transizione ritorno -1 altrimenti ritorno l'indice della transizione all'interno del vector
         return k;
     }
-    
+
     /**
-     * 
+     *
      * @param id
      * @return l'indice della fsm identificata da id all'interno di listaFsm
      */
@@ -531,7 +560,7 @@ public class InputXML extends Input {
         //faccio passare tutte le fsm cercando quella con id uguale a all'id della fsm
         for(int i=0; i<listaFsm.size(); i++)
         {
-            if(listaFsm.get(i).getId()==id)
+            if(listaFsm.get(i).getId() == id)
                 k=i;
         }
         //Se non è stata trovata la fsm ritorno -1 altrimenti ritorno l'indice della fsm all'interno di listaFsm
