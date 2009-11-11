@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <simulation>
 	<fsm>
-		<name>A</name>
+		<name>0</name>
 		<states>6</states>
 		<transition>
 			<id>a</id>
@@ -48,7 +48,7 @@
 	</fsm>
 
 	<fsm>
-		<name>B</name>
+		<name>1</name>
 		<states>3</states>
 		<transition>
 			<id>a</id>
@@ -81,33 +81,33 @@
 
 	<relation>
 		<transval>
-			<fsmval>A</fsmval>
+			<fsmval>0</fsmval>
 			<idval>a</idval>
 		</transval>
 		<transval>
-			<fsmval>B</fsmval>
+			<fsmval>1</fsmval>
 			<idval>a</idval>
 		</transval>
 		<type>sync</type>
 	</relation>
 	<relation>
 		<transval>
-			<fsmval>A</fsmval>
+			<fsmval>0</fsmval>
 			<idval>b</idval>
 		</transval>
 		<transval>
-			<fsmval>B</fsmval>
+			<fsmval>1</fsmval>
 			<idval>e</idval>
 		</transval>
 		<type>mutex</type>
 	</relation>
 	<relation>
 		<transval>
-			<fsmval>A</fsmval>
+			<fsmval>0</fsmval>
 			<idval>b</idval>
 		</transval>
 		<transval>
-			<fsmval>B</fsmval>
+			<fsmval>1</fsmval>
 			<idval>c</idval>
 		</transval>
 		<type>mutex</type>

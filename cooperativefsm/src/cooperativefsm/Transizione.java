@@ -78,32 +78,20 @@ public class Transizione {
         return stato2;
     }
 
+    public void setTransizioneSincronaCorrispondente(Transizione t){
+        transizioneSincronaCorrispondente= t;
+    }
+
     public Transizione getTransizioneSincronaCorrispondente(){
         return transizioneSincronaCorrispondente;
     }
 
-    public void setNumRelazioniSincroneStatoCorrente( Simulazione.Relazione relazioni[][], Vector<Transizione> transUscFsmCorrispondente){
-        int count=0;
-        Transizione tr_corr;
-        ListIterator l_itr_tr = transUscFsmCorrispondente.listIterator();
-
-        //Scorro la lista di transizioni uscenti per verificare quelle con cui ho una relazione sincrona
-        while(l_itr_tr.hasNext()){
-            tr_corr = (Transizione) l_itr_tr.next();
-            if(relazioni[id][tr_corr.getId()] == Simulazione.Relazione.SINCRONA){
-                count++;
-                //Il valore sarà sensato solo se al termine count sarà uguale ad 1
-                transizioneSincronaCorrispondente = tr_corr;
-            }
-        }
-
-        numRelazioniSincroneStatoCorrente = count;
+    public void setNumRelazioniSincroneStatoCorrente( int n ){
+        numRelazioniSincroneStatoCorrente=n;
     }
 
     public int getNumRelazioniSincroneStatoCorrente()
     {
-
-        //TODO
 
         return  numRelazioniSincroneStatoCorrente;
     }

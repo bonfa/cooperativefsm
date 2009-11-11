@@ -10,7 +10,6 @@ import java.util.*;
 public class Stato {
 
     private int idStato;    //è il numero progressivo assegnato allo stato, riferito alla fsm cui appartiene
-    private String nome;    //identifica un certo stato (attributo opzionale)
     private Vector<Transizione> transizioniUscenti;
 
     private boolean transizioniUscentiIsSetted;
@@ -46,10 +45,6 @@ public class Stato {
         return idStato;
     }
 
-    public void setId(int id)
-    {
-        idStato = id;
-    }
 
     public String ToString()
     {

@@ -19,18 +19,11 @@ public class TransizioniAbilitate {
         tr2=_tr2;
     }
 
-    public void setTransizioneFSM1(Transizione _tr1){
-        tr1 = _tr1;
-    }
-    public void setTransizioneFSM2(Transizione _tr2){
-        tr2 = _tr2;
-    }
-
     public Transizione getTransizioneFSM1(){
         return tr1;
     }
 
-    public Transizione gettransizioneFSM2(){
+    public Transizione getTransizioneFSM2(){
         return tr2;
     }
 
