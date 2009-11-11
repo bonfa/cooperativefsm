@@ -100,8 +100,8 @@ public class InputXML extends Input {
                 listaFsm.add(insFSM(nl.item(i)));
             }
         }
-        //se non è ancora stata inizializzata relazioniTransizioni la inizializzo
-        if(listaFsm.size()==2)
+        //se non è ancora stata inizializzata relazioniTransizioni la inizializzo nel momento in cui ho due fsm nella listaFsm
+        if(listaFsm.size()==2 && rel)
         {
             inizRel();
         }
@@ -395,7 +395,7 @@ public class InputXML extends Input {
         //Vector d'appoggio usato per riordinare il vector ind usando come criterio l'id delle fsm contenute nel primo elemento dell'array
         Vector<Integer[]> app = new Vector<Integer[]>();
         String type="";
-
+        
         //Faccio passare tutti gli elementi del nodo e prendo solo quelli che hanno il nome transval
         for(int i=0, cnt=nl.getLength(); i<cnt; i++)
         {
@@ -449,7 +449,7 @@ public class InputXML extends Input {
         }
         if(relazioniTransizioni[app.get(0)[1]][app.get(1)[1]]!=Simulazione.Relazione.ASINCRONA)
         {
-            System.out.println("-- Non è possibileinserire due relazioni per la stessa coppia di transizioni!!! --");
+            System.out.println("-- Non è possibile inserire due relazioni per la stessa coppia di transizioni!!! --");
             ind.get(-1);//per uscire dal programma
         }
         else if(type.equalsIgnoreCase("sync"))
