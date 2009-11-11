@@ -124,7 +124,7 @@ public class InputXML extends Input {
            boolean trans=true;
            boolean stCor=true;
 
-           String id = "";
+           int id = 0;
            Vector<Stato> listaS = new Vector<Stato>();
            Vector<Transizione> listaT = new Vector<Transizione>();
 
@@ -143,11 +143,11 @@ public class InputXML extends Input {
                     //Se è presente un tag "name" imposto name=false
                     name=false;
                     //Prendo il valore del tag name
-                    id = nl.item(i).getFirstChild().getNodeValue();
+                    id = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                     //Controllo che non ci sia già un'altra fsm con lo stesso id
                     for(int j=0; j<listaFsm.size(); j++)
                     {
-                        if(id.equalsIgnoreCase(listaFsm.get(j).getId()))
+                        if(id == listaFsm.get(j).getId())
                         {
                             System.out.println("-- Due fsm non possono avere lo stesso id!!! -- ");
                             listaFsm.get(-1);//per uscire dal programma
@@ -454,9 +454,10 @@ public class InputXML extends Input {
     {
         Integer[] a = new Integer[2];
         NodeList nl = node.getChildNodes();
-        String idfsm = "";
+        int idfsm=0;
         String idtr = "";
 
+        //NON E' GESTITO IL CASO IN CUI NON E' DEFINITA NESSUNA FSMVAL!!
         //faccio passare tutti gli elemtni del nodo cercando quello con nome fsmval
         for(int i=0, cnt=nl.getLength(); i<cnt; i++)
         {
@@ -464,7 +465,7 @@ public class InputXML extends Input {
 
             if(test.equalsIgnoreCase("fsmval"))
             {
-                 idfsm = nl.item(i).getFirstChild().getNodeValue();
+                 idfsm = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
             }
         }
         //faccio passare tutti gli elemtni del nodo cercando quello con nome idval
@@ -478,7 +479,7 @@ public class InputXML extends Input {
             }
         }
         //ad a[0] assegno l'id della fsm che ha nome idfsm
-        a[0] = getFsmIndexById(idfsm);
+        a[0] = idfsm;
         //ad a[1] assengo l'id della transizione che ha nome idtr e fa parte della fsm identificata da a[0]
         a[1] = getTrIdByName(idtr, a[0]);
 
@@ -523,13 +524,13 @@ public class InputXML extends Input {
      * @param id
      * @return l'indice della fsm identificata da id all'interno di listaFsm
      */
-    private int getFsmIndexById(String id) throws IndexOutOfBoundsException, NullPointerException
+    private int getFsmIndexById(int id) throws IndexOutOfBoundsException, NullPointerException
     {
         int k = -1;
         //faccio passare tutte le fsm cercando quella con id uguale a all'id della fsm
         for(int i=0; i<listaFsm.size(); i++)
         {
-            if(listaFsm.get(i).getId().equalsIgnoreCase(id))
+            if(listaFsm.get(i).getId()==id)
                 k=i;
         }
         //Se non è stata trovata la fsm ritorno -1 altrimenti ritorno l'indice della fsm all'interno di listaFsm
