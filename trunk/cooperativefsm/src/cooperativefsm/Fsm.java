@@ -45,6 +45,7 @@ public class Fsm {
 
      }
 
+
      public void setId(int _id){
          id =_id;
      }
@@ -53,6 +54,9 @@ public class Fsm {
      return id;
      }
 
+     public String getNome(){
+     return Integer.toString(id);
+     }
      public int getNumStati(){
         numStati = stati.size();
         return numStati;
@@ -112,6 +116,7 @@ public class Fsm {
             stato.transizioniUscentiIsSetted();
          }
     }
+
 
      public String ToString ()
      {
