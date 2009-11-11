@@ -1,3 +1,4 @@
+
 package cooperativefsm;
 
 /**
@@ -25,8 +26,7 @@ public class Simulazione {
    
     /**
      *
-     * That constructor provide to create a simulation by settings the params
-     * passed from the IO classes.
+     * Il costruttore provvede a settare le fsm, le relazioni tra transizione
      *
      * @param _listaFsm
      * @param relazioni
@@ -66,14 +66,44 @@ public class Simulazione {
         return listaFsm;
     }
 
+    public void setNumRelazioniSincroneStatoCorrentePerTransizione( int idFsm, Transizione tr, Vector<Transizione> transUscFsmCorrispondente){
+
+        int count=0;
+        Transizione tr_corr;
+        ListIterator l_itr_tr = transUscFsmCorrispondente.listIterator();
+
+        //Scorro la lista di transizioni uscenti per verificare quelle con cui ho una relazione sincrona
+        while(l_itr_tr.hasNext()){
+            tr_corr = (Transizione) l_itr_tr.next();
+            if(idFsm==0){
+                    if(relazioniTransizioni[tr.getId()][tr_corr.getId()] == Simulazione.Relazione.SINCRONA){
+                    count++;
+                    //Il valore sarà sensato solo se al termine count sarà uguale ad 1
+                    tr.setTransizioneSincronaCorrispondente( tr_corr );
+                }
+            }else{
+                if(relazioniTransizioni[tr_corr.getId()][tr.getId()] == Simulazione.Relazione.SINCRONA){
+                    count++;
+                    //Il valore sarà sensato solo se al termine count sarà uguale ad 1
+                    tr.setTransizioneSincronaCorrispondente( tr_corr );
+                }
+            }
+        }
+
+       tr.setNumRelazioniSincroneStatoCorrente(count);
+    }
+
     //Non ho mai avuto il dono della sintesi, me lo dicono tutti
     public ReturnCodeIterazione setNumRelazioniSincroneTransizioniUscenti(){
 
         Vector<Transizione> trUsc1 = statoCorrente.getStatoCorrenteFSM1().getTransizioniUscenti();
         Vector<Transizione> trUsc2 = statoCorrente.getStatoCorrenteFSM2().getTransizioniUscenti();
 
+        int id1 = listaFsm.elementAt(0).getId();
+        int id2 = listaFsm.elementAt(1).getId();
+
         if(trUsc1 == null || trUsc2 == null){
-            return ReturnCodeIterazione.OUTGOING_TRANSITION_NOT_SETTED;
+            return ReturnCodeIterazione.NUM_SYNC_REL_NOT_SETTED;
         }
 
         ListIterator l_itr_tr1 = trUsc1.listIterator();
@@ -86,14 +116,14 @@ public class Simulazione {
             t = (Transizione) l_itr_tr1.next();
             //trovo il numero di relazioni sincrone tra la transizione corrente
             //di fsm1 con le transizioni uscenti della fsm2
-            t.setNumRelazioniSincroneStatoCorrente(relazioniTransizioni, trUsc2);
+            setNumRelazioniSincroneStatoCorrentePerTransizione(id1,t, trUsc2);
         }
         //scorro tutte le transizioni della fsm2
         while(l_itr_tr2.hasNext()){
             t = (Transizione) l_itr_tr2.next();
             //trovo il numero di relazioni sincrone tra la transizione corrente
             //di fsm2 con le transizioni uscenti della fsm1
-            t.setNumRelazioniSincroneStatoCorrente(relazioniTransizioni, trUsc1);
+            setNumRelazioniSincroneStatoCorrentePerTransizione(id2,t, trUsc1);
         }
 
         numRelazioniSincroneUscentiIsSetted = true;
@@ -104,7 +134,7 @@ public class Simulazione {
     /**
      * Imposta il vettore contenente le transizioni abilitate a seconda della stato della simulazione
      */
-    @SuppressWarnings("empty-statement")
+  
     private void setTransizioniAbilitate()
     {
         boolean isMutEx;

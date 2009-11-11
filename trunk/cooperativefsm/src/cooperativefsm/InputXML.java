@@ -160,12 +160,13 @@ public class InputXML extends Input {
                     stati=false;
                     try
                     {
+                        int j;
                         //Faccio un parse da String a Int per il numero di stati
                         int states = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
                         //Aggiungo un numero di stati pari a quanto definito in states
-                        for(i=0; i<states; i++)
+                        for(j=0; j<states; j++)
                         {
-                            Stato s = new Stato(i);
+                            Stato s = new Stato(j);
                             listaS.add(s);
                         }
                     }
