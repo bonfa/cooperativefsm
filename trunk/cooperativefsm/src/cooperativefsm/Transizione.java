@@ -107,4 +107,16 @@ public class Transizione {
 
         return  numRelazioniSincroneStatoCorrente;
     }
+
+    /**
+     * De transizioni sono uguali se hanno lo stesso stato sorgente e lo stesso stato destinazione
+     * @param t
+     * @return
+     */
+    public boolean equals (Transizione t)
+    {
+        boolean stessoSorg = (this.stato1.getId() == t.getStato1().getId());
+        boolean stessoDest = (this.stato2.getId() == t.getStato2().getId());
+        return stessoSorg && stessoDest;
+    }
 }

@@ -110,6 +110,10 @@ public class Fsm {
          //TODO
      }
 
+     public void setId(String name)
+     {
+     id=name;
+     }
 
      public String ToString ()
      {
