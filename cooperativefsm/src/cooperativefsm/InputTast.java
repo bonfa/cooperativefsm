@@ -16,7 +16,7 @@ public class InputTast extends Input
      private final String INS_STATO   = "Inserire il numero dello stato ";
      private final String INS_RELAZ = "Vuoi inserire una nuova relazione tra transizioni? ";
      private final String TIPO_RELAZ = "TIPO DI RELAZIONE TRA LE TRANSIZIONI";
-     private final String INS_NOMEFSM   = "Inserire il nome della Fsm ";
+     private final String INS_NOMEFSM   = "Inserire il nome della Fsm numero";
      private final String INS_NOMETR   = "Inserire il nome della transizione: ";
      private final String INS_ST_CORR   = "Inserire lo stato corrente della fsm ";
 
@@ -69,11 +69,24 @@ public class InputTast extends Input
     {
         int numFsm = 2;
         for(int i = 0; i < numFsm; i++)
-             {
-             String nome = Servizio.leggiStringaNonVuota(INS_NOMEFSM + i);
-             Fsm fsm = creaFsm (nome);
-             listaFsm.add(fsm);
-             }
+             listaFsm.add(creaFsm (""));
+
+        String nome1 = Servizio.leggiStringaNonVuota(INS_NOMEFSM + " 1");
+        listaFsm.get(0).setId(nome1);
+
+        boolean nomeInserito = false;
+
+        while(!nomeInserito)
+        {
+        String nome2 = Servizio.leggiStringaNonVuota(INS_NOMEFSM + " 2");
+            if(! nome1.equals(nome2))
+            {
+                listaFsm.get(1).setId(nome2);
+                nomeInserito=true;
+            }
+            else
+                System.out.println("Esiste già una fsm con lo stesso nome. Inserirne un altro.\n");
+        }
     }
     
     /**
@@ -104,16 +117,19 @@ public class InputTast extends Input
 
 
      /**
+      * Metodo che restituisce lo stato di una fsm corrispondente all'id numerico inserito
+      * Se l'id è giusto, lo stato esiste sicuramente, perchè gli id degli stati sono incrementali
       * @ensures id < max;
       * @param a: Stringa per il messaggio da visualizzare
       * @param max: è di fatto il numero totale di stati di una fsm
-      * @return un nuovo stato che sicuramente appartiene alla fsm
+      * @return Lo stato in question della fsm
       */
-     public Stato leggiStatoConMax (String a, int max)
+     public Stato leggiStatoConMax (String a, Fsm x)
      {
+         int max = x.getNumStati()-1;
          int id = Servizio.leggiInt(INS_STATO + a + " (n° compreso tra 0 e " + max + "): ", 0, max);
-         Stato s = new Stato (id);
-         return s;
+         //Stato s = new Stato (id);
+         return x.getStatoAt(id);
      }
 
      
@@ -127,16 +143,29 @@ public class InputTast extends Input
         int k = 0;
         while (continua)
         {
-            Stato sorgente = this.leggiStatoConMax("sorgente", x.getNumStati()-1);
-            Stato destinazione = this.leggiStatoConMax("destinazione", x.getNumStati()-1);
+            Stato sorgente = this.leggiStatoConMax("sorgente", x );
+            Stato destinazione = this.leggiStatoConMax("destinazione", x );
+            Transizione newTr = new Transizione (k,sorgente,destinazione);
 
-            Transizione t = new Transizione (k,sorgente,destinazione);
-            t.setNome(Servizio.leggiStringaNonVuota(INS_NOMETR));
-            x.addTrans(t);
-            k++;
-            
-            
-            System.out.println("Transizione inserita correttamente!");
+            //controllo che non ci sia già una transizione tra questi stati!
+            boolean giaIns = false;
+            Vector<Transizione> trIns = x.getTransizioni();  //vettore con le transizioni attualmente inserite
+            int numTrIns = trIns.size();        //numero delle transizioni già inserite
+
+            for (int i=0; i<numTrIns; i++)
+                if (trIns.get(i).equals(newTr))
+                    giaIns = true;
+  
+            if(!giaIns)
+            {
+            newTr.setNome(Servizio.leggiStringaNonVuota(INS_NOMETR));
+            x.addTrans(newTr);
+            k++;    //incrementa l'indice per la prossima transizione che si potrà inserire
+                System.out.println("Transizione inserita correttamente!");
+            }
+            else
+                System.out.println("Mi dispiace ma è hai già inserito una transizione tra questi due stati. Transizione non inserita!\n");
+
             continua = this.ciSonoTrans();
         }//while
      }
@@ -219,23 +248,28 @@ public class InputTast extends Input
       * @param list: la lista di fsm in questione
       */
 
-     public boolean imposta(Simulazione.Relazione[][] relaz, Vector<Fsm> list)
+     public void imposta(Simulazione.Relazione[][] relaz, Vector<Fsm> list)
      {
         int t1 = Servizio.leggiInt("Transizione di riferimento della fsm 1", 0, list.get(0).getNumTr()- 1);
         int t2 = Servizio.leggiInt("Transizione di riferimento della fsm 2", 0, list.get(1).getNumTr() - 1);
           
-        MyMenu sceltaTipo = new MyMenu ( TIPO_RELAZ, SCELTA_RELAZ);
-        int sel = sceltaTipo.scegli();
+        //ogni transizione deve avere una e una sola relazione con ognuna delle transizioni dell'altra fsm
+        if(relazioniTransizioni[t1][t2] == Simulazione.Relazione.ASINCRONA) //cioè non è ancora presente una relazione tra le due transizioni in questione
+        {
+            MyMenu sceltaTipo = new MyMenu ( TIPO_RELAZ, SCELTA_RELAZ);
+            int sel = sceltaTipo.scegli();
 
-        switch (sel)
-            {
-                case 1: (relaz[t1][t2]) = (relaz[t1][t2]).SINCRONA; break;
-                case 2: (relaz[t1][t2]) = (relaz[t1][t2]).M_EX; break;
-            }
+            switch (sel)
+                {
+                    case 1: (relaz[t1][t2]) = (relaz[t1][t2]).SINCRONA; break;
+                    case 2: (relaz[t1][t2]) = (relaz[t1][t2]).M_EX; break;
+                }
 
-        System.out.println("Relazione aggiunta correttamente!");
-        return true;
+            System.out.println("Relazione aggiunta correttamente!");
+        }
+        else
+        System.out.println("E'già presente una relazione tra queste transizioni.\nNon verrà fatta nessuna operazione.\n");
      }
 
-
+    
 }
