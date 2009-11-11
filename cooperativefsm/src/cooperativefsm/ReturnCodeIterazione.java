@@ -7,7 +7,7 @@ package cooperativefsm;
 
 /**
  *
- * @author alessandro
+ * @author Alessandro
  */
 public enum ReturnCodeIterazione {
     NO_ERROR,

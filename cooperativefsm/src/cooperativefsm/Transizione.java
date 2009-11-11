@@ -9,7 +9,7 @@ import java.util.*;
 
 /**
  *
- * @author Renato
+ * @author Alessandro
  */
 public class Transizione {
 
