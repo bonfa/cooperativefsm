@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Fsm {
 
-    private String id;
+    private int id;
     private int numStati;
     private Vector<Stato>       stati;
     private Vector<Transizione> transizioni;
@@ -17,9 +17,11 @@ public class Fsm {
 
     /**
      * Costruttore di una fsm
+     *
+     * @param _id
      */
 
-    public Fsm (String _id)
+    public Fsm (int _id)
     {
         id          = _id;
         stati       = new Vector<Stato> ();
@@ -34,7 +36,7 @@ public class Fsm {
      * @param _transizioni
      */
 
-    public Fsm (String _id, Vector<Stato> _stati,Vector<Transizione> _transizioni) {    
+    public Fsm (int _id, Vector<Stato> _stati,Vector<Transizione> _transizioni) {
 
         id          = _id;
         stati       = _stati;
@@ -43,7 +45,11 @@ public class Fsm {
 
      }
 
-     public String getId(){
+     public void setId(int _id){
+         id =_id;
+     }
+
+     public int getId(){
      return id;
      }
 
@@ -106,14 +112,6 @@ public class Fsm {
             stato.transizioniUscentiIsSetted();
          }
     }
-     public void setNumRelazioniSincroneTransizioniUscenti(Simulazione.Relazione relazioni[][]){
-         //TODO
-     }
-
-     public void setId(String name)
-     {
-     id=name;
-     }
 
      public String ToString ()
      {
