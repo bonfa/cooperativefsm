@@ -42,7 +42,6 @@ public class Interazione implements Messaggi{
      * Stampa un elenco di coppie di transizioni
      * @param t
      */
-
     private void stampaTransizioniAbilitate(Vector<TransizioniAbilitate> t)
     {
         System.out.println(TRANSIZIONI_ABILITATE+"\n");
@@ -78,14 +77,14 @@ public class Interazione implements Messaggi{
         if (temp.size() == 0)
             {
             System.out.println(NO_TRANSIZIONI_ABILITATE+"\n");
-            stampaStatoCorrente(s,STATO_FINALE);
+            this.stampaStatoCorrente(s,STATO_FINALE);
             System.out.println(SIMULAZIONE_TERMINATA);
             return true;
             }
         else
             {
-            stampaTransizioniAbilitate(temp);
-            int transizioneAbilitata=Servizio.leggiInt(SCEGLI_TRANSIZIONE,0,temp.size());
+            this.stampaTransizioniAbilitate(temp);
+            int transizioneAbilitata=Servizio.leggiInt(SCEGLI_TRANSIZIONE,0,temp.size()-1);
             System.out.println(MENU_TRANSIZIONI_ABILITATE);
             this.stampaCoppiaDiTransizioni(temp.elementAt(transizioneAbilitata), transizioneAbilitata);
             boolean risp=Servizio.yesOrNo(ABILITAZIONE);
