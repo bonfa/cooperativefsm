@@ -41,7 +41,9 @@ public class Main {
 
         MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
         boolean continua = true;
+        boolean fineProgramma=false;
         Simulazione s = null;
+        Interazione i=new Interazione();
 
         while(continua)
         {
@@ -50,7 +52,7 @@ public class Main {
         
             switch (selezione)
             {
-                case 1: {
+                case 1: {   //Lettura da file
                         in = new InputTast();
                         s = in.leggiSimulazione();          //leggiSimulazione è un metodo della classe Input,
                         //da cambiare
@@ -58,7 +60,7 @@ public class Main {
                         continua = false;
                         break;
                         }
-                case 2: {
+                case 2: {   //Lettura da XML
                             String url=Servizio.leggiString("Inserire il percorso del file xml da leggere (" + XML_DEF + ")> ");
                             if(url.equals(""))
                                 url=XML_DEF;
@@ -90,16 +92,17 @@ public class Main {
                         //System.out.println(MESS_FINALE);
                         //System.exit(0);
                         continua=false;
+                        fineProgramma=true;
                         }
             }//switch
         
         
         }//while
                                                 
-       //while (!fineProgramma)
-        s.eseguiIterazione();
-           
-
+       while (!fineProgramma)
+       {//  s.eseguiIterazione();
+        fineProgramma=i.selezioneTransizioneDaFarScattare(s);
+       }
         //System.out.println(s.getListaFsm().get(0).ToString());
         //System.out.println(s.getListaFsm().get(1).ToString());
         if(s!=null)

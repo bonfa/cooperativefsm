@@ -56,5 +56,13 @@ public class StatoCorrente
             p=sCorrenteFsm2;
         return p;
     }
+
+    @Override
+    public String toString() {
+        return (sCorrenteFsm1.toString()+"\t"+sCorrenteFsm2.toString());
+    }
+
+
+
 }
 

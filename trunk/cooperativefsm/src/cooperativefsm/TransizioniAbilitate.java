@@ -27,10 +27,11 @@ public class TransizioniAbilitate {
         return tr2;
     }
 
-    public @Override String toString ()
+    @Override 
+    public String toString ()
     {
         //TODO
-        return "";
+        return (tr1.ToString()+"\t"+tr1.ToString());
     }
         
 }

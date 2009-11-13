@@ -66,6 +66,14 @@ public class Simulazione {
         return listaFsm;
     }
 
+    public StatoCorrente getStatoCorrente() {
+        return statoCorrente;
+    }
+
+    public Vector<TransizioniAbilitate> getTransizioniAbilitate() {
+        return transizioniAbilitate;
+    }
+
     public void setNumRelazioniSincroneStatoCorrentePerTransizione( int idFsm, Transizione tr, Vector<Transizione> transUscFsmCorrispondente){
 
         int count=0;
