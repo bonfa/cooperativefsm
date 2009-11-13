@@ -39,8 +39,7 @@ public class Simulazione {
         listaFsm = _listaFsm;
         relazioniTransizioni = relazioni;
         statoCorrente = sc;
-        transizioniAbilitate = new Vector<TransizioniAbilitate>();
-
+        
         //Setto le transizioni uscenti
         ListIterator l_fsm = listaFsm.listIterator();
         Fsm fsm;
@@ -74,7 +73,7 @@ public class Simulazione {
         return transizioniAbilitate;
     }
 
-    public void setNumRelazioniSincroneStatoCorrentePerTransizione( int idFsm, Transizione tr, Vector<Transizione> transUscFsmCorrispondente){
+    private void setNumRelazioniSincroneStatoCorrentePerTransizione( int idFsm, Transizione tr, Vector<Transizione> transUscFsmCorrispondente){
 
         int count=0;
         Transizione tr_corr;
@@ -102,7 +101,7 @@ public class Simulazione {
     }
 
     //Non ho mai avuto il dono della sintesi, me lo dicono tutti
-    public ReturnCodeIterazione setNumRelazioniSincroneTransizioniUscenti(){
+    private ReturnCodeIterazione setNumRelazioniSincroneTransizioniUscenti(){
 
         Vector<Transizione> trUsc1 = statoCorrente.getStatoCorrenteFSM1().getTransizioniUscenti();
         Vector<Transizione> trUsc2 = statoCorrente.getStatoCorrenteFSM2().getTransizioniUscenti();
@@ -209,11 +208,11 @@ public class Simulazione {
      * @param t
      * @return Il nuovo Stato corrente della simulazione
      */
-    private StatoCorrente scatta(TransizioniAbilitate t)
+    public StatoCorrente scatta(TransizioniAbilitate t)
     {
         StatoCorrente prossimoStato = new StatoCorrente();
 
-        //TODO
+        prossimoStato.setStati(t.getTransizioneFSM1().getStato2(), t.getTransizioneFSM2().getStato2());
 
         return prossimoStato;
     }
@@ -226,6 +225,8 @@ public class Simulazione {
     public ReturnCodeIterazione eseguiIterazione ()
     {
         numRelazioniSincroneUscentiIsSetted=false;
+
+        transizioniAbilitate = new Vector<TransizioniAbilitate>();
 
         ReturnCodeIterazione risp = setNumRelazioniSincroneTransizioniUscenti();
 

@@ -35,6 +35,4 @@
 		</transition>
 		<current>0</current>
 	</fsm>
-	<relation>
-	</relation>
 </simulation>
