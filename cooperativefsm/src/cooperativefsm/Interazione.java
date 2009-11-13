@@ -14,26 +14,13 @@ import java.util.*;
 public class Interazione implements Messaggi{
 
     /**
-     * POSSIBILI ERRORI:
-     * 1)numero relazioni sincrone non settato in maniera corretta
-     * 2)siamo nello stato finale
-     *
-     */
-
-
-
-    /**
      * Presenta all'utente le  possibili relazioni da far scattare
      * e legge la scelta dell'utente
      * @param s
      */
     public boolean selezioneTransizioneDaFarScattare (Simulazione s)
     {
-        //TODO
-        Vector<TransizioniAbilitate> temp=null;
-        String t;
-
-        System.out.println(STATO_CORRENTE+s.getStatoCorrente().toString());
+        this.stampaStatoCorrente(s,STATO_CORRENTE);
         ReturnCodeIterazione rci=s.eseguiIterazione();
         switch (rci)
         {
@@ -45,22 +32,7 @@ public class Interazione implements Messaggi{
                 System.out.println(ERR_TRANSIZIONI_USCENTI);
                 return true;
             case NO_ERROR:
-                temp=s.getTransizioniAbilitate();
-                System.out.println("Continua\n");
-                if (temp != null)
-                    {
-                    stampaTransizioniAbilitate(temp);
-                    t=Servizio.leggiString(SCEGLI_TRANSIZIONE);
-                    System.out.println(t);
-                    return false;
-                    }
-                else
-                    {
-                    System.out.println(NO_TRANSIZIONI_ABILITATE+"\n");
-                    System.out.print(STATO_FINALE+s.getStatoCorrente().toString());
-                    System.out.println(SIMULAZIONE_TERMINATA);
-                    return true;
-                    }
+                return this.esecuzioneSenzaErrori(s);
         }
         //Non si dovrebbe mai arrivare a questo return
         return true;
@@ -68,17 +40,85 @@ public class Interazione implements Messaggi{
 
     /**
      * Stampa un elenco di coppie di transizioni
-     *
-     *
+     * @param t
      */
-    public void stampaTransizioniAbilitate(Vector<TransizioniAbilitate> t)
+
+    private void stampaTransizioniAbilitate(Vector<TransizioniAbilitate> t)
     {
-        //TODO
         System.out.println(TRANSIZIONI_ABILITATE+"\n");
+        System.out.println(MENU_TRANSIZIONI_ABILITATE);
         for(int i=0;i<t.size();i++)
-            System.out.println(t.elementAt(i).toString()+"\n");
-            
+            this.stampaCoppiaDiTransizioni(t.elementAt(i),i);
+           
     }
 
+    /**
+     * Visualizza lo stato corrente della simulazione
+     * @param s,mex
+     */
+    private void stampaStatoCorrente(Simulazione s, String mex)
+    {
+        System.out.println(mex);
+        System.out.print(MENU_STATO_CORRENTE+"\n");
+        System.out.println("   "+s.getStatoCorrente().getStatoCorrenteFSM1().getId()+"\t\t"+s.getStatoCorrente().getStatoCorrenteFSM2().getId());
+    }
+
+    /**
+     * Gestisce l'interazione con l'utente
+     * @param s,mex
+     */
+    private boolean esecuzioneSenzaErrori(Simulazione s)
+    {
+
+        //TODO
+        Vector<TransizioniAbilitate> temp=null;
+        
+        temp=s.getTransizioniAbilitate();
+        System.out.println("\n");
+        if (temp.size() == 0)
+            {
+            System.out.println(NO_TRANSIZIONI_ABILITATE+"\n");
+            stampaStatoCorrente(s,STATO_FINALE);
+            System.out.println(SIMULAZIONE_TERMINATA);
+            return true;
+            }
+        else
+            {
+            stampaTransizioniAbilitate(temp);
+            int transizioneAbilitata=Servizio.leggiInt(SCEGLI_TRANSIZIONE,0,temp.size());
+            System.out.println(MENU_TRANSIZIONI_ABILITATE);
+            this.stampaCoppiaDiTransizioni(temp.elementAt(transizioneAbilitata), transizioneAbilitata);
+            boolean risp=Servizio.yesOrNo(ABILITAZIONE);
+            if (risp)
+                    System.out.println("Scatta transizione!\n");
+            else
+                    System.out.println("Non scatta transizione!\n");
+                //s.scatta(temp.elementAt(transizioneAbilitata));
+            return false;
+            }
+               
+    }
+
+    /**
+     * Stampa una coppia di transizioni
+     * @param t
+     */
+    private void stampaCoppiaDiTransizioni(TransizioniAbilitate t,int id)
+    {
+            System.out.print(id+"\t     ");
+
+            if (t.getTransizioneFSM1()== null)
+                System.out.print(NIENTE+" ");
+            else
+                System.out.print(t.getTransizioneFSM1().getStato1().getId()+"\t\t"+t.getTransizioneFSM1().getStato2().getId()+"\t\t ");
+
+
+            if (t.getTransizioneFSM2()== null)
+                System.out.print(NIENTE);
+            else
+                System.out.print(t.getTransizioneFSM2().getStato1().getId()+"\t\t"+t.getTransizioneFSM2().getStato2().getId());
+            System.out.println("");
+
+    }
 
 }
