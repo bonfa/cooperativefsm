@@ -92,7 +92,7 @@ public class Interazione implements Messaggi{
                     System.out.println("Scatta transizione!\n");
             else
                     System.out.println("Non scatta transizione!\n");
-                //s.scatta(temp.elementAt(transizioneAbilitata));
+                s.scatta(temp.elementAt(transizioneAbilitata));
             return false;
             }
                

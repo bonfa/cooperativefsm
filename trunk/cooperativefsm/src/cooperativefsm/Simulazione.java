@@ -210,11 +210,25 @@ public class Simulazione {
      */
     public StatoCorrente scatta(TransizioniAbilitate t)
     {
-        StatoCorrente prossimoStato = new StatoCorrente();
+        Stato s1,s2;
+        
+        if(t.getTransizioneFSM1() != null){
+            s1=t.getTransizioneFSM1().getStato2();
+        }else{
+            s1=statoCorrente.getStatoCorrenteFSM1();
+        }
 
-        prossimoStato.setStati(t.getTransizioneFSM1().getStato2(), t.getTransizioneFSM2().getStato2());
+        if(t.getTransizioneFSM2() != null){
+            s2=t.getTransizioneFSM2().getStato2();
+        }else{
+            s2=statoCorrente.getStatoCorrenteFSM2();
+        }
 
-        return prossimoStato;
+
+
+        statoCorrente.setStati(s1, s2);
+
+        return statoCorrente;
     }
 
     /**
