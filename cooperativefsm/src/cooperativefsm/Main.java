@@ -31,13 +31,8 @@ public class Main {
         final String XML_NOT = "-- File xml non formattato correttamente!!! --";
         final String XML_DEF = "fsm.xml";
         final String SALVA_SIM = "Vuoi salvare la simulazione? ";
-
-        //messaggi di output utili per l'esecuzione...li ho messi nel main ma prob andranno spostati     by carlo
-        final String NO_TR_DISP = "Non ci sono transizioni abilitate a scattare. Fine della simulazione";
-        final String UNICA_TR = "Questa è l'unica transizione/coppia di transizioni abilitata a scattare";
-        final String PIU_TR_DISP = "Ci sono più transizioni/coppie di transizioni abilitate a scattare";
-        final String SCELTA_TR = "Scegli la transizione/coppia di transizioni che deve scattare";
-        final String PROSEGUI = "Vuoi proseguire con la simulazione?";
+        final String ESECUZIONE="ESECUZIONE SIMULAZIONE:";
+       
 
         MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
         boolean continua = true;
@@ -98,7 +93,9 @@ public class Main {
         
         
         }//while
-                                                
+
+        System.out.println("\n\n"+ESECUZIONE);
+
        while (!fineProgramma)
        {//  s.eseguiIterazione();
         fineProgramma=i.selezioneTransizioneDaFarScattare(s);
