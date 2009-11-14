@@ -84,15 +84,26 @@ public class Interazione implements Messaggi{
         else
             {
             this.stampaTransizioniAbilitate(temp);
-            int transizioneAbilitata=Servizio.leggiInt(SCEGLI_TRANSIZIONE,0,temp.size()-1);
+            int transizioneAbilitata=Servizio.leggiInt(SCEGLI_TRANSIZIONE,ESCI,temp.size()-1);
+            if (transizioneAbilitata==ESCI)
+                    {
+                    boolean exit=Servizio.yesOrNo(LA_ACCENDIAMO);
+                    if (exit)
+                        {
+                        System.out.println("SIMULAZIONE_TERMINATA");
+                        return true;
+                        }
+                    }
             System.out.println(MENU_TRANSIZIONI_ABILITATE);
             this.stampaCoppiaDiTransizioni(temp.elementAt(transizioneAbilitata), transizioneAbilitata);
             boolean risp=Servizio.yesOrNo(ABILITAZIONE);
             if (risp)
-                    System.out.println("Scatta transizione!\n");
-            else
-                    System.out.println("Non scatta transizione!\n");
+                {
+                System.out.println("Scatto transizione!\n");
                 s.scatta(temp.elementAt(transizioneAbilitata));
+                }
+            //else
+              //  System.out.println("Non scatta transizione!\n");
             return false;
             }
                
