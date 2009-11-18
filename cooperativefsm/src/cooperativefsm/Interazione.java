@@ -69,7 +69,6 @@ public class Interazione implements Messaggi{
     private boolean esecuzioneSenzaErrori(Simulazione s)
     {
 
-        //TODO
         Vector<TransizioniAbilitate> temp=null;
         
         temp=s.getTransizioniAbilitate();
@@ -83,17 +82,24 @@ public class Interazione implements Messaggi{
             }
         else
             {
+            int transizioneAbilitata=-1;
             this.stampaTransizioniAbilitate(temp);
-            int transizioneAbilitata=Servizio.leggiInt(SCEGLI_TRANSIZIONE,ESCI,temp.size()-1);
-            if (transizioneAbilitata==ESCI)
+            boolean continua=true;
+            while (continua)
+                {
+                transizioneAbilitata=Servizio.leggiInt(SCEGLI_TRANSIZIONE,ESCI,temp.size()-1);
+                if (transizioneAbilitata==ESCI)
                     {
                     boolean exit=Servizio.yesOrNo(LA_ACCENDIAMO);
                     if (exit)
                         {
-                        System.out.println("SIMULAZIONE_TERMINATA");
+                        System.out.println(SIMULAZIONE_TERMINATA);
                         return true;
                         }
                     }
+                else
+                    continua=false;
+                }
             System.out.println(MENU_TRANSIZIONI_ABILITATE);
             this.stampaCoppiaDiTransizioni(temp.elementAt(transizioneAbilitata), transizioneAbilitata);
             boolean risp=Servizio.yesOrNo(ABILITAZIONE);
@@ -102,8 +108,7 @@ public class Interazione implements Messaggi{
                 System.out.println("Scatto transizione!\n");
                 s.scatta(temp.elementAt(transizioneAbilitata));
                 }
-            //else
-              //  System.out.println("Non scatta transizione!\n");
+            
             return false;
             }
                
@@ -118,15 +123,15 @@ public class Interazione implements Messaggi{
             System.out.print(id+"\t     ");
 
             if (t.getTransizioneFSM1()== null)
-                System.out.print(NIENTE+" ");
+                System.out.print(NIENTE+"\t\t ");
             else
-                System.out.print(t.getTransizioneFSM1().getStato1().getId()+"\t\t"+t.getTransizioneFSM1().getStato2().getId()+"\t\t ");
+                System.out.print("("+t.getTransizioneFSM1().getStato1().getId()+" - "+t.getTransizioneFSM1().getStato2().getId()+")\t\t");
 
 
             if (t.getTransizioneFSM2()== null)
                 System.out.print(NIENTE);
             else
-                System.out.print(t.getTransizioneFSM2().getStato1().getId()+"\t\t"+t.getTransizioneFSM2().getStato2().getId());
+                System.out.print("("+t.getTransizioneFSM2().getStato1().getId()+" - "+t.getTransizioneFSM2().getStato2().getId()+")");
             System.out.println("");
 
     }
