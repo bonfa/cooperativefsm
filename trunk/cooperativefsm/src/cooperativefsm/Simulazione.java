@@ -26,11 +26,12 @@ public class Simulazione {
 
     /*
      *
-     * Il costruttore provvede a settare le fsm, le relazioni tra transizione
+     * Il costruttore provvede a settare le fsm, le relazioni tra transizione e
+     * lo stato corrente della simulazione.
      *
-     * @param _listaFsm
-     * @param relazioni
-     * @param sc
+     * @param Vector<Fsm> _listaFsm
+     * @param Relazione relazioni[][]
+     * @param StatoCorrente sc
      *
      * @see Input,InputXML,InputTast
      */
@@ -53,11 +54,10 @@ public class Simulazione {
 
     /**
      * 
-     * This method fill the list of TransizioniAbilitate starting from
-     *  a set of Relazioni that interest outgoing Transizioni from the current
-     *  state.
      * 
-     * @return 
+     * @return la lista delle fsm della simulazione
+     *
+     * @see  Fsm
      */
 
     public Vector<Fsm> getListaFsm()
@@ -65,13 +65,46 @@ public class Simulazione {
         return listaFsm;
     }
 
+    /**
+     *
+     * @return lo StatoCorrente della simulazione
+     *
+     * @see StatoCorrente
+     */
+
     public StatoCorrente getStatoCorrente() {
         return statoCorrente;
     }
 
+    /**
+     *
+     * @return
+     */
+
     public Vector<TransizioniAbilitate> getTransizioniAbilitate() {
         return transizioniAbilitate;
     }
+
+    /**
+     *
+     * Questo metodo serve per settare l'attributo
+     * numRelazioniSincroneStatoCorrente di Transizione che ad ogni
+     * iterazione della simulazione indica per ognuna delle transizioni uscente
+     * dallo stato corrente il numero di relazioni sincrone che  la transizione
+     * ha con le transizioni uscenti dallo stato corrente della fsm
+     * complementare. Ovviamente questo metodo deve essere richiamato ad ogni
+     * iterazione, per ogni transizione uscente. Se eventualmente la transizione
+     * ha una sola relazione sincrona con una transizione uscente, la funzione
+     * setta l'attributo transizioneSincronaCorrispondente con il riferimento
+     * della transizione sincrona corrispondente. In caso contrario, il valore
+     * contenuto nell'attributo non è da considerarsi sensato.
+     *
+     * @param idFsm
+     * @param tr
+     * @param transUscFsmCorrispondente
+     *
+     * @see Fsm, Transizione, Relazione, Stato
+     */
 
     private void setNumRelazioniSincroneStatoCorrentePerTransizione( int idFsm, Transizione tr, Vector<Transizione> transUscFsmCorrispondente){
 
@@ -100,7 +133,13 @@ public class Simulazione {
        tr.setNumRelazioniSincroneStatoCorrente(count);
     }
 
-    //Non ho mai avuto il dono della sintesi, me lo dicono tutti
+    /**
+     * Si preoccupa di chiamare il metodo
+     * setNumRelazioniSincroneStatoCorrentePerTransizione per ogni transizione
+     * uscente dallo stato corrente.
+     *
+     * @return un codice che indica se l'iterazione si è svolta correttamente o meno
+     */
     private ReturnCodeIterazione setNumRelazioniSincroneTransizioniUscenti(){
 
         Vector<Transizione> trUsc1 = statoCorrente.getStatoCorrenteFSM1().getTransizioniUscenti();
@@ -139,7 +178,13 @@ public class Simulazione {
     }
 
     /**
-     * Imposta il vettore contenente le transizioni abilitate a seconda della stato della simulazione
+     * Questo metodo si preoccuppa di settare la lista delle transizioni
+     * abilitate allo scatto nell'iterazione corrente, seguendo l'algoritmo
+     * descritto nel diagramma degli stati annesso alla documentazione.
+     * Al termine dell'esecuzione di questo metodo avremo un Vector contenente
+     * le istanze di TransizioniAbilitate, ognuna delle quali specifica lo stato
+     * successivo della simulazione.
+     *
      */
   
     private void setTransizioniAbilitate()
@@ -205,7 +250,7 @@ public class Simulazione {
     
     /**
      * Esegue lo scatto della simulazione.
-     * @param t
+     * @param TransizioniAbilitate t
      * @return Il nuovo Stato corrente della simulazione
      */
     public StatoCorrente scatta(TransizioniAbilitate t)
@@ -232,7 +277,8 @@ public class Simulazione {
     }
 
     /**
-     *This method perform the simultion step.
+     *  Si occupa di effettuare i compiti che deve svolgere il sistema in uno
+     *  stp.
      * 
      * @return un boolean che rappresenta la volontà di proseguire nella simulazione
      */

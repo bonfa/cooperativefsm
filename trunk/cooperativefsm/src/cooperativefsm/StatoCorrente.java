@@ -47,6 +47,14 @@ public class StatoCorrente
         return sCorrenteFsm2;
     }
 
+
+    /**
+     * Se s==0 restituisce lo stato della fsm1, altrimenti se s==1 restituisce
+     * lo stato di fsm2, altrimenti null
+     *
+     * @param s
+     * @return
+     */
     public Stato getStato(int s)
     {
         Stato p = null;

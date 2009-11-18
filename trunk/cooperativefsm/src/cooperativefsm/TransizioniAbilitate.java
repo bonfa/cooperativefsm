@@ -6,8 +6,11 @@
 package cooperativefsm;
 
 /**
+ * Classe che contiene una singola transizione o una coppia di queste abilitate
+ * a scattare in un iterazione della simulazione.
  *
  * @author Alessandro
+ * @see Transizione, Stato
  */
 public class TransizioniAbilitate {
 
