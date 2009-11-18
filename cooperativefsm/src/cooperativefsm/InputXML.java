@@ -157,6 +157,11 @@ public class InputXML extends Input {
                     try
                     {
                         id = Integer.parseInt(nl.item(i).getFirstChild().getNodeValue());
+                        if(id!=0 && id!=1)
+                        {
+                                System.out.println("-- La fsm deve avere name=0 o name=1");
+                                listaFsm.get(-1);//per uscire dal programma
+                        }
                         //Controllo che non ci sia già un'altra fsm con lo stesso id
                         for(int j=0; j<listaFsm.size(); j++)
                         {

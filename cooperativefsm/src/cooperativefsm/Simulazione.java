@@ -23,8 +23,8 @@ public class Simulazione {
     public Relazione relazioniTransizioni[][];
 
     private boolean numRelazioniSincroneUscentiIsSetted;
-   
-    /**
+
+    /*
      *
      * Il costruttore provvede a settare le fsm, le relazioni tra transizione
      *
