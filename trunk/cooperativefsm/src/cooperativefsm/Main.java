@@ -111,7 +111,7 @@ public class Main {
                 if(url.equals(""))
                     url=XML_DEF;
                 //da cambiare
-                //s.salvaSimulazione(url);
+                OutputXML.salvaSimulazione(s,url);
             }
         }
         System.out.println(MESS_FINALE);
