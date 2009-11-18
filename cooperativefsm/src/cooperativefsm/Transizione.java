@@ -20,7 +20,8 @@ public class Transizione {
     private Stato stato1;
     private Stato stato2;
     private int numRelazioniSincroneStatoCorrente; //Indica quante relazioni sincrone ha con altre transizioni nello stato corrente
-    /*
+    
+    /**
      *  Valore che viene aggiornato di iterazione in iterazione.
      *  indica la transizione con cui nello stato corrente this (eventualmente)
      *  una transizione sincrona. Il valore è da considerarsi utilizzabile solo nel caso in cui
@@ -68,15 +69,34 @@ public class Transizione {
         return id;
     }
 
+    /**
+     * Funzione che permette di accedere allo stato sorgente della transizione
+     * @return stato sorgente della transizione
+     */
+
     public Stato getStato1()
     {
         return stato1;
     }
 
+    /**
+     * Funzione che permette di accedere allo stato destinazione della
+     * simulazione.
+     * @return
+     */
+
     public Stato getStato2()
     {
         return stato2;
     }
+
+    /**
+     * Setta il valore transizioneSincronaCorrispondente nel caso in cui la
+     * transizione sia uscente dallo stato corrente nella attuale iterazione
+     * e abbia una e una sola relazione sincrona con una transizione uscente
+     * dallo stato corrente della fsm complementare
+     * @param t
+     */
 
     public void setTransizioneSincronaCorrispondente(Transizione t){
         transizioneSincronaCorrispondente= t;

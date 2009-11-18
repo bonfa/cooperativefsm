@@ -2,6 +2,8 @@ package cooperativefsm;
 
 /**
  *
+ * Classe che rappresenta una fsm, contiene gli stati e le transizioni di questa
+ *
  * @author Alessandro Ferrari, Carlo Svanera, Luca Cominardi
  */
 
@@ -93,7 +95,9 @@ public class Fsm {
     }
 
 
-    //Setto le transizioni uscenti da ogni stato della fsm
+    /**
+     * Setta le transizioni uscenti da ogni stato della fsm.
+     */
     public void setTransizioniUscentiStati(){
         
          ListIterator l_itr_st = stati.listIterator();
