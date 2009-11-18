@@ -50,13 +50,18 @@ public class InputTast extends Input
         }
         
         statoIniziale = leggiStatoIniziale(listaFsm);                   //Lettura stato iniziale
-        
-        relazioniTransizioni = initRelazioni();                         //Inizializza l'array bidimensionale di relazioni
-        while (ciSonoRelaz())
-             imposta(relazioniTransizioni, listaFsm);
+
+        if(listaFsm.get(0).getNumTr() != 0  &&      //se entrambe le fsm hanno almeno una transizione si inizializza il vettore
+           listaFsm.get(1).getNumTr() != 0)
+        {
+            relazioniTransizioni = initRelazioni();                         //Inizializza l'array bidimensionale di relazioni
+            while (ciSonoRelaz())
+                 imposta(relazioniTransizioni, listaFsm);
+        }
+        else
+            System.out.println("Non puoi inserire relazioni tra transizioni perchè una della due FSM non ha transizioni.");
 
         System.out.println("Simulazione caricata correttamente!");
-
         return (new Simulazione(listaFsm, relazioniTransizioni, statoIniziale));    //L'interfaccia tra io e core è data da questa riga, è l'unico punto di incontro
    }
      
@@ -228,8 +233,8 @@ public class InputTast extends Input
      */
      public  Simulazione.Relazione[][] initRelazioni ()
      {
-            int n = listaFsm.elementAt(0).getTransizioni().size();//N° transizioni prima fsm
-            int m = listaFsm.elementAt(1).getTransizioni().size();//..seconda
+            int n = listaFsm.elementAt(0).getNumTr();//N° transizioni prima fsm
+            int m = listaFsm.elementAt(1).getNumTr();//..seconda
             relazioniTransizioni = new Simulazione.Relazione[n][m];
                 
             for (int i=0; i < n; i++)

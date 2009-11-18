@@ -26,7 +26,7 @@ public class Main {
     public static void main(String[] args)
     {
         final String TIPOINPUT = "TIPO DI INPUT";
-        final String [] SCELTAINPUT  = {"da tastiera","da file xml"};
+        final String [] SCELTAINPUT  = {"Da tastiera, per salvataggio","Da tastiera, per l'esecuzione","Da file xml, per esecuzione"};
         final String MESS_FINALE = "CIAO!";
         final String XML_NOT = "-- File xml non formattato correttamente!!! --";
         final String XML_DEF = "fsm.xml";
@@ -39,23 +39,28 @@ public class Main {
         boolean fineProgramma=false;
         Simulazione s = null;
         Interazione i=new Interazione();
-
+        int selezione = 0;
+        
         while(continua)
         {
             Input in = null;
-            int selezione = menuInput.scegli();
+            selezione = menuInput.scegli();
         
             switch (selezione)
             {
-                case 1: {   //Lettura da file
+                case 1: {   //Lettura da tastiera per salvataggio
                         in = new InputTast();
-                        s = in.leggiSimulazione();          //leggiSimulazione è un metodo della classe Input,
-                        //da cambiare
-                        //System.out.println(s.ToString());   //da cui ereditano le classi InputTast e InputXML
+                        s = in.leggiSimulazione();          //leggiSimulazione è un metodo della classe Input,da cui ereditano le classi InputTast e InputXML
                         continua = false;
                         break;
                         }
-                case 2: {   //Lettura da XML
+                case 2: {   //Lettura da tastiera per esecuzione
+                        in = new InputTast();
+                        s = in.leggiSimulazione();
+                        continua = false;
+                        break;
+                        }
+                case 3: {   //Lettura da XML per esecuzione
                             String url=Servizio.leggiString("Inserire il percorso del file xml da leggere (" + XML_DEF + ")> ");
                             if(url.equals(""))
                                 url=XML_DEF;
@@ -94,15 +99,14 @@ public class Main {
         
         }//while
 
+       if (selezione!=1)
         System.out.println("\n\n"+ESECUZIONE);
 
-       while (!fineProgramma)
-       {//  s.eseguiIterazione();
+       while (!fineProgramma && selezione != 1)     //l'esecuzione è fatta solo per le selezioni 2 e 3 del menu; se si è scelto 1 si passa subito al salvataggio
+       {
         fineProgramma=i.selezioneTransizioneDaFarScattare(s);
        }
-        //System.out.println(s.getListaFsm().get(0).ToString());
-        //System.out.println(s.getListaFsm().get(1).ToString());
-        if(s!=null)
+       if(s!=null)
         {
             boolean salva = Servizio.yesOrNo(SALVA_SIM);
             if(salva)
