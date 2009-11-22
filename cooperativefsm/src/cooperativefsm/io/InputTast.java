@@ -1,4 +1,4 @@
-package cooperativefsm;
+package cooperativefsm.io;
 
 /**
  * Classe che eredita  dalla classe padre Input, e ne sovrascrive alcuni metodi in modo  da
@@ -7,6 +7,12 @@ package cooperativefsm;
  * @author Renato
  */
 
+import cooperativefsm.logic.Simulazione;
+import cooperativefsm.logic.Stato;
+import cooperativefsm.logic.Fsm;
+import cooperativefsm.logic.Transizione;
+import cooperativefsm.logic.StatoCorrente;
+import cooperativefsm.*;
 import java.util.Vector;
 
 public class InputTast extends Input

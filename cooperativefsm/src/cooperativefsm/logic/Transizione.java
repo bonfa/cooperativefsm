@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package cooperativefsm;
+package cooperativefsm.logic;
 
 import java.util.*;
 

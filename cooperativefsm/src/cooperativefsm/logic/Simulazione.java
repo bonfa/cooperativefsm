@@ -1,10 +1,11 @@
 
-package cooperativefsm;
+package cooperativefsm.logic;
 
 /**
  *
  * @author Alessandro Ferrari, Carlo Svanera, Luca Cominardi
  */
+import cooperativefsm.*;
 import java.util.*;
 
 

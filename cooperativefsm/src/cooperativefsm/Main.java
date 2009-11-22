@@ -6,6 +6,15 @@
 package cooperativefsm;
 
 //import java.io.IOException;
+
+import cooperativefsm.logic.Simulazione;
+import cooperativefsm.io.Input;
+import cooperativefsm.io.OutputXML;
+import cooperativefsm.io.Servizio;
+import cooperativefsm.io.InputTast;
+import cooperativefsm.io.InputXML;
+import cooperativefsm.io.MyMenu;
+
 //import javax.xml.parsers.ParserConfigurationException;
 //import org.xml.sax.SAXException;
 
