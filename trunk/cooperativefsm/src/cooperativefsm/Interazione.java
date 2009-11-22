@@ -5,6 +5,9 @@
 
 package cooperativefsm;
 
+import cooperativefsm.logic.Simulazione;
+import cooperativefsm.logic.TransizioniAbilitate;
+import cooperativefsm.io.Servizio;
 import java.util.*;
 
 /**

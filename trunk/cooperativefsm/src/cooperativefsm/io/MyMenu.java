@@ -1,4 +1,4 @@
-package cooperativefsm;
+package cooperativefsm.io;
 
 /**
  *

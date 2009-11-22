@@ -1,4 +1,4 @@
-package cooperativefsm;
+package cooperativefsm.io;
 
 /**
  * Classe di supporto per le Operazioni di Input/Output da tastiera

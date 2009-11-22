@@ -3,9 +3,10 @@
  * and open the template in the editor.
  */
 
-package cooperativefsm;
+package cooperativefsm.io;
 
-import cooperativefsm.Simulazione.Relazione;
+import cooperativefsm.logic.*;
+import cooperativefsm.logic.Simulazione.Relazione;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;

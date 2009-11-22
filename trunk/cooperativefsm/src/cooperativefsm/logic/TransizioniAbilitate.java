@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package cooperativefsm;
+package cooperativefsm.logic;
 
 /**
  * Classe che contiene una singola transizione o una coppia di queste abilitate

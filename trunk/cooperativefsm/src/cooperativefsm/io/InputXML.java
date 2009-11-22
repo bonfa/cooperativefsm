@@ -4,13 +4,19 @@
  * and open the template in the editor.
  */
 
-package cooperativefsm;
+package cooperativefsm.io;
 
 /**
  *
  * @author Cominardi Luca
  */
 
+import cooperativefsm.logic.Simulazione;
+import cooperativefsm.logic.Stato;
+import cooperativefsm.logic.Fsm;
+import cooperativefsm.logic.StatoCorrente;
+import cooperativefsm.logic.Transizione;
+import cooperativefsm.*;
 import java.io.File;
 import java.io.IOException;
 
