@@ -19,11 +19,7 @@ import cooperativefsm.io.MyMenu;
 //import org.xml.sax.SAXException;
 
 /**
- *
- * Prova commit
- * Prova commit by carlo
- *
- * @author Cominardi Luca, Ferrari Alessandro, Svanera Carlo
+ * @author Cominardi Luca, Ferrari Alessandro, Svanera Carlo, Francesco Bonfadelli
  */
 
 public class Main {     
@@ -34,15 +30,17 @@ public class Main {
     
     public static void main(String[] args)
     {
+        final String BENVENUTO = "Benvenuto! Questo programma ti permetterà di effettuare una simulazione di due macchine a stati" +
+                " finiti cooperanti tra loro.\nPer prima cosa scegli l'opzione desiderata:\n";
         final String TIPOINPUT = "TIPO DI INPUT";
         final String [] SCELTAINPUT  = {"Da tastiera, per salvataggio","Da tastiera, per l'esecuzione","Da file xml, per esecuzione"};
-        final String MESS_FINALE = "CIAO!";
+        final String MESS_FINALE = "CIAO E GRAZIE!";
         final String XML_NOT = "-- File xml non formattato correttamente!!! --";
         final String XML_DEF = "fsm.xml";
         final String SALVA_SIM = "Vuoi salvare la simulazione? ";
         final String ESECUZIONE="ESECUZIONE SIMULAZIONE:";
        
-
+        System.out.println(BENVENUTO);
         MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
         boolean continua = true;
         boolean fineProgramma=false;
@@ -108,7 +106,7 @@ public class Main {
         
         }//while
 
-       if (selezione!=1)
+       if (selezione!=1 && selezione !=0)
         System.out.println("\n\n"+ESECUZIONE);
 
        while (!fineProgramma && selezione != 1)     //l'esecuzione è fatta solo per le selezioni 2 e 3 del menu; se si è scelto 1 si passa subito al salvataggio
