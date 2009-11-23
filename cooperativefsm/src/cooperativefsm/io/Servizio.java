@@ -197,9 +197,14 @@ public class Servizio {
 	  {
 	   boolean finito = false;
 	   int valoreLetto = 0;
+           String range = "";
+           if (minimo == massimo)
+               range = " (unico valore ammesso: " + minimo +"): ";
+           else
+               range = " (n° compreso tra " + minimo + " e " + massimo + "): ";
 	   do
 	    {
-	     valoreLetto = leggiInt(messaggio);
+	     valoreLetto = leggiInt(messaggio + range);
 	     if (valoreLetto >= minimo && valoreLetto<= massimo)
 	      finito = true;
 	     else
