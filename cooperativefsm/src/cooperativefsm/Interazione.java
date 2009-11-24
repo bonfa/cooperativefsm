@@ -121,15 +121,15 @@ public class Interazione implements Messaggi{
             System.out.print(id+"\t     ");
 
             if (t.getTransizioneFSM1()== null)
-                System.out.print(NIENTE+"\t\t ");
+                System.out.print(NIENTE+"\t\t -\t\t");
             else
-                System.out.print("("+t.getTransizioneFSM1().getStato1().getId()+" - "+t.getTransizioneFSM1().getStato2().getId()+")\t\t");
+                System.out.print("("+t.getTransizioneFSM1().getStato1().getId()+" - "+t.getTransizioneFSM1().getStato2().getId()+")\t\t"+ t.getTransizioneFSM1().getNome()+"\t\t");
 
 
             if (t.getTransizioneFSM2()== null)
-                System.out.print(NIENTE);
+                System.out.print(NIENTE+"\t\t -");
             else
-                System.out.print("("+t.getTransizioneFSM2().getStato1().getId()+" - "+t.getTransizioneFSM2().getStato2().getId()+")");
+                System.out.print("("+t.getTransizioneFSM2().getStato1().getId()+" - "+t.getTransizioneFSM2().getStato2().getId()+")\t\t"+t.getTransizioneFSM2().getNome());
             System.out.println("");
 
     }
