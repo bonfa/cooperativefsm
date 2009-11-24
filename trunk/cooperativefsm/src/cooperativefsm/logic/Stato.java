@@ -9,6 +9,8 @@ import java.util.*;
 
 public class Stato {
 
+    //@ public invariant \old(idStato)==idStato
+
     private int idStato;    //è il numero progressivo assegnato allo stato, riferito alla fsm cui appartiene
     private Vector<Transizione> transizioniUscenti;
 
