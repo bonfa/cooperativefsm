@@ -18,12 +18,12 @@ public class Simulazione {
     }
 
 
-    private Vector<Fsm> listaFsm;
-    private Vector<TransizioniAbilitate> transizioniAbilitate;  //lista dinamica che varia a seconda dello stato corrente
-    private StatoCorrente statoCorrente;
-    public Relazione relazioniTransizioni[][];
+    private /*@ spec_public non_null @*/ Vector<Fsm> listaFsm;
+    private /*@ spec_public non_null @*/ Vector<TransizioniAbilitate> transizioniAbilitate;  //lista dinamica che varia a seconda dello stato corrente
+    private /*@ spec_public non_null @*/ StatoCorrente statoCorrente;
+    public  /*@ spec_public non_null @*/ Relazione relazioniTransizioni[][];
 
-    private boolean numRelazioniSincroneUscentiIsSetted;
+    private /*@ spec_public @*/ boolean numRelazioniSincroneUscentiIsSetted;
 
     /*
      *
