@@ -16,13 +16,14 @@ public class Fsm {
     private Vector<Stato>       stati;
     private Vector<Transizione> transizioni;
  
-
     /**
      * Costruttore di una fsm
      *
      * @param _id
+     * @deprecated
      */
 
+    //@ requires _id==0 || _id==1
     public Fsm (int _id)
     {
         id          = _id;
@@ -38,6 +39,12 @@ public class Fsm {
      * @param _transizioni
      */
 
+    /*@ requires _id == 0 || _id==1
+      @ requires _stati!=null && _transizioni!=null
+      @ requires (/ forall Stato s; _stati.contains(s) ; s.getId()<numStati )
+      @ requires (/ forall Stato s1, Stato s2; _stati.contains(s1) && _stati.contains(s2) && s1 != s2; s1.getId()!=s2.getId())
+      @ requires (/ forall Transizione t; transizioni.contains(t); stati.contains(t.getStato1()) && stati.contains(t.getStato2()))
+      @*/
     public Fsm (int _id, Vector<Stato> _stati,Vector<Transizione> _transizioni) {
 
         id          = _id;
@@ -47,30 +54,42 @@ public class Fsm {
 
      }
 
+    /**
+     * @deprecated
+     */
 
+     //@ requires _id==0 || _id==1
      public void setId(int _id){
          id =_id;
      }
 
+     //@ ensures /return==0 || /return==1
      public int getId(){
      return id;
      }
 
      public String getNome(){
-     return Integer.toString(id);
+        return Integer.toString(id);
      }
-     public int getNumStati(){
+
+     //@ ensures /return>0
+     public /*@ pure @*/ int getNumStati(){
         numStati = stati.size();
         return numStati;
      }
 
-     public int getNumTr(){
+     public /*@ pure @*/ int getNumTr(){
      return transizioni.size();
      }
-    public void addStato(Stato s) {         //aggiunge uno stato al vector listaStati
+
+    /**
+     * @deprecated
+     */
+    public void addStato(Stato s) {  //aggiunge uno stato al vector listaStati
         stati.add(s);
     }
 
+    //@ ensures
     public Vector<Stato> getStati(){
         return stati;
     }
@@ -81,14 +100,20 @@ public class Fsm {
         return s;
     }
 
+    /**
+     * @deprecated
+     */
+
     public void addTrans (Transizione t)    {
         transizioni.add(t);
     }
 
+    //@ ensures /return!=null
     public Vector<Transizione> getTransizioni()    {
         return transizioni;
     }
 
+    //@ requires indice>=0 && indice<=transizioni.size()
     public Transizione getTransizioneAt (int indice)    {
         Transizione t = transizioni.get(indice);
         return t;
@@ -98,12 +123,17 @@ public class Fsm {
     /**
      * Setta le transizioni uscenti da ogni stato della fsm.
      */
+    //@ ensures (/ forall Stato  stato; stati.contains( stato ) ; stato.getTransizioniUscenti != null )
+    //@ ensures (/ forall Transizione transizione; stato.getTransizioniUscenti().contains(transizione) ; this == transizione.getStato1() )
+    //@ ensures (/ forall Transizione transizione; transizioni.contains( transizione ) && this == transizione.getStato1() ; transizioniUscenti.contains(this))
+    //@ ensures (/ forall Stato stato; stati.contains( stato ) ; stato.getTransizioniUscentiIsSetted())
     public void setTransizioniUscentiStati(){
         
          ListIterator l_itr_st = stati.listIterator();
          ListIterator l_itr_tr;
          Stato stato;
          Transizione transizione;
+
 
          //Setto le transizioni uscenti per tutti gli stati della fsm
          while(l_itr_st.hasNext()){
@@ -117,7 +147,7 @@ public class Fsm {
                 if( transizione.getStato1().equals(stato) )
                     stato.addTransUscente(transizione);
             }
-            stato.transizioniUscentiIsSetted();
+            stato.setTransizioniUscentiIsSetted();
          }
     }
 

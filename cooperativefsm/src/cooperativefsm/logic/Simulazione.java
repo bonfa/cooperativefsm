@@ -17,7 +17,6 @@ public class Simulazione {
         M_EX
     }
 
-
     private /*@ spec_public non_null @*/ Vector<Fsm> listaFsm;
     private /*@ spec_public non_null @*/ Vector<TransizioniAbilitate> transizioniAbilitate;  //lista dinamica che varia a seconda dello stato corrente
     private /*@ spec_public non_null @*/ StatoCorrente statoCorrente;
@@ -36,7 +35,18 @@ public class Simulazione {
      *
      * @see Input,InputXML,InputTast
      */
-    
+
+    /*@ requires (*_listaFsm deve contenere due Fsm*)
+      @ requires _listaFsm != null && _listaFsm.size()==2
+      @ requires relazioni != null
+      @ requires (*relazioni deve essere un array bidimensionale di dimensione numero_transizioni_fsm1 * numero_transizioni_fsm2 *)
+      @ requires relazioni.lenght < (/ product int i; i>=0  && i<==1; _listaFsm.elementAt(i).getNumTr() )
+      @ requires (*relazioni deve contenere solo valori del tipo enum RelazioneTransizione
+      @ requires (/ forall int i, int j; i>=0 && i<_listaFsm.elementAt(0).getNumTr() && j>=0 && j<_listaFsm.elementAt(1).getNumTr(); relazioni[i][j]==RelazioneTransizioni.SINCRONA || relazione[i][j]==RelazioneTransizioni.ASINCRONA || relazione[i][j]==RelazioniTransizioni.M_EX)
+      @ requires sc != null
+      @ requires (*lo stato iniziale deve essere uno stato esistente*)
+      @ requires (/ forall int i; i>=0 && i<=1; sc.getStato(i).getId()>=0 && sc.getStato(i).getId()<_listaFsm.elementAt(i).getNumStati() )
+      @*/
     public Simulazione (Vector<Fsm> _listaFsm, Relazione relazioni[][], StatoCorrente sc){
         listaFsm = _listaFsm;
         relazioniTransizioni = relazioni;
@@ -54,34 +64,33 @@ public class Simulazione {
     }
 
     /**
-     * 
-     * 
      * @return la lista delle fsm della simulazione
      *
      * @see  Fsm
      */
-
+    //@ ensures listaFsm != null && listaFsm.size()==2
     public Vector<Fsm> getListaFsm()
     {
         return listaFsm;
     }
 
     /**
-     *
      * @return lo StatoCorrente della simulazione
      *
      * @see StatoCorrente
      */
 
+    //@ ensures (/ forall int i; i>=0 && i<=1; statoCorrente.getStato(i).getId()>=0 && statoCorrente.getStato(i).getId()<listaFsm.elementAt(i).getNumStati() )
     public StatoCorrente getStatoCorrente() {
         return statoCorrente;
     }
 
     /**
      *
-     * @return
+     * @return Lista delle possibili combinazioni di transizioni abilitate allo scatto
      */
 
+    //@ ensures /return != null
     public Vector<TransizioniAbilitate> getTransizioniAbilitate() {
         return transizioniAbilitate;
     }
@@ -187,7 +196,8 @@ public class Simulazione {
      * successivo della simulazione.
      *
      */
-  
+
+    /*@ ensures /return != null @*/
     private void setTransizioniAbilitate()
     {
         boolean isMutEx;
@@ -254,6 +264,11 @@ public class Simulazione {
      * @param TransizioniAbilitate t
      * @return Il nuovo Stato corrente della simulazione
      */
+
+    //@ requires t != null
+    //@ ensures /return!=null
+    //@ ensures (/ forall int i; i>=0 && i<=1; /return.getStato(i).getId()>=0 && /return.getStato(i).getId()<listaFsm.elementAt(i).getNumStati() )
+
     public StatoCorrente scatta(TransizioniAbilitate t)
     {
         Stato s1,s2;
@@ -272,7 +287,7 @@ public class Simulazione {
 
 
 
-        statoCorrente.setStati(s1, s2);
+        statoCorrente = new StatoCorrente(s1, s2);
 
         return statoCorrente;
     }
@@ -283,6 +298,8 @@ public class Simulazione {
      * 
      * @return un boolean che rappresenta la volontà di proseguire nella simulazione
      */
+
+    //@ ensures /return==ReturnCodeIterazione.NO_ERROR
     public ReturnCodeIterazione eseguiIterazione ()
     {
         numRelazioniSincroneUscentiIsSetted=false;

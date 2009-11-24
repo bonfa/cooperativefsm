@@ -39,6 +39,7 @@ public class Transizione {
      * @param _stato2
      */
 
+    //@ requires _stato1!=null && _stato2!=null
     public Transizione(int _id, Stato _stato1, Stato _stato2)
     {
         id = _id;
@@ -74,6 +75,7 @@ public class Transizione {
      * @return stato sorgente della transizione
      */
 
+    //@ensures /return!=null && /return.getId()>0
     public Stato getStato1()
     {
         return stato1;
@@ -84,6 +86,8 @@ public class Transizione {
      * simulazione.
      * @return
      */
+
+    //@ensures /return!=null && /return.getId()>0
 
     public Stato getStato2()
     {
@@ -98,14 +102,17 @@ public class Transizione {
      * @param t
      */
 
+    //@ requires numRelazioniSincroneStatoCorrente == 1 && t!=null
     public void setTransizioneSincronaCorrispondente(Transizione t){
         transizioneSincronaCorrispondente= t;
     }
 
+    //@ requires numRelazioniSincroneStatoCorrente == 1 && /return!=null
     public Transizione getTransizioneSincronaCorrispondente(){
         return transizioneSincronaCorrispondente;
     }
 
+    //@ requires n=>0
     public void setNumRelazioniSincroneStatoCorrente( int n ){
         numRelazioniSincroneStatoCorrente=n;
     }

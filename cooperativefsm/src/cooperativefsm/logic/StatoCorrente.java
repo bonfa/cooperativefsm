@@ -12,7 +12,10 @@ public class StatoCorrente
     public Stato sCorrenteFsm1;
     public Stato sCorrenteFsm2;
 
-    //Modify
+    /**
+     * @deprecated
+     */
+
     public StatoCorrente (/*Stato corrente1, Stato corrente2*/)
     {
 
@@ -23,6 +26,12 @@ public class StatoCorrente
         sCorrenteFsm2 = corrente2;
         */
     }
+    
+    //@ requires corrente1!=null && corrente2!=null
+    public StatoCorrente (Stato corrente1, Stato corrente2){
+        sCorrenteFsm1 = corrente1;
+        sCorrenteFsm2 = corrente2;
+    }
 
     /**
      * Imposta gli stati correnti delle varie fsm
@@ -30,6 +39,8 @@ public class StatoCorrente
      * 
      * @param corrente1
      * @param corrente2
+     *
+     * @deprecated
      */
     public void setStati ( Stato corrente1, Stato corrente2 )
     {
@@ -55,7 +66,9 @@ public class StatoCorrente
      * @param s
      * @return
      */
-    public Stato getStato(int s)
+
+
+    public /*@ pure @*/ Stato getStato(int s)
     {
         Stato p = null;
         if(s==0)
