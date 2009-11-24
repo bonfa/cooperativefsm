@@ -1,17 +1,27 @@
 <?xml version="1.0"?>
+<!--Iniziare sempre il file con l'intestazione xml, vedi riga sopra -->
+<!--Il primo tag da aprire è il tag simulation, contiene tutti gli altri tag -->
 <simulation>
+	<!--Il tag fsm permette di specificare una macchina a stati finiti -->
 	<fsm>
+		<!--Il tag name permette di dare un nome alla fsm, la prima fsm dovrà avere name=0, la seconda fsm dovrà avere id=1 -->
 		<name>0</name>
+		<!--Il tag states specifica il numero di stati di una fsm -->
 		<states>6</states>
+		<!--Il tag transition definisce una transizione all'interno di una fsm -->
 		<transition>
+			<!--Il tag id permette di dare un nome alla transizione -->
 			<id>a</id>
+			<!--Il tag s1 specifica lo stato iniziale di una transizione -->
 			<s1>0</s1>
+			<!--Il tag s2 specifica lo stato finale di una transizione -->
 			<s2>1</s2>
 		</transition>
 		<transition>
 			<id>b</id>
 			<s1>0</s1>
 			<s2>2</s2>
+			<!--Il tag length dev'essere ancora implementato, permetterà di definire la durata di una transizione -->
 			<!--<length>10</length>-->
 		</transition>
 		<transition>
@@ -44,6 +54,7 @@
 			<s1>4</s1>
 			<s2>1</s2>
 		</transition>
+		<!--Il tag current serve per specificare lo stato iniziale della fsm -->
 		<current>0</current>
 	</fsm>
 
@@ -57,13 +68,13 @@
 		</transition>
 		<transition>
 			<id>b</id>
-			<s1>0</s1>
-			<s2>2</s2>
+			<s1>1</s1>
+			<s2>0</s2>
 		</transition>
 		<transition>
 			<id>c</id>
-			<s1>1</s1>
-			<s2>2</s2>
+			<s1>2</s1>
+			<s2>0</s2>
 		</transition>
 		<transition>
 			<id>d</id>
@@ -72,22 +83,31 @@
 		</transition>
 		<transition>
 			<id>e</id>
-			<s1>2</s1>
-			<s2>0</s2>
+			<s1>0</s1>
+			<s2>1</s2>
 			<!--<length>7</length>-->
 		</transition>
 		<current>0</current>
 	</fsm>
-
+	
+	<!--Il tag relation definisce una relazione tra transizioni -->
 	<relation>
+		<!--Il tag transval identifica una transizione per la relazione, per ogni relation ci può essere solo una coppia di transval -->
 		<transval>
+			<!--Il tag fsm identifica l'fsm da cui si vuole prendere la transizione -->
 			<fsmval>0</fsmval>
+			<!--Il tag idval identifica l'id della transizione all'interno della fsm fsmval -->
 			<idval>a</idval>
 		</transval>
 		<transval>
 			<fsmval>1</fsmval>
 			<idval>a</idval>
 		</transval>
+		<!--Il tag type serve per specificare il tipo di relazione che intercorre tra due transizioni, le possibilità sono:
+			sync 	(sincrona)
+			mutex	(mutuamente esclusiva) -->
+		<!--Non è necessario definire una relazione per tutte le possibili coppie di transizioni. Se per una coppia di transizioni non è definita una relazione,
+			di default per tale coppia la relazione è considerata asincrona-->
 		<type>sync</type>
 	</relation>
 	<relation>
