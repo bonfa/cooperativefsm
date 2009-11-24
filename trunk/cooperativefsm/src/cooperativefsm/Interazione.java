@@ -5,8 +5,7 @@
 
 package cooperativefsm;
 
-import cooperativefsm.logic.Simulazione;
-import cooperativefsm.logic.TransizioniAbilitate;
+import cooperativefsm.logic.*;
 import cooperativefsm.io.Servizio;
 import java.util.*;
 
@@ -24,21 +23,17 @@ public class Interazione implements Messaggi{
     public boolean selezioneTransizioneDaFarScattare (Simulazione s)
     {
         this.stampaStatoCorrente(s,STATO_CORRENTE);
-        ReturnCodeIterazione rci=s.eseguiIterazione();
-        switch (rci)
-        {
-            case NUM_SYNC_REL_NOT_SETTED:
-                System.out.println(ERRORE+ERR_TRANSIZIONI_SINCRONE);
-                return true;
-            case OUTGOING_TRANSITION_NOT_SETTED:
-                //Non si dovrebbe mai verificare questo caso!
-                System.out.println(ERR_TRANSIZIONI_USCENTI);
-                return true;
-            case NO_ERROR:
-                return this.esecuzioneSenzaErrori(s);
+        try{
+            s.eseguiIterazione();
+            return this.esecuzioneSenzaErrori(s);
+        }catch(OutgoingTransitionNotSettedException e){
+            System.out.println(ERR_TRANSIZIONI_USCENTI);
+            return true;
+        }catch(SyncRelationNumberNotSettedException e){
+            System.out.println(ERRORE+ERR_TRANSIZIONI_SINCRONE);
+            return true;
         }
-        //Non si dovrebbe mai arrivare a questo return
-        return true;
+            
     }
 
     /**

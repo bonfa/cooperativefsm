@@ -5,7 +5,6 @@ package cooperativefsm.logic;
  *
  * @author Alessandro Ferrari, Carlo Svanera, Luca Cominardi
  */
-import cooperativefsm.*;
 import java.util.*;
 
 
@@ -47,7 +46,7 @@ public class Simulazione {
       @ requires (*lo stato iniziale deve essere uno stato esistente*)
       @ requires (/ forall int i; i>=0 && i<=1; sc.getStato(i).getId()>=0 && sc.getStato(i).getId()<_listaFsm.elementAt(i).getNumStati() )
       @*/
-    public Simulazione (Vector<Fsm> _listaFsm, Relazione relazioni[][], StatoCorrente sc){
+    public Simulazione (Vector<Fsm> _listaFsm, Relazione relazioni[][], StatoCorrente sc) throws cooperativeFsmLogicException{
         listaFsm = _listaFsm;
         relazioniTransizioni = relazioni;
         statoCorrente = sc;
@@ -56,9 +55,14 @@ public class Simulazione {
         ListIterator l_fsm = listaFsm.listIterator();
         Fsm fsm;
 
-        while(l_fsm.hasNext()){
-             fsm=(Fsm) l_fsm.next();
-             fsm.setTransizioniUscentiStati();
+        try
+        {
+            while(l_fsm.hasNext()){
+                 fsm=(Fsm) l_fsm.next();
+                 fsm.setTransizioniUscentiStati();
+            }
+        }catch(Exception e){
+            throw new OutgoingTransitionNotSettedException();
         }
 
     }
@@ -150,41 +154,43 @@ public class Simulazione {
      *
      * @return un codice che indica se l'iterazione si è svolta correttamente o meno
      */
-    private ReturnCodeIterazione setNumRelazioniSincroneTransizioniUscenti(){
+    private void setNumRelazioniSincroneTransizioniUscenti() throws SyncRelationNumberNotSettedException
+    {
+        try
+        {
+            Vector<Transizione> trUsc1 = statoCorrente.getStatoCorrenteFSM1().getTransizioniUscenti();
+            Vector<Transizione> trUsc2 = statoCorrente.getStatoCorrenteFSM2().getTransizioniUscenti();
 
-        Vector<Transizione> trUsc1 = statoCorrente.getStatoCorrenteFSM1().getTransizioniUscenti();
-        Vector<Transizione> trUsc2 = statoCorrente.getStatoCorrenteFSM2().getTransizioniUscenti();
+            int id1 = listaFsm.elementAt(0).getId();
+            int id2 = listaFsm.elementAt(1).getId();
 
-        int id1 = listaFsm.elementAt(0).getId();
-        int id2 = listaFsm.elementAt(1).getId();
+            if(trUsc1 == null || trUsc2 == null){
+                throw new OutgoingTransitionNotSettedException();
+            }
 
-        if(trUsc1 == null || trUsc2 == null){
-            return ReturnCodeIterazione.NUM_SYNC_REL_NOT_SETTED;
+            ListIterator l_itr_tr1 = trUsc1.listIterator();
+            ListIterator l_itr_tr2 = trUsc2.listIterator();
+
+            Transizione t;
+
+            //scorro tutte le transizioni della fsm1
+            while(l_itr_tr1.hasNext()){
+                t = (Transizione) l_itr_tr1.next();
+                //trovo il numero di relazioni sincrone tra la transizione corrente
+                //di fsm1 con le transizioni uscenti della fsm2
+                setNumRelazioniSincroneStatoCorrentePerTransizione(id1,t, trUsc2);
+            }
+            //scorro tutte le transizioni della fsm2
+            while(l_itr_tr2.hasNext()){
+                t = (Transizione) l_itr_tr2.next();
+                //trovo il numero di relazioni sincrone tra la transizione corrente
+                //di fsm2 con le transizioni uscenti della fsm1
+                setNumRelazioniSincroneStatoCorrentePerTransizione(id2,t, trUsc1);
+            }
+        }catch(Exception ex){
+            throw new SyncRelationNumberNotSettedException();
         }
 
-        ListIterator l_itr_tr1 = trUsc1.listIterator();
-        ListIterator l_itr_tr2 = trUsc2.listIterator();
-
-        Transizione t;
-
-        //scorro tutte le transizioni della fsm1
-        while(l_itr_tr1.hasNext()){
-            t = (Transizione) l_itr_tr1.next();
-            //trovo il numero di relazioni sincrone tra la transizione corrente
-            //di fsm1 con le transizioni uscenti della fsm2
-            setNumRelazioniSincroneStatoCorrentePerTransizione(id1,t, trUsc2);
-        }
-        //scorro tutte le transizioni della fsm2
-        while(l_itr_tr2.hasNext()){
-            t = (Transizione) l_itr_tr2.next();
-            //trovo il numero di relazioni sincrone tra la transizione corrente
-            //di fsm2 con le transizioni uscenti della fsm1
-            setNumRelazioniSincroneStatoCorrentePerTransizione(id2,t, trUsc1);
-        }
-
-        numRelazioniSincroneUscentiIsSetted = true;
-
-        return ReturnCodeIterazione.NO_ERROR;
     }
 
     /**
@@ -300,21 +306,21 @@ public class Simulazione {
      */
 
     //@ ensures /return==ReturnCodeIterazione.NO_ERROR
-    public ReturnCodeIterazione eseguiIterazione ()
+    public Vector<TransizioniAbilitate> eseguiIterazione() throws cooperativeFsmLogicException
     {
         numRelazioniSincroneUscentiIsSetted=false;
 
         transizioniAbilitate = new Vector<TransizioniAbilitate>();
 
-        ReturnCodeIterazione risp = setNumRelazioniSincroneTransizioniUscenti();
-
-        if(risp!=ReturnCodeIterazione.NO_ERROR){
-            return risp;
+        try{
+            setNumRelazioniSincroneTransizioniUscenti();
+        }catch(SyncRelationNumberNotSettedException e){
+            throw new SyncRelationNumberNotSettedException();
         }
-
+        
         setTransizioniAbilitate();
 
-        return ReturnCodeIterazione.NO_ERROR;
+        return transizioniAbilitate;
     }
 
     public String ToString()
