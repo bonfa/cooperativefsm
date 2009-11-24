@@ -14,7 +14,7 @@ public class Stato {
 
     private boolean transizioniUscentiIsSetted;
 
-
+    //@ requires num_stato>0
     public Stato (int num_stato) {   //costruttore di uno stato
 
         transizioniUscentiIsSetted = false;
@@ -23,14 +23,20 @@ public class Stato {
         transizioniUscenti = new Vector<Transizione>();
     }
 
+    //@requires t!=null && t.getStato1()==this
     public void addTransUscente(Transizione t){
         transizioniUscenti.add(t);
     }
     
-    public void transizioniUscentiIsSetted(){
+    public void setTransizioniUscentiIsSetted(){
         transizioniUscentiIsSetted = true;
     }
 
+    public /*@ pure @*/  boolean getTransizioniUscentiIsSetted(){
+        return transizioniUscentiIsSetted;
+    }
+
+    //@ensures /return!=null
     public Vector<Transizione> getTransizioniUscenti(){
 
         if(transizioniUscentiIsSetted){
