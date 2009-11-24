@@ -11,6 +11,11 @@ import java.util.*;
 
 public class Fsm {
 
+    /* Presenza di metodi deprecated utilizzati in parti di codice che non permettono la 
+     * verificabilità dell'invariante.
+     //@ public invariant /old(id)==id && /old(stati)==stati && /old(stati).size()==stati.size() && /old(transizioni)=transizioni && /old(transizioni).size()==transizioni.size()
+     */
+
     private int id;
     private int numStati;
     private Vector<Stato>       stati;

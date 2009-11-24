@@ -13,6 +13,8 @@ import java.util.*;
  */
 public class Transizione {
 
+    //@ public invariant /old(id)==id && /old(stato1)==stato1 && /old(stato2)==stato2
+
     private int id;         //è il numero progressivo assegnato alla transizione, riferito alla fsm cui appartiene
     //private String id;
     private String nome;    //identifica una certa transizione (attributo opzionale)
