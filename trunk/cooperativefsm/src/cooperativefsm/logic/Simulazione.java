@@ -21,7 +21,7 @@ public class Simulazione {
     private /*@ spec_public non_null @*/ StatoCorrente statoCorrente;
     public  /*@ spec_public non_null @*/ Relazione relazioniTransizioni[][];
 
-    private /*@ spec_public @*/ boolean numRelazioniSincroneUscentiIsSetted;
+    private /*@ spec_public @*/ boolean numRelazioniSincroneUscentiIsSetted, transizioniAbilitateIsSetted;
 
     /*
      *
@@ -95,7 +95,10 @@ public class Simulazione {
      */
 
     //@ ensures /return != null
-    public Vector<TransizioniAbilitate> getTransizioniAbilitate() {
+    public Vector<TransizioniAbilitate> getTransizioniAbilitate() throws EnabledTransitionNotSettedException{
+
+        if(!transizioniAbilitateIsSetted) throw new EnabledTransitionNotSettedException();
+
         return transizioniAbilitate;
     }
 
@@ -262,6 +265,8 @@ public class Simulazione {
             }
         }
 
+        transizioniAbilitateIsSetted=true;
+
     }
 
     
@@ -309,6 +314,7 @@ public class Simulazione {
     public Vector<TransizioniAbilitate> eseguiIterazione() throws cooperativeFsmLogicException
     {
         numRelazioniSincroneUscentiIsSetted=false;
+        transizioniAbilitateIsSetted=false;
 
         transizioniAbilitate = new Vector<TransizioniAbilitate>();
 
