@@ -7,12 +7,7 @@ package cooperativefsm.io;
  * @author Renato
  */
 
-import cooperativefsm.logic.Simulazione;
-import cooperativefsm.logic.Stato;
-import cooperativefsm.logic.Fsm;
-import cooperativefsm.logic.Transizione;
-import cooperativefsm.logic.StatoCorrente;
-import cooperativefsm.*;
+import cooperativefsm.logic.*;
 import java.util.Vector;
 
 public class InputTast extends Input
