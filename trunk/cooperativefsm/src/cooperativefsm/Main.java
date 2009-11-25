@@ -30,26 +30,27 @@ public class Main {
     
     public static void main(String[] args)
     {
-        final String BENVENUTO = "Benvenuto! Questo programma ti permetterà di effettuare una simulazione di due macchine a stati" +
+        final String BENVENUTO = "Benvenuto! Questo programma ti permetterà di effettuare una simulazione\n di due macchine a stati" +
                 " finiti cooperanti tra loro.\nPer prima cosa scegli l'opzione desiderata:\n";
         final String TIPOINPUT = "TIPO DI INPUT";
-        final String [] SCELTAINPUT  = {"Da tastiera, per salvataggio","Da tastiera, per l'esecuzione","Da file xml, per esecuzione"};
+        final String [] SCELTAINPUT  = {"Da tastiera, per salvataggio","Da tastiera, per l'esecuzione","Da file xml, per esecuzione", "Esci"};
         final String MESS_FINALE = "CIAO E GRAZIE!";
-        final String XML_NOT = "-- File xml non formattato correttamente!!! --";
+        final String XML_NOT = "-- File xml inesistente o non formattato correttamente!!! --\nDescrizione dell'errore:\n";
         final String XML_DEF = "fsm.xml";
         final String SALVA_SIM = "Vuoi salvare la simulazione? ";
         final String ESECUZIONE="ESECUZIONE SIMULAZIONE:";
        
-        System.out.println(BENVENUTO);
+        
         MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
-        boolean continua = true;
-        boolean fineProgramma=false;
         Simulazione s = null;
-        Interazione i=new Interazione();
+        Interazione i= new Interazione();
         int selezione = 0;
         
+        System.out.println(BENVENUTO);
+        boolean continua = true;
         while(continua)
         {
+            s = null;   //serve per azzerare le eventuali simulazioni relative a sessioni precedenti
             Input in = null;
             selezione = menuInput.scegli();
         
@@ -58,13 +59,11 @@ public class Main {
                 case 1: {   //Lettura da tastiera per salvataggio
                         in = new InputTast();
                         s = in.leggiSimulazione();          //leggiSimulazione è un metodo della classe Input,da cui ereditano le classi InputTast e InputXML
-                        continua = false;
                         break;
                         }
                 case 2: {   //Lettura da tastiera per esecuzione
                         in = new InputTast();
                         s = in.leggiSimulazione();
-                        continua = false;
                         break;
                         }
                 case 3: {   //Lettura da XML per esecuzione
@@ -77,10 +76,10 @@ public class Main {
                                 s = in.leggiSimulazione();
                                 //da cambiare
                                 //System.out.println(s.ToString());
-                                continua = false;
+                                //continua = false;
                             } catch (Exception ex) {
                                 //System.out.println(XML_NOT + ex.toString());
-                                System.out.println(XML_NOT);
+                                System.out.println(XML_NOT + ex.toString());
 //                            } catch (IOException ex) {
 //                                System.out.println("-- Il file specificato non esiste!!! --");
 //                                //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,36 +94,35 @@ public class Main {
                         }
 
 
-                case 0: {
-                        //System.out.println(MESS_FINALE);
-                        //System.exit(0);
-                        continua=false;
-                        fineProgramma=true;
+                case 4: {
+                        continua=false;     //provoca l'uscita dal ciclo while del main menu e quindi la fine del programma
+                        break;
                         }
             }//switch
         
         
+        if (continua && s!=null)    //se la fase di input è andata a buon fine si procede
+        {
+               if (selezione!=1)
+               System.out.println("\n\n"+ESECUZIONE);
+
+               //esecuzione vera e propria
+               boolean fineEsecuzione=false;
+               while (!fineEsecuzione && selezione != 1)     //l'esecuzione è fatta solo per le selezioni 2 e 3 del menu; se si è scelto 1 si passa subito al salvataggio
+                    fineEsecuzione=i.selezioneTransizioneDaFarScattare(s);
+
+               //alla fine di un'esecuzione è sempre richiesto se si vuole salvare
+               boolean salva = Servizio.yesOrNo(SALVA_SIM);
+               if(salva)
+               {
+                    String url=Servizio.leggiString("Inserire il percorso dove salvare il file xml della simulazione (" + XML_DEF + ")> ");
+                    if(url.equals(""))
+                        url=XML_DEF;
+                    OutputXML.salvaSimulazione(s,url);
+               }
+        }//if
         }//while
 
-       if (selezione!=1 && selezione !=0)
-        System.out.println("\n\n"+ESECUZIONE);
-
-       while (!fineProgramma && selezione != 1)     //l'esecuzione è fatta solo per le selezioni 2 e 3 del menu; se si è scelto 1 si passa subito al salvataggio
-       {
-        fineProgramma=i.selezioneTransizioneDaFarScattare(s);
-       }
-       if(s!=null)
-        {
-            boolean salva = Servizio.yesOrNo(SALVA_SIM);
-            if(salva)
-            {
-                String url=Servizio.leggiString("Inserire il percorso dove salvare il file xml della simulazione (" + XML_DEF + ")> ");
-                if(url.equals(""))
-                    url=XML_DEF;
-                //da cambiare
-                OutputXML.salvaSimulazione(s,url);
-            }
-        }
         System.out.println(MESS_FINALE);
     }
     

@@ -164,8 +164,9 @@ public class Transizione {
      */
     public boolean equals (Transizione t)
     {
+        boolean stessoNome = this.getNome().equals(t.getNome());
         boolean stessoSorg = (this.stato1.getId() == t.getStato1().getId());
         boolean stessoDest = (this.stato2.getId() == t.getStato2().getId());
-        return stessoSorg && stessoDest;
+        return (stessoSorg && stessoDest) || stessoNome;
     }
 }

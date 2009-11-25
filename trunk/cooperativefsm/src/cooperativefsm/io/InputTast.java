@@ -176,7 +176,8 @@ public class InputTast extends Input
                     System.out.println("Transizione inserita correttamente!");
             }
             else
-                System.out.println("Mi dispiace ma è hai già inserito una transizione tra questi due stati. Transizione non inserita!\n");
+                System.out.println("Purtroppo è già presente una transizione tra questi due stati, " +
+                        "\noppure hai già inserito una transizione con lo stesso nome. \nTransizione non inserita!\n");
 
             continua = this.ciSonoTrans();
         }//while
