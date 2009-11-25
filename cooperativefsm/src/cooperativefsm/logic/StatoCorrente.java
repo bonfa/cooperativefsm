@@ -1,9 +1,9 @@
 package cooperativefsm.logic;
 
 /**
+ * La classe stato corrente definisce la situazione della simulazione in un certo istante
  *
  * @author Alessandro
- * La classe stato corrente definisce la situazione della simulazione in un certo istante
  *
  */
 public class StatoCorrente
@@ -49,10 +49,18 @@ public class StatoCorrente
         //sCorrenteFsm2 = new Stato(corrente2.getId());
         sCorrenteFsm2 = corrente2;
     }
-
+    /**
+     * Stato dell'esecuzione della prima Fsm
+     * @return stato della prima fsm
+     */
     public Stato getStatoCorrenteFSM1(){
         return sCorrenteFsm1;
     }
+
+    /**
+     * Stato dell'esecuzione della seconda Fsm
+     * @return stato della seconda fsm
+     */
 
     public Stato getStatoCorrenteFSM2(){
         return sCorrenteFsm2;

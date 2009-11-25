@@ -6,7 +6,7 @@
 package cooperativefsm.logic;
 
 /**
- *
+ * Eccezione generica del core di cooperativefsm
  * @author alessandro
  */
 public class cooperativeFsmLogicException extends RuntimeException{

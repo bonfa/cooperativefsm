@@ -6,6 +6,8 @@
 package cooperativefsm.logic;
 
 /**
+ * Le transizioniAbilitate vengo richieste quando ancora non sono state calcolate.
+ * L'esecuzione non può proseguire correttamente.
  *
  * @author alessandro
  */
