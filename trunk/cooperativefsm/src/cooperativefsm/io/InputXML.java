@@ -30,7 +30,14 @@ import org.xml.sax.SAXException;
 
 import java.util.Vector;
 
-
+/**
+ * La classe contiene tutti i metodi necessari per leggere un file formattato
+ * secondo lo standard xml. Questa classe si occupa inoltre di effettuare
+ * tutti i controlli incrociati necessari sui tag xml in modo da poter costruire
+ * una istanza coerente di Simulazione.
+ *
+ * @author luca
+ */
 public class InputXML extends Input {
 
 
@@ -40,9 +47,9 @@ public class InputXML extends Input {
     private boolean rel=true;
 
     /**
-     *
-     * @param URI
-     * è il percorso del file xml da caricare
+     * Il costruttore riceve l'URI del file xml e si occupa di chiamare gli altri
+     * metodi per poter costruire una istanza coerente di Simulazione
+     * @param URI è il percorso del file xml da leggere
      * @throws SAXException
      * @throws IOException
      * @throws ParserConfigurationException
@@ -579,7 +586,7 @@ public class InputXML extends Input {
     }
     /**
      *
-     * @param file
+     * @param file è il percorso del file xml da caricare
      * @return un oggetto di tipo Document, è un albero contenente tutti i nodi xml
      * @throws SAXException
      * @throws IOException

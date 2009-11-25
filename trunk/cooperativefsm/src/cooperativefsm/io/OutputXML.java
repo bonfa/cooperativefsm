@@ -15,7 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Questa classe salva su un file di testo una simulazione. La formattazione
+ * del file è di tipo xml, questo file può essere letto per riprendere lo stato
+ * della simulazione in un momento successivo
  * @author luca
  */
 public class OutputXML {
@@ -27,10 +29,8 @@ private static Simulazione s;
  * del file è di tipo xml, questo file può essere letto per riprendere lo stato
  * della simulazione in un momento successivo 
  *
- * @param _s
- * è la simulazione da salvare
- * @param file
- * è il percorso dove salvare il file
+ * @param _s è la simulazione da salvare
+ * @param file è il percorso dove salvare il file
  */
 public static void salvaSimulazione(Simulazione _s, String file)
     {
