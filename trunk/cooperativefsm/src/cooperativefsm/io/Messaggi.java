@@ -2,7 +2,7 @@
 package cooperativefsm.io;
 
 /**
- * Interfaccia contenente una serie di messaggi utilizzati dalla classe Iterazione
+ * Interfaccia contenente una serie di messaggi utilizzati dalla classe Interazione
  * @author bonfa
  */
 public interface Messaggi {

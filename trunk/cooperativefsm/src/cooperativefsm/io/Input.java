@@ -4,10 +4,7 @@ package cooperativefsm.io;
  *
  * @author Alessandro Ferrari, Carlo Svanera, Luca Cominardi
  */
-import cooperativefsm.logic.Simulazione;
-import cooperativefsm.logic.Fsm;
-import cooperativefsm.logic.StatoCorrente;
-import cooperativefsm.*;
+import cooperativefsm.logic.*;
 import java.util.Vector;
 
 public abstract class  Input
