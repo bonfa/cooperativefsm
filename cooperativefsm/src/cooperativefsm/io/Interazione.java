@@ -1,16 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-package cooperativefsm;
+package cooperativefsm.io;
 
 import cooperativefsm.logic.*;
-import cooperativefsm.io.Servizio;
 import java.util.*;
 
 /**
- *
+ * La classe implementa un'interazione tra l'utente e un'istanza della
+ * classe simulazione che viene passata come parametro di ingresso
+ * all'unico metodo visibile, cioè selezioneTransizioneDaFarScattare().
  * @author bonfa
  */
 public class Interazione implements Messaggi{

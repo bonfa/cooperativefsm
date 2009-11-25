@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-package cooperativefsm;
+package cooperativefsm.io;
 
 /**
- *
+ * Interfaccia contenente una serie di messaggi utilizzati dalla classe Iterazione
  * @author bonfa
  */
 public interface Messaggi {
