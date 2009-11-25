@@ -1,12 +1,23 @@
 
 package cooperativefsm.logic;
 
+import java.util.*;
+
 /**
+ * La classe contiene le funzioni principali per i calcoli necessari all'esecuzione
+ * delle simulazioni, è quella di maggior interesse per la business logic del programma.
+ * Al costruttore è necessario passare un Vector non nullo contenente due Fsm, uno
+ * StatoCorrente non nullo indicante uno stato della simulazione coerente con gli stati esistenti
+ * nelle fsm ed un array bidimensionale che contiene le RelazioniTransizioni tra le transizioni delle fsm.
+ * L'array deve la dimensione specificata dalla prima quadra pari al numero di transizioni della prima fsm,
+ * mentre dimensione per la seconda quadra pari al numero di transizioni della seconda fsm.
+ * I dati passati devono rispettare le precondizioni specificate dal codice jml.
+ * Contiene il metodo eseguiIterazione() che restituisce una lista di transizioni abilitate a
+ * scattare dallo statoCorrente. Ha poi il metodo scatta(TransizioniAbilitate t) che permette di far
+ * scattare un istanza di  TransizioniAbilitate.
  *
  * @author Alessandro Ferrari, Carlo Svanera, Luca Cominardi
  */
-import java.util.*;
-
 
 public class Simulazione {
 
@@ -23,11 +34,15 @@ public class Simulazione {
 
     private /*@ spec_public @*/ boolean numRelazioniSincroneUscentiIsSetted, transizioniAbilitateIsSetted;
 
-    /*
-     *
+    /**
      * Il costruttore provvede a settare le fsm, le relazioni tra transizione e
      * lo stato corrente della simulazione.
-     *
+     * Al costruttore è necessario passare un Vector non nullo contenente due Fsm, uno
+     * StatoCorrente non nullo indicante uno stato della simulazione coerente con gli stati esistenti
+     * nelle fsm ed un array bidimensionale che contiene le RelazioniTransizioni tra le transizioni delle fsm.
+     * L'array deve la dimensione specificata dalla prima quadra pari al numero di transizioni della prima fsm,
+     * mentre dimensione per la seconda quadra pari al numero di transizioni della seconda fsm.
+     * I dati passati devono rispettare le precondizioni specificate dal codice jml.
      * @param Vector<Fsm> _listaFsm
      * @param Relazione relazioni[][]
      * @param StatoCorrente sc
@@ -65,9 +80,13 @@ public class Simulazione {
             throw new OutgoingTransitionNotSettedException();
         }
 
+        transizioniAbilitateIsSetted=false;
+
     }
 
     /**
+     * Ritorna le due fsm che fanno parte della simulazione.
+     *
      * @return la lista delle fsm della simulazione
      *
      * @see  Fsm
@@ -79,6 +98,8 @@ public class Simulazione {
     }
 
     /**
+     * Ritorna lo stato corrente e coerente della simulazione.
+     *
      * @return lo StatoCorrente della simulazione
      *
      * @see StatoCorrente
@@ -90,6 +111,9 @@ public class Simulazione {
     }
 
     /**
+     * Deve essere chiamato quando il Vector di TransizioniAbilitate allo scatto
+     * per l'iterazione corrente è già stato elaborato, altrimenti incorre in una
+     * RuntimeException di tipo EnabledTransitionNotSettedException.
      *
      * @return Lista delle possibili combinazioni di transizioni abilitate allo scatto
      */
@@ -304,10 +328,10 @@ public class Simulazione {
     }
 
     /**
-     *  Si occupa di effettuare i compiti che deve svolgere il sistema in uno
-     *  stp.
+     *  Si occupa di elaborare la lista di possibili transizioni abilitate a scattare
+     *  nello step corrente della simulazione.
      * 
-     * @return un boolean che rappresenta la volontà di proseguire nella simulazione
+     * @return Vector contenente le TransizioniAbilitate, candidate allo scatto
      */
 
     //@ ensures /return==ReturnCodeIterazione.NO_ERROR

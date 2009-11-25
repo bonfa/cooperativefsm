@@ -8,7 +8,11 @@ package cooperativefsm.logic;
 import java.util.*;
 
 /**
+ * Classe che rappresenta una transizioni tra stati di una fsm. Indica lo stato
+ * sorgente e lo stato destinazione più una serie di altri attributi utili 
+ * per la simulazione.
  *
+ * @see Stato, Fsm, Simulazione
  * @author Alessandro
  */
 public class Transizione {
@@ -57,11 +61,19 @@ public class Transizione {
         return s;
     }
 
+    /**
+     * Setta il nome della transizione (utile per stampa)
+     * @param _nome
+     */
     public void setNome(String _nome)
     {
         nome = _nome;
     }
 
+    /**
+     * Ritorna il nome della Transizione.
+     * @return nome della
+     */
     public String getNome()
     {
         return nome;
@@ -109,16 +121,36 @@ public class Transizione {
         transizioneSincronaCorrispondente= t;
     }
 
+     /**
+     * Ritorna il valore transizioneSincronaCorrispondente nel caso in cui la
+     * transizione sia uscente dallo stato corrente nella attuale iterazione
+     * e abbia una e una sola relazione sincrona con una transizione uscente
+     * dallo stato corrente della fsm complementare.
+     * @return valore della transizione sincrona corrispodente nella corrente iterazione, ha senso solo
+     * se getNumRelazioniSincroneStatoCorrente()==1.
+     */
+
     //@ requires numRelazioniSincroneStatoCorrente == 1 && /return!=null
     public Transizione getTransizioneSincronaCorrispondente(){
         return transizioneSincronaCorrispondente;
     }
 
+    /**
+     * Serve per settare il numero di relazioni sincrone che la Transizione this,
+     * che si suppone uscente dallo stato corrente, ha con Transizioni uscenti
+     * dallo stato dell'altra Fsm contestualmente all'iterazione corrente.
+     * @param n
+     */
     //@ requires n=>0
     public void setNumRelazioniSincroneStatoCorrente( int n ){
         numRelazioniSincroneStatoCorrente=n;
     }
 
+    /**
+     * Ritorna il numero di relazioni sincrone che la Transizione this,
+     * che si suppone uscente dallo stato corrente, ha con Transizioni uscenti
+     * dallo stato dell'altra Fsm contestualmente all'iterazione corrente.
+     */
     public int getNumRelazioniSincroneStatoCorrente()
     {
 
@@ -126,7 +158,7 @@ public class Transizione {
     }
 
     /**
-     * De transizioni sono uguali se hanno lo stesso stato sorgente e lo stesso stato destinazione
+     * Due transizioni sono uguali se hanno lo stesso stato sorgente e lo stesso stato destinazione
      * @param t
      * @return
      */

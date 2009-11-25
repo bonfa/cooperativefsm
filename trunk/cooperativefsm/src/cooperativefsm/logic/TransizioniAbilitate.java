@@ -6,8 +6,8 @@
 package cooperativefsm.logic;
 
 /**
- * Classe che contiene una singola transizione o una coppia di queste abilitate
- * a scattare in un iterazione della simulazione.
+ * Classe che contiene una coppia di queste abilitate (una transizione può essere a null per indicare
+ * "nessuna transizione" a scattare in un iterazione della simulazione.
  *
  * @author Alessandro
  * @see Transizione, Stato
@@ -22,10 +22,20 @@ public class TransizioniAbilitate {
         tr2=_tr2;
     }
 
+    /**
+     * Transizione abilitata a scattare della prima Fsm. Può essere un riferimento
+     * a null per indicare lo scatto di nessuna transizione.
+     * @return Transizione abilitata allo scatto nella prima Fsm
+     */
     public Transizione getTransizioneFSM1(){
         return tr1;
     }
 
+    /**
+     * Transizione abilitata a scattare della seconda Fsm. Può essere un riferimento
+     * a null per indicare lo scatto di nessuna transizione.
+     * @return Transizione abilitata allo scatto nella seconda Fsm
+     */
     public Transizione getTransizioneFSM2(){
         return tr2;
     }
