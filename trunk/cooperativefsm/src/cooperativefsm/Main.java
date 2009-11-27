@@ -1,18 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cooperativefsm;
-
-//import java.io.IOException;
 
 import cooperativefsm.io.*;
 import cooperativefsm.logic.Simulazione;
-
-
-//import javax.xml.parsers.ParserConfigurationException;
-//import org.xml.sax.SAXException;
 
 /**
  * @author Cominardi Luca, Ferrari Alessandro, Svanera Carlo, Francesco Bonfadelli
@@ -35,6 +24,7 @@ public class Main {
         final String XML_DEF = "fsm.xml";
         final String SALVA_SIM = "Vuoi salvare la simulazione? ";
         final String ESECUZIONE="ESECUZIONE SIMULAZIONE:";
+        final String SALV_CORR="Simulazione salvata correttamente!";
        
         
         MyMenu menuInput = new MyMenu( TIPOINPUT , SCELTAINPUT );
@@ -66,29 +56,16 @@ public class Main {
                             String url=Servizio.leggiString("Inserire il percorso del file xml da leggere (" + XML_DEF + ")> ");
                             if(url.equals(""))
                                 url=XML_DEF;
+
                             try {
                                 in = new InputXML(url); //l'uri del file xml dovrà essere passato da tastiera, invio per il default
                                 System.out.println("-- Simulazione creata con successo!!! --");
-                                s = in.leggiSimulazione();
-                                //da cambiare
-                                //System.out.println(s.ToString());
-                                //continua = false;
-                            } catch (Exception ex) {
-                                //System.out.println(XML_NOT + ex.toString());
-                                System.out.println(XML_NOT + ex.toString());
-//                            } catch (IOException ex) {
-//                                System.out.println("-- Il file specificato non esiste!!! --");
-//                                //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//                            } catch (ParserConfigurationException ex) {
-//                                System.out.println(XML_NOT);
-//                                //Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//                            } catch (NullPointerException q) {
-//                                System.out.println(XML_NOT);
-//                            } catch (ArrayIndexOutOfBoundsException t) {
-//                                System.out.println(XML_NOT);
-                            } break;
+                                s = in.leggiSimulazione();                                
+                                }
+                            catch (Exception ex)    {
+                                System.out.println(XML_NOT + ex.toString());    }
+                            break;
                         }
-
 
                 case 4: {
                         continua=false;     //provoca l'uscita dal ciclo while del main menu e quindi la fine del programma
@@ -98,7 +75,7 @@ public class Main {
         
         
         if (continua && s!=null)    //se la fase di input è andata a buon fine si procede
-        {
+            {
                if (selezione!=1)
                System.out.println("\n\n"+ESECUZIONE);
 
@@ -115,11 +92,11 @@ public class Main {
                     if(url.equals(""))
                         url=XML_DEF;
                     OutputXML.salvaSimulazione(s,url);
+                    System.out.println(SALV_CORR);
                }
-        }//if
+            }//if
         }//while
 
         System.out.println(MESS_FINALE);
     }
-    
 }
