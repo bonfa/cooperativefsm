@@ -5,7 +5,6 @@
 
 package cooperativefsm.logic;
 
-import java.util.*;
 
 /**
  * Classe che rappresenta una transizioni tra stati di una fsm. Indica lo stato
@@ -159,6 +158,7 @@ public class Transizione {
 
     /**
      * Due transizioni sono uguali se hanno lo stesso stato sorgente e lo stesso stato destinazione
+     * oppure lo stesso nome (id testuale)
      * @param t
      * @return
      */

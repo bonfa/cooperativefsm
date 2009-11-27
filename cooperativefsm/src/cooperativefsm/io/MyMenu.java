@@ -1,19 +1,15 @@
 package cooperativefsm.io;
 
 /**
- *
- * @author Renato chi?
- */
+ * Questa classe rappresenta un menu testuale generico a piu' voci
+ * @author Carlo
 /*
-Questa classe rappresenta un menu testuale generico a piu' voci
-Si suppone che la voce per uscire sia sempre associata alla scelta 0
-e sia presentata in fondo al menu
+
 
 */
 public class MyMenu
 {
   final private static String CORNICE = "--------------------------------";
-  //final private static String VOCE_USCITA = "0\tEsci";
   final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
 
   private String titolo;
@@ -27,7 +23,7 @@ public class MyMenu
   }
 
   /**
-   *
+   * Restituisce un intero relativo alla scelta dell'utente
    * @return
    */
   public int scegli ()          //NB: non è stato fatto nessun controllo che il carattere inserito sia un intero
@@ -36,6 +32,9 @@ public class MyMenu
 	return Servizio.leggiInt(RICHIESTA_INSERIMENTO, 1 ,voci.length);
   }
 
+  /**
+   * Stampa a video il menu
+   */
   public void stampaMenu ()
   {
 	System.out.println(CORNICE);
@@ -46,8 +45,6 @@ public class MyMenu
 	  System.out.println( (i+1) + "\t" + voci[i]);
 	 }
     System.out.println();
-	//System.out.println(VOCE_USCITA);
-    //System.out.println();
   }
 
 }

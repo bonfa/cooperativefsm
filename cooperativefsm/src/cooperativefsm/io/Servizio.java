@@ -1,16 +1,13 @@
 package cooperativefsm.io;
 
-/**
- * Classe di supporto per le Operazioni di Input/Output da tastiera
- * @author Renato
- */
-import java.util.Scanner;
 import java.io.*;
 
-
+/**
+ * Classe di supporto per le operazioni di Input da tastiera
+ * @author Carlo
+ */
 
 public class Servizio {
-	  private static Scanner lettore = creaScanner();
 
 	  private final static String ERRORE_FORMATO = "Attenzione: il dato inserito non e' nel formato corretto";
 	  private final static String ERRORE_MINIMO= "Attenzione: e' richiesto un valore maggiore o uguale a ";
@@ -24,10 +21,13 @@ public class Servizio {
           private static InputStreamReader reader = new InputStreamReader (System.in);
           private static BufferedReader myInput = new BufferedReader (reader);
 
+          /**
+           * Metodo per leggere una stringa
+           * @param messaggio da visualizzare a video
+           * @return una stringa generica
+           */
           public static String leggiString(String messaggio)
                 {
-                //InputStreamReader reader = new InputStreamReader (System.in);
-                //BufferedReader myInput = new BufferedReader (reader);
                 System.out.println (messaggio);
                 String str= new String();
                     try 
@@ -41,7 +41,11 @@ public class Servizio {
                     }
                 return str;
                 }
-          
+          /**
+           * Metodo per leggere un intero
+           * @param messaggio da visualizzare a video
+           * @return un intero
+           */
             public static int leggiInt(String messaggio)
                 {
                 
@@ -58,15 +62,13 @@ public class Servizio {
                     }
                 return i;
                 }
-           
-	  
-            private static Scanner creaScanner ()
-	  {
-	   Scanner creato = new Scanner(System.in);
-	   creato.useDelimiter(System.getProperty("line.separator"));
-	   return creato;
-	  }
 
+            /**
+             * Metodo per leggere un astringa non vuota
+             * @param messaggio
+             * @return una stringa non vuota
+             * @ensures lettura!= "";
+             */
 	  public static String leggiStringaNonVuota(String messaggio)
 	  {
 	   boolean finito=false;
@@ -84,29 +86,11 @@ public class Servizio {
 	   return lettura;
 	  }
 
-
-	  public static char leggiChar (String messaggio)
-	  {
-	   boolean finito = false;
-	   char valoreLetto = '\0';
-	   do
-	    {
-	     System.out.print(messaggio);
-	     String lettura = lettore.next();
-	     if (lettura.length() > 0)
-	      {
-	       valoreLetto = lettura.charAt(0);
-	       finito = true;
-	      }
-	     else
-	      {
-	       System.out.println(ERRORE_STRINGA_VUOTA);
-	      }
-	    } while (!finito);
-
-	   return valoreLetto;
-	  }
-
+/**
+ * Metodo per leggere un singolo char
+ * @param messaggio
+ * @return una varibile char
+ */
           public static char leggiCaratt (String messaggio)
 	  {
 	   boolean finito = false;
@@ -127,7 +111,13 @@ public class Servizio {
 
 	   return valoreLetto;
 	  }
-          
+
+
+          /**
+           * Metodo che chiese all'utente una conferma
+           * @param messaggio
+           * @return una variabile boolean
+           */
 	  public static boolean yesOrNo(String messaggio)
 	  {
 		  String mioMessaggio = messaggio + "("+RISPOSTA_SI+"/"+RISPOSTA_NO+")";
@@ -155,28 +145,6 @@ public class Servizio {
 	   return valoreLetto;
 	  }
 
-
-	  public static int leggiIntero (String messaggio)
-	  {
-	   boolean finito = false;
-	   int valoreLetto = 0;
-	   do
-	    {
-	     System.out.print(messaggio);
-	     if (lettore.hasNextInt())
-	      {
-	       valoreLetto = lettore.nextInt();
-	       finito = true;
-	      }
-	     else
-	      {
-	       System.out.println(ERRORE_FORMATO);
-	       String daButtare = lettore.next();
-	      }
-	    } while (!finito);
-	   return valoreLetto;
-	  }
-
 	  public static int leggiIntConMinimo(String messaggio, int minimo)
 	  {
 	   boolean finito = false;
@@ -193,6 +161,14 @@ public class Servizio {
 	   return valoreLetto;
 	  }
 
+          /**
+           * Overload del metodo leggiInt()
+           * @param messaggio
+           * @param minimo
+           * @param massimo
+           * @return un intero compreso nel range
+           * @ensures valoreLetto <= massimo && valoreLetto >= minimo;
+           */
 	  public static int leggiInt(String messaggio, int minimo, int massimo)
 	  {
 	   boolean finito = false;
@@ -216,44 +192,4 @@ public class Servizio {
 
 	   return valoreLetto;
 	  }
-
-
-	  public static double leggiDouble (String messaggio)
-	  {
-	   boolean finito = false;
-	   double valoreLetto = 0;
-	   do
-	    {
-	     System.out.print(messaggio);
-	     if (lettore.hasNextDouble())
-	      {
-	       valoreLetto = lettore.nextDouble();
-	       finito = true;
-	      }
-	     else
-	      {
-	       System.out.println(ERRORE_FORMATO);
-	       String daButtare = lettore.next();
-	      }
-	    } while (!finito);
-	   return valoreLetto;
-	  }
-
-	  public static double leggiDoubleConMinimo (String messaggio, double minimo)
-	  {
-	   boolean finito = false;
-	   double valoreLetto = 0;
-	   do
-	    {
-	     valoreLetto = leggiDouble(messaggio);
-	     if (valoreLetto >= minimo)
-	      finito = true;
-	     else
-	      System.out.println(ERRORE_MINIMO + minimo);
-	    } while (!finito);
-
-	   return valoreLetto;
-	  }
-
-
 }

@@ -1,14 +1,13 @@
 package cooperativefsm.io;
 
-/**
- * Classe che eredita  dalla classe padre Input, e ne sovrascrive alcuni metodi in modo  da
- * specializzarli per la lettura da tastiera
- *
- * @author Renato
- */
-
 import cooperativefsm.logic.*;
 import java.util.Vector;
+/**
+ * Classe specializzatat per la lettura si una simulazione da tastiera.
+ * Eredita  dalla classe Input, e ne sovrascrive in particolarei metodi
+ * astratti "leggiSimulazione()" e "leggiStatoIniziale()"
+ * @author Carlo
+ */
 
 public class InputTast extends Input
 {  
@@ -33,7 +32,7 @@ public class InputTast extends Input
          listaFsm = new Vector<Fsm> ();
      }
      /**
-      *
+      * Metodo fonadementale per effettuare l'input di una simulazione da tastiera
       * @return Un'istanza corretta di Simulazione
       */
      public @Override Simulazione leggiSimulazione()
@@ -76,28 +75,10 @@ public class InputTast extends Input
         int numFsm = 2;
         for(int i = 0; i < numFsm; i++)
              listaFsm.add(creaFsm(i));
-
-//gestione dell'id letterale: RIMOSSA
-//        String nome1 = Servizio.leggiStringaNonVuota(INS_NOMEFSM + " 1");
-//        listaFsm.get(0).setId(nome1);
-//
-//        boolean nomeInserito = false;
-//
-//        while(!nomeInserito)
-//        {
-//        String nome2 = Servizio.leggiStringaNonVuota(INS_NOMEFSM + " 2");
-//            if(! nome1.equals(nome2))
-//            {
-//                listaFsm.get(1).setId(nome2);
-//                nomeInserito=true;
-//            }
-//            else
-//                System.out.println("Esiste già una fsm con lo stesso nome. Inserirne un altro.\n");
-//        }
     }
     
     /**
-     *
+     * Metodo che richiede il numero di stati di una FSM
      * @param nome_fsm
      * @return Il numero di stati da creare nella fsm
      */
@@ -123,19 +104,19 @@ public class InputTast extends Input
      }
 
 
+     
      /**
       * Metodo che restituisce lo stato di una fsm corrispondente all'id numerico inserito
-      * Se l'id è giusto, lo stato esiste sicuramente, perchè gli id degli stati sono incrementali
+      * Se l'id è coerente, lo stato esiste sicuramente, perchè gli id degli stati sono incrementali
       * @ensures id < max;
       * @param a: Stringa per il messaggio da visualizzare
-      * @param max: è di fatto il numero totale di stati di una fsm
-      * @return Lo stato in question della fsm
+      * @param x: La Fsm da cui estrarre lo stato
+      * @return
       */
      private Stato leggiStatoConMax (String a, Fsm x)
      {
          int max = x.getNumStati()-1;
          int id = Servizio.leggiInt(INS_STATO + a , 0, max);
-         //Stato s = new Stato (id);
          return x.getStatoAt(id);
      }
 
@@ -147,7 +128,7 @@ public class InputTast extends Input
      private void inizializzaTrans (Fsm x)
      {
         boolean continua = this.ciSonoTrans();   
-        int k = 0;
+        int k = 0; //rappresenta l'id della transizione, che corrisponde al numero progressivo con cui è inserita
         while (continua)
         {
             Stato sorgente = this.leggiStatoConMax("sorgente", x );
@@ -171,20 +152,26 @@ public class InputTast extends Input
                     System.out.println("Transizione inserita correttamente!");
             }
             else
-                System.out.println("Purtroppo è già presente una transizione tra questi due stati, " +
-                        "\noppure hai già inserito una transizione con lo stesso nome. \nTransizione non inserita!\n");
+                System.out.println("Purtroppo è già presente una transizione tra questi due stati. " +
+                        "\nTransizione non inserita!\n");
 
             continua = this.ciSonoTrans();
         }//while
      }
 
-
+     /**
+      * Chiede all'utente se vuole inserire ulteriori transizioni
+      * @return Una variabile boolean che indica se si vogliono aggiungere altre transizioni
+      */
      private boolean ciSonoTrans ()
      {
         return Servizio.yesOrNo(RICH_TRANS);
      }
 
-
+     /**
+      * Chiede all'utente se vuole inserire ulteriori relazioni tra transizioni
+      * @return Una variabile boolean che indica se si vogliono aggiungere altre relazioni tra transizioni
+      */
      private boolean ciSonoRelaz()
      {
         return Servizio.yesOrNo(INS_RELAZ);
@@ -193,6 +180,7 @@ public class InputTast extends Input
 
 
      /**
+      * Legge da tastirera lo stato iniziale della simulazione
       * @ensures (\exist s1; 0 < ind1 < lista.get(0).getnumStati() -1; lista.getStatoAt(ind1) != null)
       * @param la lista contenente le fsm
       * @return lo stato iniziale della simulazione
@@ -211,15 +199,13 @@ public class InputTast extends Input
         return s;
      }
 
-    
 
-    /**
-     * Metodo che crea un'istanza di Fsm con un id letterale
-     * @ensures maccchina != null
-     * @param nome: nome della fsm
-     * @return una nuova istanza di fsm
-     */
-
+/**
+ * Metodo che crea un'istanza di Fsm
+ * @ensures macchina != null
+ * @param id Identificatore numerico della Fsm
+ * @return la nuova istanza di Fsm
+ */
      private Fsm creaFsm (int id)
      {
         Fsm macchina = new Fsm (id);
@@ -230,8 +216,8 @@ public class InputTast extends Input
      
 
     /**
-     * Metodo che ricava le relazioni tra le transizioni delle 2 FSM
-     * @return il vettore contenente le relazioni tra TUTTE le transizioni [...]
+     * Metodo che inizializza le relazioni tra tutte le transizioni delle 2 FSM come relazioni asincrone
+     * @return il vettore contenente le relazioni tra TUTTE le transizioni
      */
      private  Simulazione.Relazione[][] initRelazioni ()
      {
@@ -251,7 +237,7 @@ public class InputTast extends Input
 
 
       /**
-      * imposta una relazione tra due transizioni € a due fsm diverse
+      * Imposta una relazione tra due transizioni appartenenti a due fsm diverse
       * @param relaz: l'array bidimensionale contenente tutte le possibili relazioni tra transizioni
       * @param list: la lista di fsm in questione
       */
@@ -285,6 +271,10 @@ public class InputTast extends Input
         System.out.println("E'già presente una relazione tra queste transizioni.\nNon verrà fatta nessuna operazione.\n");
      }
 
+     /**
+      * Stampa a video tutte le transizioni di una Fsm
+      * @param x Macchina a stati finiti
+      */
     private void stampaTr (Fsm x)
     {
         System.out.println("\n---------------------------------------");
